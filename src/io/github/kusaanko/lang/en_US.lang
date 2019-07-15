@@ -1,0 +1,72 @@
+copy=Copy
+rename=Rename
+renamed=Renamed
+edit=Edit
+delete=Delete
+deleted=Deleted
+warning=Warning
+confirm=Confirm
+
+restartnow=Please restart MCAddToJar now.
+reoutputallprofiles=Do you want to re-output all profiles?
+
+license=License
+help=Help
+apachelicense2.0=This software includes the artifacts distributed under the Apache License, Version 2.0 license.
+
+lang_name=English
+language=Language
+dotmcdoesnotexist=.minecraft folder does not exist
+
+adddirectory=Add directory
+enterdirectorypath=Enter directory path
+theversionalreadyexists=The version already exists.
+
+output=Output
+duringoutput=During output...
+isnotexist= is not exist.
+oldmcpatcherdownload=It supports automatic download of OldMCPatcher. Please check the connection of the net.\nFor manual operation, download OldMCPatcher-version.zip from https://github.com/kusaanko/OldMCPatcher/releases/latest and place it in the %s.
+downloadforge=Download Forge
+downloadvanilla=Download Vanilla
+backupjar=Backup jar
+backingupjar=Backing up jar...
+backupjson=Backup json
+backingupjson=Backing up json...
+mcvanillawasnotfound=Minecraft vanilla was not found.
+deleteoriginal=Do you want to delete the %s?
+
+whathappenedprofile=What happened to the %s?
+
+copyversion=Copy version
+enteranewversionname=Enter a new version name
+
+loadingforgeversion=Loading Forge version
+downloadingforge=Downloading Forge
+
+downloadingvanilla=Downloading Vanilla
+downloadminecraft=Download Minecraft
+
+fmlwarning1=1.5Forge can not start error handling
+fmlwarning2=1.5 Forge first time FML download is performed, but 404Not found is not downloaded and Minecraft does not start.
+fmlwarning3=First, download the file from the link below.
+fmlwarning4=After extracting the downloaded file, put it in the lib folder of the game directory where the contents are set. There is no need to overwrite.
+fmlwarning5=If it starts again, it will advance to the title screen.
+
+couldnotfindminecraftjarfile=Could not find Minecraft jar file.
+oldmcpatcherupdate=OldMCPatcher has been updated.\nPrevious version:%s\nNew version:%s
+oldmcpatcherdownloaded=OldMCPatcher has been downloaded.\nVersion:%s
+
+newversion=New version
+currentversion=Current version
+newversionisavailable=New version is available.
+updatenow=Update now
+changelog=Change log
+executablefilename=The executable file name after download is MCAddToJar.jar.
+
+pleaseselectaname=Please select a name
+
+renameversionname=Rename version name
+
+couldnotbedetectedversion=It could not be detected automatically. Please select a version.
+selectversion=Select version
+selectminecraftversion=Select Minecraft Version
