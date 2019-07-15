@@ -2,7 +2,9 @@ package io.github.kusaanko;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -19,43 +21,31 @@ public class Language {
 
     public static void init() {
         try {
-            String rootPackageName = "io.github.kusaanko.lang".replace(".", File.separator);
-            ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-            Enumeration<URL> rootUrls = classLoader.getResources(rootPackageName);
-
-            while (rootUrls.hasMoreElements()) {
-                URL rootUrl = rootUrls.nextElement();
-                Path rootPath = Paths.get(rootUrl.toURI());
-
-                Files.walkFileTree(rootPath, new SimpleFileVisitor<Path>() {
-                    @Override
-                    public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
-                        String pathName = path.toString();
-                        if (pathName.endsWith(".lang")) {
-                            int beginIndex = pathName.lastIndexOf(rootPackageName);
-                            int endIndex = pathName.lastIndexOf(".lang");
-                            String name = pathName.substring(beginIndex, endIndex).replace(File.separator, ".");
-                            name = name.substring(name.lastIndexOf(".") + 1);
-                            Properties properties = new Properties();
-                            try {
-                                properties.load(Files.newBufferedReader(path));
-                                lang.put(name, properties);
-                            }catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        return super.visitFile(path, attrs);
-                    }
-                });
-            }
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
-        try {
             try {
                 Files.createDirectory(Paths.get("lang"));
             }catch (FileAlreadyExistsException ignore) {}
+            {
+                InputStream in = Language.class.getResourceAsStream("en_US.lang");
+                FileOutputStream stream = new FileOutputStream(new File("lang/en_US.lang"));
+                byte[] buff = new byte[8192];
+                int len;
+                while((len = in.read(buff))!=-1) {
+                    stream.write(buff, 0, len);
+                }
+                in.close();
+                stream.close();
+            }
+            {
+                InputStream in = Language.class.getResourceAsStream("ja_JP.lang");
+                FileOutputStream stream = new FileOutputStream(new File("lang/ja_JP.lang"));
+                byte[] buff = new byte[8192];
+                int len;
+                while((len = in.read(buff))!=-1) {
+                    stream.write(buff, 0, len);
+                }
+                in.close();
+                stream.close();
+            }
             for(Path path : Files.list(Paths.get("lang/")).collect(Collectors.toList())) {
                 Properties properties = new Properties();
                 try {
