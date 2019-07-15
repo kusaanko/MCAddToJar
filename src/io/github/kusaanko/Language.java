@@ -25,7 +25,7 @@ public class Language {
                 Files.createDirectory(Paths.get("lang"));
             }catch (FileAlreadyExistsException ignore) {}
             {
-                InputStream in = Language.class.getResourceAsStream("en_US.lang");
+                InputStream in = Language.class.getResourceAsStream("lang/en_US.lang");
                 FileOutputStream stream = new FileOutputStream(new File("lang/en_US.lang"));
                 byte[] buff = new byte[8192];
                 int len;
@@ -36,7 +36,7 @@ public class Language {
                 stream.close();
             }
             {
-                InputStream in = Language.class.getResourceAsStream("ja_JP.lang");
+                InputStream in = Language.class.getResourceAsStream("lang/ja_JP.lang");
                 FileOutputStream stream = new FileOutputStream(new File("lang/ja_JP.lang"));
                 byte[] buff = new byte[8192];
                 int len;
