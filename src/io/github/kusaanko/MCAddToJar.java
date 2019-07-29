@@ -17,7 +17,7 @@ import static io.github.kusaanko.Language.*;
 
 public class MCAddToJar extends JFrame {
     public static File mcDir;
-    public static final String version = "1.1.0";
+    public static final String version = "1.1.1";
     public static final String repo = "https://github.com/kusaanko/MCAddToJar/releases";
     public static MCAddToJar frame;
 
@@ -30,6 +30,8 @@ public class MCAddToJar extends JFrame {
                 mcDir = null;
             }
         }
+
+        Language.init();
         if(mcDir==null) {
             mcDir = Util.getWorkingDirectory("minecraft");
             if (!mcDir.exists()) {
@@ -54,7 +56,7 @@ public class MCAddToJar extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
         frame = this;
-        Language.init();
+        Language.initMenu();
         {
             JMenu help = new JMenu(translate("help"));
             JMenuItem menu = new JMenuItem(translate("license"));
