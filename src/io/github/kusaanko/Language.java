@@ -1,9 +1,9 @@
 package io.github.kusaanko;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -18,35 +18,20 @@ public class Language {
 
     public static void init() {
         try {
-            try {
-                Files.createDirectory(Paths.get("lang"));
-            }catch (FileAlreadyExistsException ignore) {}
-            {
-                InputStream in = Language.class.getResourceAsStream("lang/en_US.lang");
-                FileOutputStream stream = new FileOutputStream(new File("lang/en_US.lang"));
-                byte[] buff = new byte[8192];
-                int len;
-                while((len = in.read(buff))!=-1) {
-                    stream.write(buff, 0, len);
-                }
-                in.close();
-                stream.close();
-            }
-            {
-                InputStream in = Language.class.getResourceAsStream("lang/ja_JP.lang");
-                FileOutputStream stream = new FileOutputStream(new File("lang/ja_JP.lang"));
-                byte[] buff = new byte[8192];
-                int len;
-                while((len = in.read(buff))!=-1) {
-                    stream.write(buff, 0, len);
-                }
-                in.close();
-                stream.close();
-            }
+            try{
+                Properties properties = new Properties();
+                properties.load(new InputStreamReader(Language.class.getResourceAsStream("lang/en_US.lang"), StandardCharsets.UTF_8));
+                lang.put("en_US", properties);
+            }catch (Exception e) {e.printStackTrace();}
+            try{
+                Properties properties = new Properties();
+                properties.load(new InputStreamReader(Language.class.getResourceAsStream("lang/ja_JP.lang"), StandardCharsets.UTF_8));
+                lang.put("en_US", properties);
+            }catch (Exception e) {e.printStackTrace();}
             for(Path path : Files.list(Paths.get("lang/")).collect(Collectors.toList())) {
                 Properties properties = new Properties();
                 try {
-                    properties.load(Files.newBufferedReader(path));
+                    properties.load(Files.newBufferedReader(path, StandardCharsets.UTF_8));
                     String name = path.getFileName().toString();
                     lang.put(name.substring(0, name.lastIndexOf(".")), properties);
                 }catch (Exception e) {
@@ -56,6 +41,9 @@ public class Language {
         }catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void initMenu() {
         JMenuBar menuBar = MCAddToJar.frame.getJMenuBar();
         JMenu menu = new JMenu("Language");
         ButtonGroup group = new ButtonGroup();
@@ -87,6 +75,14 @@ public class Language {
     }
 
     public static String translate(String key) {
+        if(lang.get(language)==null) {
+            if(lang.get("en_US")==null) {
+                JOptionPane.showMessageDialog(MCAddToJar.frame, "Can't initialize language.");
+                throw new IllegalAccessError("can't initialize language.");
+            }else {
+                return lang.get("en_US").getProperty(key, key);
+            }
+        }
         String value = lang.get(language).getProperty(key);
         if(value==null) {
             return lang.get("en_US").getProperty(key, key);
