@@ -27,7 +27,7 @@ public class Language {
             try{
                 Properties properties = new Properties();
                 properties.load(new InputStreamReader(Language.class.getResourceAsStream("lang/ja_JP.lang"), StandardCharsets.UTF_8));
-                lang.put("en_US", properties);
+                lang.put("ja_JP", properties);
             }catch (Exception e) {e.printStackTrace();}
             for(Path path : Files.list(Paths.get("lang/")).collect(Collectors.toList())) {
                 Properties properties = new Properties();
