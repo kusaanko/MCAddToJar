@@ -18,7 +18,9 @@ public class Language {
 
     public static void init() {
         try {
-            Files.createDirectory(Paths.get("lang/"));
+            try {
+                Files.createDirectory(Paths.get("lang/"));
+            }catch (FileAlreadyExistsException ignore) {}
             try{
                 Properties properties = new Properties();
                 properties.load(new InputStreamReader(Language.class.getResourceAsStream("lang/en_US.lang"), StandardCharsets.UTF_8));
