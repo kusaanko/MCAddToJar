@@ -63,7 +63,7 @@ public class Util {
             connection.setRequestProperty("User-Agent", "Mozilla/5.0");
             System.out.println("connect to "+url);
             connection.connect();
-            System.out.println("connected "+url);
+            System.out.println("connected to "+url);
 
             InputStream inputStream = connection.getInputStream();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
