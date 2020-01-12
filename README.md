@@ -6,6 +6,7 @@ This application contains deliverables distributed under license of Apache Licen
 Add gson to the reference library at compile time.  
 コンパイル時にはgsonを参照ライブラリに追加してください。
 
-https://github.com/google/gson
+https://github.com/google/gson  
+https://github.com/kusaanko/Updater
 
 Look at https://kusaanko.github.io/OldMCPatcher/
