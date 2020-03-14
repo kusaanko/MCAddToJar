@@ -40,6 +40,7 @@ public class MCAddToJar extends JFrame {
                 JOptionPane.showMessageDialog(null, translate("plssetdotmc"));
             }else {
                 JOptionPane.showMessageDialog(null, translate("dotmcalert"));
+                Config.put("minecraftDir", args[0]);
             }
         }else {
             String dir = Config.get("minecraftDir", "");
