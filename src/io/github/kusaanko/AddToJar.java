@@ -120,7 +120,6 @@ class AddToJar extends JFrame {
                             JOptionPane.showMessageDialog(AddToJar.this, translate("mcvanillawasnotfound"));
                             break output;
                         }
-                        long file = mc.lastModified();
                         ZipOutputStream append = new ZipOutputStream(new FileOutputStream(mc));
                         ArrayList<String> copy = (ArrayList<String>) profile.mcAddToJarTurn.clone();
                         Collections.reverse(copy);
