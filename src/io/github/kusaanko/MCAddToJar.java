@@ -26,7 +26,6 @@ public class MCAddToJar extends JFrame {
     public static void main(String[] args) {
         Config.load();
         Language.init();
-        args = new String[]{"C:\\Users\\kusaanko\\Desktop\\草あんこ\\MOD 関係\\1.2.5旧ランチャー\\.minecraft"};
         try{
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }catch (Exception e) {
