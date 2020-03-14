@@ -17,7 +17,7 @@ import static io.github.kusaanko.Language.*;
 
 public class MCAddToJar extends JFrame {
     public static File mcDir;
-    public static final String version = "1.1.6";
+    public static final String version = "1.1.7";
     public static final String repo = "https://github.com/kusaanko/MCAddToJar/releases";
     public static MCAddToJar frame;
 
@@ -30,6 +30,7 @@ public class MCAddToJar extends JFrame {
         }
 
         Language.init();
+        Config.load();
         if(mcDir==null) {
             mcDir = Util.getWorkingDirectory("minecraft");
             if (!mcDir.exists()) {
@@ -42,7 +43,6 @@ public class MCAddToJar extends JFrame {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        Config.load();
         DownloadOriginal.init();
         Runtime.getRuntime().addShutdownHook(new Thread(Config::save));
         new MCAddToJar();
