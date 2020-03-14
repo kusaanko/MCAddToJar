@@ -17,7 +17,7 @@ import static io.github.kusaanko.Language.*;
 
 public class MCAddToJar extends JFrame {
     public static File mcDir;
-    public static final String version = "1.1.2";
+    public static final String version = "1.1.3";
     public static final String repo = "https://github.com/kusaanko/MCAddToJar/releases";
     public static MCAddToJar frame;
 
@@ -144,39 +144,16 @@ public class MCAddToJar extends JFrame {
                 }
                 if(!fileSum.equals(newSum)) {
                     Util.downloadFile("https://github.com/kusaanko/OldMCPatcher/releases/download/"+newVer+"/OldMCPatcher-"+newVer+".zip", "OldMCPatcher.zip");
-                    JOptionPane.showMessageDialog(this, (isUpdate?
-                            String.format(translate("oldmcpatcherupdate"), version!=null?version:"Unknown", newVer):
-                            String.format(translate("oldmcpatcherdownloaded"), newVer)));
                     File profileFolder = new File("profiles/");
                     if(!profileFolder.exists()) {
                         if(!profileFolder.mkdirs()) {
                             throw new IOException("Couldn't make the profile directory!");
                         }
                     }
-                    if(profileFolder.listFiles().length>0&&JOptionPane.showConfirmDialog(MCAddToJar.frame, translate("reoutputallprofiles"), translate("confirm"), JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
-                        for(File f : profileFolder.listFiles()) {
-                            if(f.getName().endsWith(".profile")) {
-                                profile = Profile.load(f);
-                                ended = false;
-                                String profileName = f.getName().substring(0, f.getName().lastIndexOf("."));
-                                AddToJar addToJar = new AddToJar(new File(mcDir, "versions/"+profileName),
-                                        profileName, profile, true) {
-                                    @Override
-                                    public void outputEnd() {
-                                        ended = true;
-                                        this.dispose();
-                                    }
-                                };
-                                addToJar.output();
-                                while(!ended) {
-                                    try {
-                                        Thread.sleep(100);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        }
+                    if(isUpdate) {
+                        new NewVersionOldMCPatcher(MCAddToJar.frame, version!=null?version:"Unknown", newVer, profileFolder);
+                    }else {
+                        JOptionPane.showMessageDialog(this, (String.format(translate("oldmcpatcherdownloaded"), newVer)));
                     }
                 }
             } catch (NoSuchAlgorithmException | IOException e) {
