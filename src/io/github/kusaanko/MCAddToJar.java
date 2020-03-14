@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
@@ -22,26 +24,39 @@ public class MCAddToJar extends JFrame {
     public static MCAddToJar frame;
 
     public static void main(String[] args) {
+        Config.load();
+        Language.init();
+        args = new String[]{"C:\\Users\\kusaanko\\Desktop\\草あんこ\\MOD 関係\\1.2.5旧ランチャー\\.minecraft"};
+        try{
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         if(args.length>0) {
             mcDir = new File(args[0]);
             if(!mcDir.exists()) {
                 mcDir = null;
+                JOptionPane.showMessageDialog(null, args[0]+translate("isnotexist"));
+                JOptionPane.showMessageDialog(null, translate("plssetdotmc"));
+            }else {
+                JOptionPane.showMessageDialog(null, translate("dotmcalert"));
+            }
+        }else {
+            String dir = Config.get("minecraftDir", "");
+            if(!dir.isEmpty()) {
+                mcDir = new File(dir);
+                if(!mcDir.exists()) {
+                    mcDir = null;
+                    JOptionPane.showMessageDialog(null, dir + translate("isnotexist"));
+                }
             }
         }
-
-        Language.init();
-        Config.load();
         if(mcDir==null) {
             mcDir = Util.getWorkingDirectory("minecraft");
             if (!mcDir.exists()) {
                 JOptionPane.showMessageDialog(null, translate("dotmcdoesnotexist") + ": " + mcDir);
                 return;
             }
-        }
-        try{
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }catch (Exception e) {
-            e.printStackTrace();
         }
         DownloadOriginal.init();
         Runtime.getRuntime().addShutdownHook(new Thread(Config::save));
@@ -58,11 +73,22 @@ public class MCAddToJar extends JFrame {
         {
             JMenu help = new JMenu(translate("help"));
             JMenuItem menu = new JMenuItem(translate("license"));
-            menu.addActionListener(e -> {
-                new License(this);
-            });
+            menu.addActionListener(e -> new License(this));
             help.add(menu);
             menuBar.add(help);
+        }
+        {
+            JMenu settings = new JMenu(translate("settings"));
+            JMenuItem menu = new JMenuItem(translate("setpathdotmc"));
+            menu.addActionListener(e -> {
+                String data;
+                if((data = JOptionPane.showInputDialog(this, translate("enterdirectorypath")+"("+translate("relativepathallowed")+")"))!=null) {
+                    Config.put("minecraftDir", data);
+                    JOptionPane.showMessageDialog(this, translate("restartnow"));
+                }
+            });
+            settings.add(menu);
+            menuBar.add(settings);
         }
         new Thread(() -> {
             try {
