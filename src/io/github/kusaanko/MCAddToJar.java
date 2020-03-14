@@ -162,7 +162,12 @@ public class MCAddToJar extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         model = new DefaultListModel<>();
-        JList<String> list = new JList<>(model);
+        JList<String> list = new JList(model) {
+            @Override
+            public Object getSelectedValue() {
+                return super.getSelectedValue().toString().replaceAll("\\(Modded\\)$", "");
+            }
+        };
         JScrollPane pane = new JScrollPane(list);
         JPanel panel = new JPanel(new BorderLayout());
         JPanel controls = new JPanel(new GridLayout(1, 0));
@@ -170,7 +175,7 @@ public class MCAddToJar extends JFrame {
         JButton rename = new JButton(translate("rename"));
         copy.addActionListener(e -> {
             if(list.getSelectedIndex()==-1) return;
-            File profileFile = new File(mcDir,"versions/"+list.getSelectedValue().replaceAll("\\(Modded\\)$", ""));
+            File profileFile = new File(mcDir,"versions/"+list.getSelectedValue());
             new CopyVersion(this, profileFile) {
                 @Override
                 public void ok(String name) {
