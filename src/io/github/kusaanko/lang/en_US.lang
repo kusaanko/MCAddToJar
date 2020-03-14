@@ -1,3 +1,5 @@
+langversion=1
+
 copy=Copy
 rename=Rename
 renamed=Renamed
@@ -53,9 +55,10 @@ fmlwarning4=After extracting the downloaded file, put it in the lib folder of th
 fmlwarning5=If it starts again, it will advance to the title screen.
 
 couldnotfindminecraftjarfile=Could not find Minecraft jar file.
-oldmcpatcherupdate=OldMCPatcher has been updated.\nPrevious version:%s\nNew version:%s
+oldmcpatcherupdated=OldMCPatcher has been updated.
 oldmcpatcherdownloaded=OldMCPatcher has been downloaded.\nVersion:%s
 
+preversion=Previous version
 newversion=New version
 currentversion=Current version
 newversionisavailable=New version is available.
