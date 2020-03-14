@@ -131,7 +131,6 @@ public class MCAddToJar extends JFrame {
                     whatVersion.addWindowListener(new WindowAdapter() {
                         @Override
                         public void windowClosing(WindowEvent e) {
-                            Config.save();
                             System.exit(0);
                         }
                     });
