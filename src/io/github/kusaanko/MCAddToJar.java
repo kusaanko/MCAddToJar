@@ -55,7 +55,17 @@ public class MCAddToJar extends JFrame {
             mcDir = Util.getWorkingDirectory("minecraft");
             if (!mcDir.exists()) {
                 JOptionPane.showMessageDialog(null, translate("dotmcdoesnotexist") + ": " + mcDir);
-                return;
+                String data;
+                if((data = JOptionPane.showInputDialog(null, translate("enterdirectorypath")+"("+translate("relativepathallowed")+")"))!=null) {
+                    Config.put("minecraftDir", data);
+                    mcDir = new File(data);
+                    if (!mcDir.exists()) {
+                        JOptionPane.showMessageDialog(null, translate("dotmcdoesnotexist") + ": " + mcDir);
+                        return;
+                    }
+                }else {
+                    return;
+                }
             }
         }
         DownloadOriginal.init();
