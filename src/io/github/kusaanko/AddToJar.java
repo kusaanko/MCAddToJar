@@ -40,7 +40,12 @@ class AddToJar extends JFrame {
 
                     output:try{
                         if(json) {
-                            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(versionDir, versionName + ".json")), "UTF-8"));
+                            File jsonFile = new File(versionDir, versionName + ".json");
+                            if(!Files.isWritable(jsonFile.toPath())) {
+                                JOptionPane.showMessageDialog(AddToJar.this, String.format(translate("couldnotoutput"), jsonFile.getName()));
+                                return;
+                            }
+                            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(jsonFile), "UTF-8"));
 
                             String line;
                             String text = "";
@@ -115,6 +120,10 @@ class AddToJar extends JFrame {
                         }
                         if (profile.mcAddToJar.size() == 0) break output;
                         File mc = new File(versionDir, versionName+".jar");
+                        if(!Files.isWritable(mc.toPath())) {
+                            JOptionPane.showMessageDialog(AddToJar.this, String.format(translate("couldnotoutput"), mc.getName()));
+                            return;
+                        }
                         File mc_original = new File("originals", profile.version+".jar");
                         if (!mc_original.exists()) {
                             JOptionPane.showMessageDialog(AddToJar.this, translate("mcvanillawasnotfound"));
