@@ -117,7 +117,7 @@ public class MCAddToJar extends JFrame {
                 profileFile.getParentFile().mkdirs();
                 profile = Profile.load(profileFile);
                 if(profile==null) {
-                    new WhatVersion(MCAddToJar.this, profileFile) {
+                    WhatVersion whatVersion = new WhatVersion(MCAddToJar.this, profileFile) {
                         @Override
                         public void ok(String version) {
                             profile = new Profile(new HashMap<>(), new ArrayList<>(), profileFile, version);
@@ -126,6 +126,15 @@ public class MCAddToJar extends JFrame {
                             new AddToJar(new File(mcDir, "bin/"), "minecraft", profile, false);
                         }
                     };
+                    whatVersion.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    whatVersion.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e) {
+                            Config.save();
+                            System.exit(0);
+                        }
+                    });
+                    whatVersion.setVisible(true);
                 }else {
                     MCAddToJar.this.dispose();
                     new AddToJar(new File(mcDir, "bin/"), "minecraft", profile, false);
@@ -291,7 +300,7 @@ public class MCAddToJar extends JFrame {
                                 this.dispose();
                                 new AddToJar(new File(mcDir, "versions/"+list.getSelectedValue()), list.getSelectedValue(), profile, true);
                             }
-                        };
+                        }.setVisible(true);
                     }else {
                         MCAddToJar.this.dispose();
                         new AddToJar(new File(mcDir, "versions/"+list.getSelectedValue()), list.getSelectedValue(), profile, true);
