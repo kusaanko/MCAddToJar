@@ -181,7 +181,7 @@ class AddToJar extends JFrame {
                         append.close();
                         Map<String, String> env = new HashMap<>();
                         env.put("create", "false");
-                        URI uri = URI.create("jar:file:/"+URLEncoder.encode(mc.getPath().replace("\\","/"),"UTF-8").replace("+","%20")); // Zip file path
+                        URI uri = URI.create("jar:file:/"+URLEncoder.encode(mc.getAbsolutePath().replace("\\","/"),"UTF-8").replace("+","%20")); // Zip file path
                         try(FileSystem zipfs = FileSystems.newFileSystem(uri, env)) {
                             ZipFile mod = new ZipFile(mc);
                             Enumeration<? extends ZipEntry> entries = mod.entries();
