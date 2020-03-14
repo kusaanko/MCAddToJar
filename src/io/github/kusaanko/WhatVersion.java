@@ -52,7 +52,6 @@ public class WhatVersion extends JDialog {
         panel.add(button);
         this.add(panel);
         this.setLocationRelativeTo(null);
-        this.setVisible(true);
     }
 
     public void ok(String version) {}
