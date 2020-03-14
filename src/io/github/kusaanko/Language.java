@@ -36,7 +36,20 @@ public class Language {
                 try {
                     properties.load(Files.newBufferedReader(path, StandardCharsets.UTF_8));
                     String name = path.getFileName().toString();
-                    lang.put(name.substring(0, name.lastIndexOf(".")), properties);
+                    name = name.substring(0, name.lastIndexOf("."));
+                    Properties prop = lang.get(name);
+                    if(prop!=null) {
+                        if(properties.getProperty("langversion")==null) {
+                            Files.delete(path);
+                            continue;
+                        }else {
+                            if(Integer.parseInt(properties.getProperty("langversion"))<Integer.parseInt(prop.getProperty("langversion"))) {
+                                Files.delete(path);
+                                continue;
+                            }
+                        }
+                    }
+                    lang.put(name, properties);
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
