@@ -1,4 +1,4 @@
-langversion=1
+langversion=2
 
 copy=Copy
 rename=Rename
@@ -19,6 +19,12 @@ apachelicense2.0=This software includes the artifacts distributed under the Apac
 lang_name=English
 language=Language
 dotmcdoesnotexist=.minecraft folder does not exist
+
+settings=Settings
+setpathdotmc=Set path for .minecraft
+plssetdotmc=Please set .minecraft from setting.
+dotmcalert=Set .minecraft directory.\nStart MCAddToJar.jar from next time.
+relativepathallowed=Relative path allowed
 
 adddirectory=Add directory
 enterdirectorypath=Enter directory path
