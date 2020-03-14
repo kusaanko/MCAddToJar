@@ -74,4 +74,4 @@ couldnotbedetectedversion=It could not be detected automatically. Please select 
 selectversion=Select version
 selectminecraftversion=Select Minecraft Version
 
-couldnotoutput=Could not output because other programs are using %s.
+couldnotoutput=Could not write to %s because another program is in use or does not have write permission.
