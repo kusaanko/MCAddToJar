@@ -1,3 +1,5 @@
+langversion=1
+
 copy=コピー
 rename=名前変更
 renamed=名前を変えました
@@ -53,9 +55,10 @@ fmlwarning4=ダウンロードしたファイルを展開後、中身を設定�
 fmlwarning5=再度起動するとタイトル画面まで進めます。
 
 couldnotfindminecraftjarfile=Minecraftのjarファイルが検出できませんでした。
-oldmcpatcherupdate=OldMCPatcherをアップデートしました。\n前のバージョン:%s\n新しいバージョン:%s
+oldmcpatcherupdated=OldMCPatcherを更新しました。
 oldmcpatcherdownloaded=OldMCPatcherをダウンロードしました。\nバージョン:%s
 
+preversion=前のバージョン
 newversion=新しいバージョン
 currentversion=現在のバージョン
 newversionisavailable=新しいバージョンが利用可能です
