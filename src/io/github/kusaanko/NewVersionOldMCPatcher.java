@@ -30,7 +30,7 @@ public class NewVersionOldMCPatcher extends JDialog {
             Matcher matcher = Pattern.compile("\"body\":\"([^\"]*)\"").matcher(body);
             if(matcher.find()) {
                 body = matcher.group(1);
-                JScrollPane pane = new JScrollPane(label("<font style=\"font-weight: bold;\">"+body.replace("\\r", "").replace("\\n", "<br>")));
+                JScrollPane pane = new JScrollPane(label("<font style=\"font-weight: bold;\">"+body.replace("\r", "").replace("\n", "<br>").replace("\\r", "").replace("\\n", "<br>")));
                 pane.setPreferredSize(new Dimension(100, 100));
                 pane.setSize(200, 100);
                 panel.add(pane);
