@@ -73,3 +73,5 @@ renameversionname=バージョン名変更
 couldnotbedetectedversion=自動検出できませんでした。バージョンを選んでください。
 selectversion=バージョンを選択
 selectminecraftversion=マインクラフトのバージョンを選択
+
+couldnotoutput=他のプログラムが%sを使用しているため、出力できませんでした。
