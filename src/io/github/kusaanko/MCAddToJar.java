@@ -170,7 +170,7 @@ public class MCAddToJar extends JFrame {
         JButton rename = new JButton(translate("rename"));
         copy.addActionListener(e -> {
             if(list.getSelectedIndex()==-1) return;
-            File profileFile = new File(mcDir,"versions/"+list.getSelectedValue());
+            File profileFile = new File(mcDir,"versions/"+list.getSelectedValue().replaceAll("\\(Modded\\)$", ""));
             new CopyVersion(this, profileFile) {
                 @Override
                 public void ok(String name) {
@@ -285,7 +285,7 @@ public class MCAddToJar extends JFrame {
         for(File f : Objects.requireNonNull(new File(mcDir, "versions").listFiles())) {
             if(f.isDirectory()) {
                 if(new File("profiles",f.getName()+".profile").exists()) {
-                    model.add(0, f.getName());
+                    model.add(0, f.getName()+"(Modded)");
                     profiles.remove(new File("profiles",f.getName()+".profile"));
                 }else {
                     model.addElement(f.getName());
