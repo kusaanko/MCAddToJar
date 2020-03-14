@@ -181,16 +181,18 @@ class AddToJar extends JFrame {
                         append.close();
                         Map<String, String> env = new HashMap<>();
                         env.put("create", "false");
-                        URI uri = URI.create("jar:file:/"+URLEncoder.encode(new File(versionDir, versionName+".jar").getPath().replace("\\","/"),"UTF-8").replace("+","%20")); // Zip file path
+                        URI uri = URI.create("jar:file:/"+URLEncoder.encode(mc.getPath().replace("\\","/"),"UTF-8").replace("+","%20")); // Zip file path
                         try(FileSystem zipfs = FileSystems.newFileSystem(uri, env)) {
-                            delete(zipfs.getPath("/META-INF", "CODESIGN.RSA"));
-                            delete(zipfs.getPath("/META-INF", "CODESIGN.SF"));
-                            delete(zipfs.getPath("/META-INF", "MANIFEST.MF"));
-                            delete(zipfs.getPath("/META-INF", "MOJANG_C.DSA"));
-                            delete(zipfs.getPath("/META-INF", "MOJANG_C.SF"));
-                            delete(zipfs.getPath("/META-INF", "FORGE.DSA"));
-                            delete(zipfs.getPath("/META-INF", "FORGE.SF"));
+                            ZipFile mod = new ZipFile(mc);
+                            Enumeration<? extends ZipEntry> entries = mod.entries();
+                            while (entries.hasMoreElements()) {
+                                ZipEntry entry = entries.nextElement();
+                                if(entry.getName().startsWith("META-INF")) {
+                                    delete(zipfs.getPath("/"+entry.getName()));
+                                }
+                            }
                             delete(zipfs.getPath("/META-INF/"));
+                            mod.close();
                         }
                     }catch(Exception e1) {
                         e1.printStackTrace();
