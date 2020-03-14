@@ -21,8 +21,6 @@ public class MCAddToJar extends JFrame {
     public static final String repo = "https://github.com/kusaanko/MCAddToJar/releases";
     public static MCAddToJar frame;
 
-    private boolean ended = false;
-
     public static void main(String[] args) {
         if(args.length>0) {
             mcDir = new File(args[0]);
