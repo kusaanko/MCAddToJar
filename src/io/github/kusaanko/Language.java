@@ -57,6 +57,7 @@ public class Language {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        language = Config.get("lang", lang.get(Locale.getDefault().toString())!=null?Locale.getDefault().toString():"en_US");
     }
 
     public static void initMenu() {
@@ -77,7 +78,6 @@ public class Language {
                 System.exit(0);
             });
         }
-        language = Config.get("lang", lang.get(Locale.getDefault().toString())!=null?Locale.getDefault().toString():"en_US");
         Enumeration<AbstractButton> en = group.getElements();
         AbstractButton button;
         while(en.hasMoreElements()) {
