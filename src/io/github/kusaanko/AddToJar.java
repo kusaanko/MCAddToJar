@@ -198,7 +198,7 @@ class AddToJar extends JFrame {
                         e1.printStackTrace();
                     }
                     output.setEnabled(true);
-                    output.setText("出力");
+                    output.setText(translate("output"));
                 }
             };
         }).start());
