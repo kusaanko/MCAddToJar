@@ -73,3 +73,5 @@ renameversionname=Rename version name
 couldnotbedetectedversion=It could not be detected automatically. Please select a version.
 selectversion=Select version
 selectminecraftversion=Select Minecraft Version
+
+couldnotoutput=Could not output because other programs are using %s.
