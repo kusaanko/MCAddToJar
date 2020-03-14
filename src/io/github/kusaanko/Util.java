@@ -3,6 +3,7 @@ package io.github.kusaanko;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.DigestInputStream;
@@ -77,7 +78,7 @@ public class Util {
 
             w.close();
             baos.close();
-            return baos.toString();
+            return new String(baos.toByteArray(), StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
