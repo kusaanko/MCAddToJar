@@ -54,6 +54,8 @@ class AddToJar extends JFrame {
                             }
                             text = text.substring(0, text.length() - 1);
 
+                            text = text.replaceAll("\"id\"([^\"]*)\"legacy\"([^\"]*)\"sha1\"([^\"]*)\"770572e819335b6c0a053f8378ad88eda189fc14\"([^\"]*)\"size\"([^0-9]*)109634(,[^\"]*)\"totalSize\"([^0-9]*)153475165(,[^\"]*)\"url\"([^\"]*\")https://launchermeta.mojang.com/v1/packages/770572e819335b6c0a053f8378ad88eda189fc14/legacy.json(\"},[^\"]*\"assets\":[^\"]*\")legacy\"",
+                                    "\"id\"$1\"pre-1.6\"$2\"sha1\"$3\"4759bad2824e419da9db32861fcdc3a274336532\"$4\"size\": 73813$6\"totalSize\": 49381897$8\"url\"$9https://launchermeta.mojang.com/v1/packages/4759bad2824e419da9db32861fcdc3a274336532/pre-1.6.json$10pre-1.6\"");
                             text = text.replaceAll("\"downloads\":[^\"]*\"client\"([^{}]*\\{[^}]*},?)*[^}]*},", "");
                             text = text.replaceAll("\"downloads\":[^\"]*\"client\"([^{}]*\\{[^}]*},?)*[^}]*},", "");
                             {
