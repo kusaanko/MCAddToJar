@@ -204,7 +204,6 @@ class AddToJar extends JFrame {
                     }
                     output.setEnabled(true);
                     output.setText(translate("output"));
-                    outputEnd();
                 }
             };
         }).start());
@@ -416,6 +415,7 @@ class AddToJar extends JFrame {
 
     public void output() {
         this.output.doClick();
+        outputEnd();
     }
 
     public void outputEnd() {}
