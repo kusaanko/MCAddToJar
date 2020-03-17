@@ -197,6 +197,8 @@ class AddToJar extends JFrame {
                             delete(zipfs.getPath("/META-INF/"));
                             mod.close();
                         }
+                    }catch(FileNotFoundException e1){
+                        JOptionPane.showMessageDialog(this, e1.getLocalizedMessage());
                     }catch(Exception e1) {
                         e1.printStackTrace();
                     }
