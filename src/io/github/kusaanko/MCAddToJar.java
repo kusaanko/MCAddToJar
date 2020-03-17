@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -85,6 +87,15 @@ public class MCAddToJar extends JFrame {
             JMenuItem menu = new JMenuItem(translate("license"));
             menu.addActionListener(e -> new License(this));
             help.add(menu);
+            JMenuItem see = new JMenuItem(translate("seeupdatehistory"));
+            see.addActionListener(ev -> {
+                try {
+                    Desktop.getDesktop().browse(new URI("https://github.com/kusaanko/MCAddToJar/releases"));
+                } catch (URISyntaxException | IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            help.add(see);
             menuBar.add(help);
         }
         {
