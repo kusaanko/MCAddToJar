@@ -45,20 +45,22 @@ public class NewVersionOldMCPatcher extends JDialog {
                         Profile profile = Profile.load(f);
                         final boolean[] ended = {false};
                         String profileName = f.getName().substring(0, f.getName().lastIndexOf("."));
-                        AddToJar addToJar = new AddToJar(new File(MCAddToJar.mcDir, "versions/"+profileName),
-                                profileName, profile, true) {
-                            @Override
-                            public void outputEnd() {
-                                ended[0] = true;
-                                this.dispose();
-                            }
-                        };
-                        addToJar.output();
-                        while(!ended[0]) {
-                            try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException e1) {
-                                e1.printStackTrace();
+                        if(new File(MCAddToJar.mcDir, "versions/"+profileName).exists()) {
+                            AddToJar addToJar = new AddToJar(new File(MCAddToJar.mcDir, "versions/" + profileName),
+                                    profileName, profile, true) {
+                                @Override
+                                public void outputEnd() {
+                                    ended[0] = true;
+                                    this.dispose();
+                                }
+                            };
+                            addToJar.output();
+                            while (!ended[0]) {
+                                try {
+                                    Thread.sleep(100);
+                                } catch (InterruptedException e1) {
+                                    e1.printStackTrace();
+                                }
                             }
                         }
                     }
