@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.io.*;
 import java.net.URI;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
 import java.util.List;
@@ -45,7 +46,7 @@ class AddToJar extends JFrame {
                                 JOptionPane.showMessageDialog(AddToJar.this, String.format(translate("couldnotoutput"), jsonFile.getName()));
                                 return;
                             }
-                            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(jsonFile), "UTF-8"));
+                            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8));
 
                             String line;
                             String text = "";
