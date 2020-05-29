@@ -46,6 +46,10 @@ deleteoriginal=%sを削除しますか？
 modmanager=Modマネージャー
 crashloganalysis=クラッシュログの解析
 
+selectprofile=プロファイルを選択
+scanningprofile=プロファイルをスキャン中...
+profilecouldnotbedetected=プロファイルが検出できませんでした。
+
 whathappenedprofile=%sはどうしましたか？
 
 copyversion=バージョンをコピー
