@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class Profile {
@@ -24,7 +25,7 @@ public class Profile {
     public void save() {
         try{
             profile_version = 2;
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(profileFile),"UTF-8"));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(profileFile), StandardCharsets.UTF_8));
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             bw.write(gson.toJson(this));
             bw.close();
@@ -33,11 +34,15 @@ public class Profile {
         }
     }
 
+    public String getVersionName() {
+        return this.profileFile.getName().substring(0, this.profileFile.getName().lastIndexOf("."));
+    }
+
     private static String ver;
     public static Profile load(File profileFile) {
         if(profileFile.exists()) {
             try {
-                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(profileFile), "UTF-8"));
+                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(profileFile), StandardCharsets.UTF_8));
                 Gson gson = new Gson();
                 Profile profile = gson.fromJson(br, Profile.class);
                 profile.profileFile = profileFile;
