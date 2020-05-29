@@ -207,7 +207,7 @@ class AddToJar extends JFrame {
                 }
             };
         }).start());
-        JPanel controls = new JPanel(new GridLayout(3, 0));
+        JPanel controls = new JPanel(new GridLayout(0, 3));
         JButton up = new JButton("↑");
         JButton down = new JButton("↓");
         JButton edit = new JButton(translate("edit"));
@@ -216,6 +216,8 @@ class AddToJar extends JFrame {
         JButton oldmc = new JButton("OldMCPatcher");
         JButton backupjar = new JButton(translate("backupjar"));
         JButton backupjson = new JButton(translate("backupjson"));
+        JButton modmanager = new JButton(translate("modmanager"));
+        JButton crashloganalysis = new JButton(translate("crashloganalysis"));
         controls.add(up);
         controls.add(down);
         controls.add(edit);
@@ -224,6 +226,10 @@ class AddToJar extends JFrame {
         controls.add(oldmc);
         controls.add(backupjar);
         controls.add(backupjson);
+        if(profile.version.equals("1.2.5")) {
+            controls.add(modmanager);
+            controls.add(crashloganalysis);
+        }
         if(!json) backupjson.setEnabled(false);
         panel.add(controls, BorderLayout.NORTH);
         panel.add(output, BorderLayout.SOUTH);

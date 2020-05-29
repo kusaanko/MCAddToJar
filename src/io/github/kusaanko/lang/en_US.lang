@@ -43,6 +43,8 @@ backupjson=Backup json
 backingupjson=Backing up json...
 mcvanillawasnotfound=Minecraft vanilla was not found.
 deleteoriginal=Do you want to delete the %s?
+modmanager=Mod manager
+crashloganalysis=Crash log analysis
 
 whathappenedprofile=What happened to the %s?
 
