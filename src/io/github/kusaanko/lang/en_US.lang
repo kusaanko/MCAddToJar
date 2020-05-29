@@ -46,6 +46,10 @@ deleteoriginal=Do you want to delete the %s?
 modmanager=Mod manager
 crashloganalysis=Crash log analysis
 
+selectprofile=Select Profile
+scanningprofile=Scanning profile...
+profilecouldnotbedetected=The profile could not be detected.
+
 whathappenedprofile=What happened to the %s?
 
 copyversion=Copy version
