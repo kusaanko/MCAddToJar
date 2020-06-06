@@ -111,6 +111,20 @@ public class MCAddToJar extends JFrame {
             settings.add(menu);
             menuBar.add(settings);
         }
+        {
+            JMenu versionstoshow = new JMenu(translate("versionstoshow"));
+            String[] versions = {"1.0", "1.1", "1.2.x", "1.3.x", "1.4.x", "1.5.x", "others"};
+            for(String version : versions) {
+                JCheckBoxMenuItem ver = new JCheckBoxMenuItem(translate(version));
+                versionstoshow.add(ver);
+                ver.setSelected(Boolean.parseBoolean(Config.get("show" + version, "true")));
+                ver.addActionListener(e -> {
+                    Config.put("show" + version, String.valueOf(ver.isSelected()));
+                    update();
+                });
+            }
+            menuBar.add(versionstoshow);
+        }
         new Thread(() -> {
             try {
                 URL url = new URL(repo+"/latest");
