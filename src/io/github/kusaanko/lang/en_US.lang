@@ -29,6 +29,8 @@ relativepathallowed=Relative path allowed
 
 versionstoshow=Versions to show
 others=Others
+checkall=Check all
+uncheckall=Uncheck all
 
 adddirectory=Add directory
 enterdirectorypath=Enter directory path
