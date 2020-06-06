@@ -27,6 +27,9 @@ plssetdotmc=Please set .minecraft from setting.
 dotmcalert=Set .minecraft directory.\nStart MCAddToJar.jar from next time.
 relativepathallowed=Relative path allowed
 
+versionstoshow=Versions to show
+others=Others
+
 adddirectory=Add directory
 enterdirectorypath=Enter directory path
 theversionalreadyexists=The version already exists.
