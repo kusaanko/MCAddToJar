@@ -12,7 +12,7 @@ public class CheckProfile extends JDialog {
         super(parent);
         this.setModal(true);
         this.setSize(380,150);
-        this.setTitle("io.github.kusaanko.MCAddToJar");
+        this.setTitle("MCAddToJar");
         JPanel panel = new JPanel(new GridLayout(0, 1));
         JPanel panel1 = new JPanel(new GridLayout(1, 0));
         JLabel label = new JLabel(String.format(Language.translate("whathappenedprofile"), profileFile.getName().substring(0, profileFile.getName().lastIndexOf("."))));
