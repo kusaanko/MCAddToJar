@@ -417,6 +417,9 @@ public class MCAddToJar extends JFrame {
                 }
                 if(new File("profiles",f.getName()+".profile").exists()) {
                     profiles.remove(new File("profiles",f.getName()+".profile"));
+                    try {
+                        mcVersion = Objects.requireNonNull(Profile.load(new File("profiles", f.getName() + ".profile"))).version;
+                    }catch (NullPointerException ignore) {}
                 }
                 if(     mcVersion.isEmpty() && !Boolean.parseBoolean(Config.get("showothers", "true")) ||
                         mcVersion.startsWith("1.0") && !Boolean.parseBoolean(Config.get("show1.0", "true")) ||
