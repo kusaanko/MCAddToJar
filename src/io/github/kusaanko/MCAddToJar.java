@@ -114,10 +114,32 @@ public class MCAddToJar extends JFrame {
             menuBar.add(settings);
         }
         {
-            JMenu versionstoshow = new JMenu(translate("versionstoshow"));
             String[] versions = {"1.0", "1.1", "1.2.x", "1.3.x", "1.4.x", "1.5.x", "others"};
+            ArrayList<JCheckBoxMenuItem> menuItems = new ArrayList<>();
+            JMenu versionstoshow = new JMenu(translate("versionstoshow"));
+            JMenuItem checkAll = new JMenuItem(translate("checkall"));
+            JMenuItem uncheckAll = new JMenuItem(translate("uncheckall"));
+
+            checkAll.addActionListener(e -> {
+                menuItems.forEach(item -> item.setSelected(true));
+                for(String version : versions) {
+                    Config.put("show" + version, "true");
+                }
+                update();
+            });
+            uncheckAll.addActionListener(e -> {
+                menuItems.forEach(item -> item.setSelected(false));
+                for(String version : versions) {
+                    Config.put("show" + version, "false");
+                }
+                update();
+            });
+            versionstoshow.add(checkAll);
+            versionstoshow.add(uncheckAll);
+
             for(String version : versions) {
                 JCheckBoxMenuItem ver = new JCheckBoxMenuItem(translate(version));
+                menuItems.add(ver);
                 versionstoshow.add(ver);
                 ver.setSelected(Boolean.parseBoolean(Config.get("show" + version, "true")));
                 ver.addActionListener(e -> {
