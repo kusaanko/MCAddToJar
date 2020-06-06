@@ -136,10 +136,26 @@ public class MCAddToJar extends JFrame {
                 if(connection.getResponseCode()==302) {
                     String newURL = connection.getHeaderField("Location");
                     String latest = newURL.substring(newURL.lastIndexOf("/")+1);
-                    try {
-                        if (Integer.parseInt(version.replace(".", "")) < Integer.parseInt(latest.replace(".", "")))
-                            new NewVersionAvailable(this, latest);
-                    }catch (NumberFormatException ignore) {}
+                    String[] curver = version.split("\\.");
+                    String[] ver = latest.split("\\.");
+                    boolean newVersionAvailable = false;
+                    for (int i = 0; i < Math.max(curver.length, ver.length); i++) {
+                        String cv = i < curver.length ? curver[i] : "0";
+                        String v = i < ver.length ? ver[i] : "0";
+                        try {
+                            if (Integer.parseInt(cv) < Integer.parseInt(v)) {
+                                newVersionAvailable = true;
+                                break;
+                            }
+                            if (Integer.parseInt(cv) > Integer.parseInt(v)) {
+                                break;
+                            }
+                        } catch (NumberFormatException ignore) {
+                        }
+                    }
+                    if(newVersionAvailable) {
+                        new NewVersionAvailable(this, latest);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
