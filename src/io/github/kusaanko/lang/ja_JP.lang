@@ -28,6 +28,8 @@ dotmcalert=.minecraftのディレクトリを設定しました。\n次回から
 
 versionstoshow=表示するバージョン
 others=その他
+checkall=全てチェックをつける
+uncheckall=全てチェックを外す
 
 adddirectory=ディレクトリの追加
 enterdirectorypath=ディレクトリのパスを入力
