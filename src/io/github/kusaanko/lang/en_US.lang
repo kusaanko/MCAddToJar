@@ -54,6 +54,7 @@ crashloganalysis=Crash log analysis
 selectprofile=Select Profile
 scanningprofile=Scanning profile...
 profilecouldnotbedetected=The profile could not be detected.
+thisversionisnotsupported=This version is not supported.
 
 whathappenedprofile=What happened to the %s?
 

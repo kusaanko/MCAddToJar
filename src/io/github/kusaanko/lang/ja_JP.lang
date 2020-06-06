@@ -54,6 +54,7 @@ crashloganalysis=クラッシュログの解析
 selectprofile=プロファイルを選択
 scanningprofile=プロファイルをスキャン中...
 profilecouldnotbedetected=プロファイルが検出できませんでした。
+thisversionisnotsupported=このバージョンには対応していません。
 
 whathappenedprofile=%sはどうしましたか？
 
