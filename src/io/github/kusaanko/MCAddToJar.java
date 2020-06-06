@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static io.github.kusaanko.Language.*;
 
@@ -356,11 +358,39 @@ public class MCAddToJar extends JFrame {
         model.removeAllElements();
         new File("profiles").mkdirs();
         ArrayList<File> profiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(new File("profiles").listFiles())));
+        String[] versions = new String[]{
+                "1.0",
+                "1.1",
+                "1.2.1","1.2.2","1.2.3","1.2.4","1.2.5",
+                "1.3.1","1.3.2",
+                "1.4.2","1.4.4","1.4.5","1.4.6","1.4.7",
+                "1.5.1","1.5.2"};
+        Pattern pattern = Pattern.compile("([0-9]*\\.?)*");
         for(File f : Objects.requireNonNull(new File(mcDir, "versions").listFiles())) {
             if(f.isDirectory()) {
+                String mcVersion = "";
+                Matcher matcher = pattern.matcher(f.getName());
+                while(matcher.find()) {
+                    for (String version : versions) {
+                        if (matcher.group(0).equals(version)) {
+                            mcVersion = version;
+                        }
+                    }
+                }
+                if(new File("profiles",f.getName()+".profile").exists()) {
+                    profiles.remove(new File("profiles",f.getName()+".profile"));
+                }
+                if(     mcVersion.isEmpty() && !Boolean.parseBoolean(Config.get("showothers", "true")) ||
+                        mcVersion.startsWith("1.0") && !Boolean.parseBoolean(Config.get("show1.0", "true")) ||
+                        mcVersion.startsWith("1.1") && !Boolean.parseBoolean(Config.get("show1.1", "true")) ||
+                        mcVersion.startsWith("1.2") && !Boolean.parseBoolean(Config.get("show1.2.x", "true")) ||
+                        mcVersion.startsWith("1.3") && !Boolean.parseBoolean(Config.get("show1.3.x", "true")) ||
+                        mcVersion.startsWith("1.4") && !Boolean.parseBoolean(Config.get("show1.4.x", "true")) ||
+                        mcVersion.startsWith("1.5") && !Boolean.parseBoolean(Config.get("show1.5.x", "true"))) {
+                    continue;
+                }
                 if(new File("profiles",f.getName()+".profile").exists()) {
                     model.add(0, f.getName()+"(Modded)");
-                    profiles.remove(new File("profiles",f.getName()+".profile"));
                 }else {
                     model.addElement(f.getName());
                 }
