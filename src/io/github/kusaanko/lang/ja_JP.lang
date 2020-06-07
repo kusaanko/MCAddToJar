@@ -55,6 +55,15 @@ selectprofile=プロファイルを選択
 scanningprofile=プロファイルをスキャン中...
 profilecouldnotbedetected=プロファイルが検出できませんでした。
 thisversionisnotsupported=このバージョンには対応していません。
+scanningmods=MODをスキャン中...
+author=制作者
+version=バージョン
+modname=MOD名
+downloadlink=ダウンロードリンク
+update=更新
+downloading=%sをダウンロード中...
+waitingforsiteresponse=サイトの応答を待機しています...
+anerrorhasoccurredhttp=エラーが発生しました。\nHTTPステータスコード:%s
 
 whathappenedprofile=%sはどうしましたか？
 
