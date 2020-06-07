@@ -27,7 +27,7 @@ public class NewVersionOldMCPatcher extends JDialog {
         panel.add(textpanel);
         {
             String body = Util.executeGet("https://api.github.com/repos/kusaanko/OldMCPatcher/releases");
-            Matcher matcher = Pattern.compile("\"body\":\"([^\"]*)\"").matcher(body);
+            Matcher matcher = Pattern.compile("\"body\"[^:]:[^\"]\"([^\"]*)\"").matcher(body);
             if(matcher.find()) {
                 body = matcher.group(1);
                 JScrollPane pane = new JScrollPane(label("<font style=\"font-weight: bold;\">"+body.replace("\r", "").replace("\n", "<br>").replace("\\r", "").replace("\\n", "<br>")));
