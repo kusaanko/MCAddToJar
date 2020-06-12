@@ -34,6 +34,11 @@ public class Profile {
         }
     }
 
+    public void add(String path) {
+        this.mcAddToJar.put(path, new ArrayList<>());
+        this.mcAddToJarTurn.add(path);
+    }
+
     public String getVersionName() {
         return this.profileFile.getName().substring(0, this.profileFile.getName().lastIndexOf("."));
     }
