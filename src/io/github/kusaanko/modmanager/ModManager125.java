@@ -25,7 +25,6 @@ public class ModManager125 extends JDialog {
             panel.add(scaning);
             parentPane.add(panel);
             new Thread(() -> {
-                System.out.println(profileDir.getAbsolutePath());
                 new File(profileDir, "mods").mkdirs();
                 for(File file : Objects.requireNonNull(new File(profileDir, "mods").listFiles())) {
                     String fileName = file.getName().substring(0, file.getName().lastIndexOf("."));
