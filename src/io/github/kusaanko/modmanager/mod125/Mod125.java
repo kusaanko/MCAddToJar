@@ -54,6 +54,6 @@ public abstract class Mod125 extends Mod {
 
     @Override
     public Class<? extends Mod>[] getRequireModsInJar() {
-        return new Class[]{Forge125.class};
+        return genRequireMods(Forge125.class);
     }
 }

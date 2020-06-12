@@ -18,7 +18,7 @@ public class IC2Fix125 extends Mod125 {
 
     @Override
     public Class<? extends Mod>[] getRequireMods() {
-        return new Class[]{IC2125.class};
+        return genRequireMods(IC2125.class);
     }
 
     @Override
