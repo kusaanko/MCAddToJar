@@ -82,9 +82,10 @@ solveaproblem=Solve a problem
 redownload=Re-download
 download=Download
 doyoureallywanttodelete=Do you really want to delete?
-downloading=Downloading %s...
+downloading=Downloading %s...%s
 waitingforsiteresponse=Waiting for site response...
 anerrorhasoccurredhttp=An error has occurred.\nHTTP status code:%s
+anerrorhasoccurred=An error has occurred.\n%s
 
 whathappenedprofile=What happened to the %s?
 
