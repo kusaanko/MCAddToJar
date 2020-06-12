@@ -1,5 +1,7 @@
 package io.github.kusaanko;
 
+import io.github.kusaanko.modmanager.ModManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
@@ -14,7 +16,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
 import java.util.List;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -24,7 +25,7 @@ import java.util.zip.ZipOutputStream;
 
 import static io.github.kusaanko.Language.*;
 
-class AddToJar extends JFrame {
+public class AddToJar extends JFrame {
     private DefaultListModel<String> model;
     private Profile profile;
     private JButton output;
@@ -338,6 +339,9 @@ class AddToJar extends JFrame {
                 backupjson.setText(translate("backupjson"));
             }).start();
         });
+        modmanager.addActionListener(e -> {
+            new ModManager(this, profile);
+        });
         JScrollPane pane = new JScrollPane(list);
         update();
         pane.setPreferredSize(new Dimension(500,300));
@@ -404,7 +408,7 @@ class AddToJar extends JFrame {
         Runtime.getRuntime().addShutdownHook(new Thread(profile::save));
     }
 
-    private void update() {
+    public void update() {
         model.removeAllElements();
         for(String name : profile.mcAddToJarTurn) {
             model.addElement(name);
