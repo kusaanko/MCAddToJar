@@ -152,9 +152,9 @@ public class ModManagerPanel extends JPanel {
             boolean needUpdating = false;
             if((serious && !mode.equals("serious")) || (mod.getFileVersion().isEmpty() && mode.equals("serious")))
                 serious = false;
-            if(!mod.getFileVersion().isEmpty() && !mod.getFileVersion().equals(mod.getVersion()) && mode.equals("needupdating"))
+            if(!mod.getFileVersion().isEmpty() && mod.compareVersion() && mode.equals("needupdating"))
                 needUpdating = true;
-            if(!mod.getFileVersion().isEmpty() && mod.getFileVersion().equals(mod.getVersion()) && mode.equals("installed"))
+            if(!mod.getFileVersion().isEmpty() && !mod.compareVersion() && mode.equals("installed"))
                 installed = true;
             if(mod.getFileVersion().isEmpty() && mode.equals("notinstalled"))
                 notInstalled = true;
