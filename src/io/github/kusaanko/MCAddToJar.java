@@ -26,6 +26,7 @@ public class MCAddToJar extends JFrame {
     public static final String version = "1.1.20";
     public static final String repo = "https://github.com/kusaanko/MCAddToJar/releases";
     public static MCAddToJar frame;
+    public static AddToJar addToJar;
 
     public static void main(String[] args) {
         Config.load();
@@ -372,12 +373,12 @@ public class MCAddToJar extends JFrame {
                                 profile = new Profile(new HashMap<>(), new ArrayList<>(), profileFile, version);
                                 MCAddToJar.this.dispose();
                                 this.dispose();
-                                new AddToJar(new File(mcDir, "versions/"+list.getSelectedValue()), list.getSelectedValue(), profile, true);
+                                addToJar = new AddToJar(new File(mcDir, "versions/"+list.getSelectedValue()), list.getSelectedValue(), profile, true);
                             }
                         }.setVisible(true);
                     }else {
                         MCAddToJar.this.dispose();
-                        new AddToJar(new File(mcDir, "versions/"+list.getSelectedValue()), list.getSelectedValue(), profile, true);
+                        addToJar = new AddToJar(new File(mcDir, "versions/"+list.getSelectedValue()), list.getSelectedValue(), profile, true);
                     }
                 }
             }
