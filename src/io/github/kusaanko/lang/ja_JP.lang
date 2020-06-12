@@ -81,6 +81,7 @@ notinstalled=未インストール
 solveaproblem=問題を解決する
 redownload=再ダウンロード
 download=ダウンロード
+doyoureallywanttodelete=本当に削除しますか？
 downloading=%sをダウンロード中...
 waitingforsiteresponse=サイトの応答を待機しています...
 anerrorhasoccurredhttp=エラーが発生しました。\nHTTPステータスコード:%s

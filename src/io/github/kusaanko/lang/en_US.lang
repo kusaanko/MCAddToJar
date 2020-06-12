@@ -81,6 +81,7 @@ notinstalled=Not intalled
 solveaproblem=Solve a problem
 redownload=Re-download
 download=Download
+doyoureallywanttodelete=Do you really want to delete?
 downloading=Downloading %s...
 waitingforsiteresponse=Waiting for site response...
 anerrorhasoccurredhttp=An error has occurred.\nHTTP status code:%s
