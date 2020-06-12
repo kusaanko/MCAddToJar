@@ -105,7 +105,6 @@ public class Util {
             }
             inputStream.close();
             outputStream.close();
-            return;
 
         }catch(IOException e) {
             e.printStackTrace();
