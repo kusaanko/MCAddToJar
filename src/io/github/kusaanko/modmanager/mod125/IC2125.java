@@ -3,10 +3,7 @@ package io.github.kusaanko.modmanager.mod125;
 public class IC2125 extends Mod125 {
     @Override
     public String is(String fileName) {
-        if(fileName.contains("industrialcraft") && fileName.contains("2") && fileName.contains("client") && fileName.contains("_")) {
-            return fileName.substring(fileName.indexOf("_") + 1);
-        }
-        return null;
+        return startsWith(fileName, "industrialcraft-2-client_");
     }
 
     @Override

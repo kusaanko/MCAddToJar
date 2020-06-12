@@ -3,10 +3,7 @@ package io.github.kusaanko.modmanager.mod125;
 public class EE2125 extends Mod125 {
     @Override
     public String is(String fileName) {
-        if(fileName.startsWith("EE2ClientV")) {
-            return fileName.substring("EE2ClientV".length());
-        }
-        return null;
+        return startsWith(fileName, "EE2ClientV");
     }
 
     @Override
