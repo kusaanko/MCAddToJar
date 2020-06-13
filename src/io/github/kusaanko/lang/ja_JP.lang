@@ -98,6 +98,9 @@ therearenotenoughmods=必要な前提MODが足りていません。
 andidsareduplicated=%sと%sのIDが重複しています。
 errornotregisteredyet=まだ登録されていないエラーです。
 pleaseenterthefullcrashlog=クラッシュログ全文を入力してください。
+waitfordownload=ダウンロードの待機
+draganddropthedownloadedfile=ダウンロードしたファイルをここにドラッグ・アンド・ドロップ
+opendownloadlink=ダウンロードリンクを開く
 
 whathappenedprofile=%sはどうしましたか？
 

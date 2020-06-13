@@ -86,6 +86,9 @@ downloading=Downloading %s...%s
 waitingforsiteresponse=Waiting for site response...
 anerrorhasoccurredhttp=An error has occurred.\nHTTP status code:%s
 anerrorhasoccurred=An error has occurred.\n%s
+waitfordownload=Wait for download.
+draganddropthedownloadedfile=Drag and drop the downloaded file here.
+opendownloadlink=Open download link
 
 crashloganalyzer=Crash log analyzer
 pastecrashlog=Paste crash log
