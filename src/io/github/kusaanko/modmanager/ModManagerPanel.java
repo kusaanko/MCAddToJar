@@ -193,14 +193,16 @@ public class ModManagerPanel extends JPanel {
                 }
                 DownloadingDialog dialog = new DownloadingDialog(parentDialog);
                 dialog.registerEvent(outputFile -> {
-                    mods.remove(mod);
-                    Mod m = Mod125.is125(outputFile.getName().substring(0, outputFile.getName().lastIndexOf(".")));
-                    if(m != null) {
-                        m.setFilePath(outputFile.getAbsolutePath());
-                        mods.add(m);
+                    if(outputFile.exists()) {
+                        mods.remove(mod);
+                        Mod m = Mod125.is125(outputFile.getName().substring(0, outputFile.getName().lastIndexOf(".")));
+                        if (m != null) {
+                            m.setFilePath(outputFile.getAbsolutePath());
+                            mods.add(m);
+                        }
+                        dialog.dispose();
+                        updatePanes();
                     }
-                    dialog.dispose();
-                    updatePanes();
                     processing = false;
                 });
                 dialog.run(mod.getDownloadURL(), folder, profile, mod);
