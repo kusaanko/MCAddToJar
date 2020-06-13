@@ -39,6 +39,7 @@ public class ModManager125 extends JDialog {
                     String fileName = file.getName().substring(0, file.getName().lastIndexOf("."));
                     Mod mod = Mod125.is125(fileName);
                     if(mod != null) {
+                        mod.setFilePath(file.getAbsolutePath());
                         mods.add(mod);
                     }
                 }
