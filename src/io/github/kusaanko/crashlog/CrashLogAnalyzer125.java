@@ -32,7 +32,6 @@ public class CrashLogAnalyzer125 extends JDialog {
                 if(occurrencePoints.contains("cpw.mods.fml.common.Loader.modInit")) {
                     possibleCause = "therearenotenoughmods";
                 }
-                System.out.println(crashLog);
             }catch (Exception ignore) {}
         }
 
