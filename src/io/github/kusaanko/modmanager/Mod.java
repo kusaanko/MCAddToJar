@@ -72,6 +72,10 @@ public abstract class Mod implements Cloneable {
         return classes;
     }
 
+    public boolean needUserDownload() {
+        return false;
+    }
+
     public String getDownloadFolder() {
         return "mods/1.2.5/";
     }
