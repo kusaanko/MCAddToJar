@@ -231,8 +231,8 @@ public class ModManagerPanel extends JPanel {
                         }
                         dialog.dispose();
                     }
-                    solve.doClick();
                     updatePanes();
+                    solve.doClick();
                     processing = false;
                 });
                 dialog.run(mod.getDownloadURL(), folder, profile, mod);
