@@ -2,14 +2,12 @@ package io.github.kusaanko.modmanager;
 
 import io.github.kusaanko.MCAddToJar;
 import io.github.kusaanko.Profile;
-import io.github.kusaanko.Util;
 import io.github.kusaanko.modmanager.mod125.Mod125;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
