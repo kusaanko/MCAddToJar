@@ -17,6 +17,11 @@ public class IC2Fix125 extends Mod125 {
     }
 
     @Override
+    public Class<? extends Mod>[] getRequireModsInJar() {
+        return genRequireMods(Forge125.class, MCAPI125.class);
+    }
+
+    @Override
     public Class<? extends Mod>[] getRequireMods() {
         return genRequireMods(IC2125.class);
     }

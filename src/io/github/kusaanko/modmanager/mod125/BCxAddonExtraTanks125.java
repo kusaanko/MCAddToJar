@@ -19,6 +19,16 @@ public class BCxAddonExtraTanks125 extends Mod125 {
     }
 
     @Override
+    public TYPE getType() {
+        return TYPE.ADDON;
+    }
+
+    @Override
+    public Class<? extends Mod>[] getRequireModsInJar() {
+        return genRequireMods(Forge125.class, MCAPI125.class);
+    }
+
+    @Override
     public Class<? extends Mod>[] getRequireMods() {
         return genRequireMods(BCx125.class);
     }
