@@ -198,6 +198,10 @@ public class ModManagerPanel extends JPanel {
                 DownloadingDialog dialog = new DownloadingDialog(parentDialog);
                 dialog.registerEvent(outputFile -> {
                     if(outputFile.exists()) {
+                        if (mod.getInstallationType() == Mod.INSTALLATION_TYPE.IN_JAR) {
+                            profile.add(outputFile.getAbsolutePath());
+                            MCAddToJar.addToJar.update();
+                        }
                         mods.remove(mod);
                         Mod m = Mod125.is125(outputFile.getName().substring(0, outputFile.getName().lastIndexOf(".")));
                         if (m != null) {
