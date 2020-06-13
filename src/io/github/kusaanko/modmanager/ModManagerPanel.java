@@ -193,6 +193,22 @@ public class ModManagerPanel extends JPanel {
                     updatePanes();
                 }
             });
+            JButton solve = new JButton(translate("solveaproblem"));
+            solve.addActionListener(e -> {
+                new Thread(() -> {
+                    for(Class<? extends Mod> cl : needMods) {
+                        while (processing) {
+                            try {
+                                Thread.sleep(10);
+                            } catch (InterruptedException interruptedException) {
+                                interruptedException.printStackTrace();
+                            }
+                        }
+                        processing = true;
+                        classToButton.get(cl).doClick();
+                    }
+                }).start();
+            });
             JButton download = new JButton(translate("download"));
             download.addActionListener(e -> {
                 download.setEnabled(false);
@@ -215,28 +231,13 @@ public class ModManagerPanel extends JPanel {
                         }
                         dialog.dispose();
                     }
+                    solve.doClick();
                     updatePanes();
                     processing = false;
                 });
                 dialog.run(mod.getDownloadURL(), folder, profile, mod);
             });
             classToButton.put(mod.getClass(), download);
-            JButton solve = new JButton(translate("solveaproblem"));
-            solve.addActionListener(e -> {
-                new Thread(() -> {
-                    for(Class<? extends Mod> cl : needMods) {
-                        while (processing) {
-                            try {
-                                Thread.sleep(10);
-                            } catch (InterruptedException interruptedException) {
-                                interruptedException.printStackTrace();
-                            }
-                        }
-                        processing = true;
-                        classToButton.get(cl).doClick();
-                    }
-                }).start();
-            });
             JButton redownload = new JButton(translate("redownload"));
             redownload.addActionListener(e -> {
                 new File(mod.getFilePath()).delete();
