@@ -29,7 +29,7 @@ public class CrashLogAnalyzer125 extends JDialog {
                     excep = excep.substring(0, excep.indexOf(":"));
                 }
                 occurrencePoints = crashLog.substring(crashLog.indexOf("\n") + 1);
-                if(occurrencePoints.contains("cpw.mods.fml.common.Loader.modInit")) {
+                if(occurrencePoints.contains("cpw.mods.fml.common.Loader.modInit") || excep.contains("NoClassDefFoundError")) {
                     possibleCause = "therearenotenoughmods";
                 }
             }catch (Exception ignore) {}
