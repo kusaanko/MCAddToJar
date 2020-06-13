@@ -2,12 +2,15 @@ package io.github.kusaanko.modmanager;
 
 import io.github.kusaanko.MCAddToJar;
 import io.github.kusaanko.Profile;
+import io.github.kusaanko.Util;
 import io.github.kusaanko.modmanager.mod125.Mod125;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import static io.github.kusaanko.Language.translate;
@@ -73,6 +76,7 @@ public class ModManagerPanel extends JPanel {
     }
 
     public void updatePane(String mode, JPanel panel) {
+        this.sort();
         panel.removeAll();
         JComponent[] components = new JComponent[]{genJLabel(translate("modname")), genJLabel(translate("author")), genJLabel("<html>" + translate("type") + "<br>" + translate("installationtype")),
                 genJLabel("<html>" + translate("nowver") + "<br>" + translate("recommendver")),
@@ -248,6 +252,10 @@ public class ModManagerPanel extends JPanel {
                 this.addLine(panel, components);
             }
         }
+    }
+
+    private void sort() {
+        this.mods.sort(Comparator.comparing(Mod::getName).thenComparing(Mod::getAuthor));
     }
 
     private JLabel genJLabel(String text) {
