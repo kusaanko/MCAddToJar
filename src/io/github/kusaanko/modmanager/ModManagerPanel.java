@@ -60,6 +60,11 @@ public class ModManagerPanel extends JPanel {
         this.tabbedPane.addTab(translate("needupdating"), scrollPane2);
         this.tabbedPane.addTab(translate("installed"), scrollPane3);
         this.tabbedPane.addTab(translate("notinstalled"), scrollPane4);
+
+        scrollPane.getVerticalScrollBar().setUnitIncrement(25);
+        scrollPane2.getVerticalScrollBar().setUnitIncrement(25);
+        scrollPane3.getVerticalScrollBar().setUnitIncrement(25);
+        scrollPane4.getVerticalScrollBar().setUnitIncrement(25);
     }
 
     public void addMod(Mod mod) {
