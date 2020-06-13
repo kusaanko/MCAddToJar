@@ -1,5 +1,6 @@
 package io.github.kusaanko;
 
+import io.github.kusaanko.crashlog.CrashLogAnalyzer;
 import io.github.kusaanko.modmanager.ModManager;
 
 import javax.swing.*;
@@ -341,6 +342,9 @@ public class AddToJar extends JFrame {
         });
         modmanager.addActionListener(e -> {
             new ModManager(this, profile);
+        });
+        crashloganalysis.addActionListener(e -> {
+            new CrashLogAnalyzer(this, profile.version);
         });
         JScrollPane pane = new JScrollPane(list);
         update();
