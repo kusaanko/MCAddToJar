@@ -87,6 +87,18 @@ waitingforsiteresponse=サイトの応答を待機しています...
 anerrorhasoccurredhttp=エラーが発生しました。\nHTTPステータスコード:%s
 anerrorhasoccurred=エラーが発生しました。\n%s
 
+crashloganalyzer=クラッシュログの解析
+pastecrashlog=クラッシュログを貼り付け
+analyze=解析
+exception=例外
+exceptionmessage=例外メッセージ
+occurrencepoints=発生箇所
+possiblecause=考えられる原因
+therearenotenoughmods=必要な前提MODが足りていません。
+andidsareduplicated=%sと%sのIDが重複しています。
+errornotregisteredyet=まだ登録されていないエラーです。
+pleaseenterthefullcrashlog=クラッシュログ全文を入力してください。
+
 whathappenedprofile=%sはどうしましたか？
 
 copyversion=バージョンをコピー

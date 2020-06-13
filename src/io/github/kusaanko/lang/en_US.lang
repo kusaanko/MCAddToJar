@@ -87,6 +87,18 @@ waitingforsiteresponse=Waiting for site response...
 anerrorhasoccurredhttp=An error has occurred.\nHTTP status code:%s
 anerrorhasoccurred=An error has occurred.\n%s
 
+crashloganalyzer=Crash log analyzer
+pastecrashlog=Paste crash log
+analyze=Analyze
+exception=Exception
+exceptionmessage=Exception message
+occurrencepoints=Occurrence points
+possiblecause=Possible causes
+therearenotenoughmods=There are not enough mods.
+andidsareduplicated=%s and %s IDs are duplicated.
+errornotregisteredyet=Error not registered yet.
+pleaseenterthefullcrashlog=Please enter the full crash log.
+
 whathappenedprofile=What happened to the %s?
 
 copyversion=Copy version
