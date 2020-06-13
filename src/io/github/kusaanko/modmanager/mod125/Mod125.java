@@ -10,8 +10,10 @@ public abstract class Mod125 extends Mod {
     static {
         mods125 = new HashMap<>();
         mods125.put(Forge125.class, new Forge125());
+        mods125.put(OptiFine125.class, new OptiFine125());
 
         //Sayo
+        mods125.put(MCAPI125.class, new MCAPI125());
         mods125.put(BCx125.class, new BCx125());
         mods125.put(BCxAddonCE125.class, new BCxAddonCE125());
         mods125.put(BCxAddonExtraTanks125.class, new BCxAddonExtraTanks125());
@@ -26,7 +28,6 @@ public abstract class Mod125 extends Mod {
         mods125.put(StackSizeChange125.class, new StackSizeChange125());
         mods125.put(TorchAttack125.class, new TorchAttack125());
         mods125.put(AccessChest125.class, new AccessChest125());
-        mods125.put(IC2125.class, new IC2125());
         mods125.put(IC2125.class, new IC2125());
         mods125.put(IC2125.class, new IC2125());
         mods125.put(IC2125.class, new IC2125());
