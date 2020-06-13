@@ -21,6 +21,7 @@ public abstract class Mod125 extends Mod {
         mods125.put(DigBedrock125.class, new DigBedrock125());
         mods125.put(FenceGateKeeper125.class, new FenceGateKeeper125());
         mods125.put(HarvestLevelSetter125.class, new HarvestLevelSetter125());
+        mods125.put(IC2Fix125.class, new IC2Fix125());
         mods125.put(LilypadBreed125.class, new LilypadBreed125());
         mods125.put(MineAllFix125.class, new MineAllFix125());
         mods125.put(OreBlockLight125.class, new OreBlockLight125());
@@ -28,16 +29,45 @@ public abstract class Mod125 extends Mod {
         mods125.put(StackSizeChange125.class, new StackSizeChange125());
         mods125.put(TorchAttack125.class, new TorchAttack125());
         mods125.put(AccessChest125.class, new AccessChest125());
-        mods125.put(IC2125.class, new IC2125());
-        mods125.put(IC2125.class, new IC2125());
-        mods125.put(IC2125.class, new IC2125());
-        mods125.put(IC2125.class, new IC2125());
-        mods125.put(IC2125.class, new IC2125());
-        mods125.put(IC2125.class, new IC2125());
-        mods125.put(IC2Fix125.class, new IC2Fix125());
+        mods125.put(AlternativeRecipes125.class, new AlternativeRecipes125());
+        mods125.put(AzukiBar125.class, new AzukiBar125());
+        mods125.put(BedrockTools125.class, new BedrockTools125());
+        mods125.put(BigTree125.class, new BigTree125());
+        mods125.put(Cardboard125.class, new Cardboard125());
+        mods125.put(CraftGuide125.class, new CraftGuide125());
+        mods125.put(DirectionAdjustment125.class, new DirectionAdjustment125());
+        mods125.put(EraserBomb125.class, new EraserBomb125());
+        mods125.put(ForestryTMI125.class, new ForestryTMI125());//
+        mods125.put(IDwakander125.class, new IDwakander125());
+        mods125.put(InvTweaks125.class, new InvTweaks125());
+        mods125.put(Lamp125.class, new Lamp125());
+        mods125.put(littleMaidMob125.class, new littleMaidMob125());
+        mods125.put(Mob2Egg125.class, new Mob2Egg125());
+        mods125.put(MoreFire125.class, new MoreFire125());
+        mods125.put(RailPlus125.class, new RailPlus125());
+        mods125.put(SmallStairs125.class, new SmallStairs125());
+        mods125.put(SolomonsRod125.class, new SolomonsRod125());
+        mods125.put(SpawnChange125.class, new SpawnChange125());
+        mods125.put(StackableTools125.class, new StackableTools125());
+        mods125.put(StorageBox125.class, new StorageBox125());
+        mods125.put(FururinMod125.class, new FururinMod125());
+        mods125.put(OptiFineHDRendererFix125.class, new OptiFineHDRendererFix125());
+        mods125.put(OptiFineLocalizeFix125.class, new OptiFineLocalizeFix125());
+        mods125.put(DiamondHell125.class, new DiamondHell125());
+        mods125.put(ThinArm125.class, new ThinArm125());
+        mods125.put(VillagersSpawnBan125.class, new VillagersSpawnBan125());
+
+        //A.K.
+        mods125.put(ChainDestruction125.class, new ChainDestruction125());
+        mods125.put(EEAA125.class, new EEAA125());
+        mods125.put(EnchantChanger125.class, new EnchantChanger125());
+        mods125.put(MergeEnchantment125.class, new MergeEnchantment125());
+        mods125.put(MultiToolHolders125.class, new MultiToolHolders125());
 
         //Others
+        mods125.put(IC2125.class, new IC2125());
         mods125.put(EE2125.class, new EE2125());
+        mods125.put(TooManyItems125.class, new TooManyItems125());
     }
 
     public static Mod is125(String fileName) {
