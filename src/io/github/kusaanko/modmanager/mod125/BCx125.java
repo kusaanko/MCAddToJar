@@ -1,5 +1,7 @@
 package io.github.kusaanko.modmanager.mod125;
 
+import io.github.kusaanko.modmanager.Mod;
+
 public class BCx125 extends Mod125 {
 
     public String is(String fileName) {
@@ -17,6 +19,11 @@ public class BCx125 extends Mod125 {
     @Override
     public String getDownloadPageURL() {
         return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SscjF4b3pYamlkY1k";
+    }
+
+    @Override
+    public Class<? extends Mod>[] getRequireModsInJar() {
+        return genRequireMods(Forge125.class, MCAPI125.class);
     }
 
     @Override
