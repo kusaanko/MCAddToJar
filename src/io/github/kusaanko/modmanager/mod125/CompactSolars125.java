@@ -19,6 +19,11 @@ public class CompactSolars125 extends Mod125 {
     }
 
     @Override
+    public TYPE getType() {
+        return TYPE.ADDON;
+    }
+
+    @Override
     public Class<? extends Mod>[] getRequireMods() {
         return genRequireMods(IC2125.class);
     }
