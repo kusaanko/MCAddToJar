@@ -5,10 +5,7 @@ import io.github.kusaanko.modmanager.Mod;
 public class OptiFineLocalizeFix125 extends Mod125 {
     @Override
     public String is(String fileName) {
-        if(fileName.startsWith("OptiFine_1.2.5_HD_U_C7_Localize_Fix")) {
-            return fileName.substring("OptiFine_1.2.5_HD_U_C7_Localize_Fix".length());
-        }
-        return null;
+        return startsWith(fileName, "OptiFine_1.2.5_HD_U_C7_Localize_Fix");
     }
 
     @Override
