@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import static io.github.kusaanko.Language.translate;
@@ -26,36 +27,32 @@ public class ModManager125 extends JDialog {
             parentPane.add(panel);
             new Thread(() -> {
                 new File(profileDir, "mods").mkdirs();
-                for(File file : Objects.requireNonNull(new File(profileDir, "mods").listFiles())) {
-                    String fileName = file.getName().substring(0, file.getName().lastIndexOf("."));
-                    Mod mod = Mod125.is125(fileName);
-                    if(mod != null) {
-                        mod.setFilePath(file.getAbsolutePath());
-                        mods.add(mod);
-                    }
-                }
+                ArrayList<File> files = new ArrayList<>(Arrays.asList(Objects.requireNonNull(new File(profileDir, "mods").listFiles())));
                 for(String filePath : profile.mcAddToJarTurn) {
                     File file = new File(filePath);
-                    String fileName = file.getName().substring(0, file.getName().lastIndexOf("."));
-                    Mod mod = Mod125.is125(fileName);
-                    if(mod != null) {
-                        mod.setFilePath(file.getAbsolutePath());
-                        mods.add(mod);
+                    files.add(file);
+                }
+                for (Mod mod : Mod125.mods125.values()) {
+                    boolean added = false;
+                    for(File file : files) {
+                        if (file.isFile() && (file.getName().endsWith(".zip") || file.getName().endsWith(".jar"))) {
+                            String fileName = file.getName().substring(0, file.getName().lastIndexOf("."));
+                            String ver = mod.is(fileName);
+                            if (ver != null) {
+                                Mod m = mod.clone();
+                                m.setFileName(fileName);
+                                m.setFileVersion(ver);
+                                mods.add(m);
+                                added = true;
+                                break;
+                            }
+                        }
+                    }
+                    if(!added) {
+                        mods.add(mod.clone());
                     }
                 }
                 ModManagerPanel panel1 = new ModManagerPanel(this, profileDir, profile);
-                for(Mod m : Mod125.mods125.values()) {
-                    boolean add = true;
-                    for(Mod mod : mods) {
-                        if(mod.getClass() == m.getClass()) {
-                            add = false;
-                            break;
-                        }
-                    }
-                    if(add) {
-                        mods.add(m.clone());
-                    }
-                }
                 for(Mod mod : mods) {
                     panel1.addMod(mod);
                 }
