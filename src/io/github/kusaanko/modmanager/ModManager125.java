@@ -56,6 +56,7 @@ public class ModManager125 extends JDialog {
                 for(Mod mod : mods) {
                     panel1.addMod(mod);
                 }
+                panel1.updatePanes();
                 parentPane.removeAll();
                 parentPane.add(panel1);
                 parentPane.validate();
