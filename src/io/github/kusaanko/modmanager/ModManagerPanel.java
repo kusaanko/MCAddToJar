@@ -67,7 +67,6 @@ public class ModManagerPanel extends JPanel {
 
     public void addMod(Mod mod) {
         this.mods.add(mod);
-        updatePanes();
     }
 
     public void updatePanes() {
