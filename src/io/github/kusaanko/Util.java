@@ -162,7 +162,6 @@ public class Util {
         int len;
         ZipEntry entry;
         while((entry = zipInputStream.getNextEntry()) != null) {
-            System.out.println(entry.getName());
             zipOutputStream.putNextEntry(new ZipEntry(entry.getName()));
 
             while((len = zipInputStream.read(buff)) != -1) {
@@ -170,7 +169,6 @@ public class Util {
             }
         }
         while ((entry = zipInputStreamOut.getNextEntry()) != null) {
-            System.out.println(entry.getName());
             try {
                 zipOutputStream.putNextEntry(new ZipEntry(entry.getName()));
 
