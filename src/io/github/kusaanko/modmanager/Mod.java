@@ -24,6 +24,11 @@ public abstract class Mod implements Cloneable {
         OTHER_FOLDER,
     }
 
+    public static enum PROCESS_TYPE{
+        PLAIN,
+        UNZIP,
+    }
+
     /**
      * Whether the filename passed is this mod.
      * @return null is not this mod.Returns the version if the target file is this mod.
@@ -45,8 +50,14 @@ public abstract class Mod implements Cloneable {
         return INSTALLATION_TYPE.MODS_FOLDER;
     }
 
-    public PATCH_TYPE getPatchType() {
-        return PATCH_TYPE.OVERWRITE_ZIP;
+    public PROCESS_TYPE getProcessType() {
+        return PROCESS_TYPE.PLAIN;
+    }
+
+    //Folder a/b/
+    //File a/b/c
+    public String[] getUnzipFiles() {
+        return new String[]{};
     }
 
     public Class<? extends Mod> getPatchMod() {
@@ -57,6 +68,10 @@ public abstract class Mod implements Cloneable {
     //File a/b/c
     public String[] getPatchDeleteFiles() {
         return new String[]{};
+    }
+
+    public PATCH_TYPE getPatchType() {
+        return PATCH_TYPE.OVERWRITE_ZIP;
     }
 
     public String getInstallationFolder() {
