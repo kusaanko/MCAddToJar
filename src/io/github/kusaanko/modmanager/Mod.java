@@ -56,8 +56,8 @@ public abstract class Mod implements Cloneable {
 
     //Folder a/b/
     //File a/b/c
-    public String[] getUnzipFiles() {
-        return new String[]{};
+    public String getUnzipFile() {
+        return null;
     }
 
     public Class<? extends Mod> getPatchMod() {
