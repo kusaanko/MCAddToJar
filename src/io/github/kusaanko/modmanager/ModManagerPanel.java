@@ -193,7 +193,7 @@ public class ModManagerPanel extends JPanel {
             if(mode.equals("patch"))
                 patch = true;
 
-            components = new JComponent[]{genJLabel(mod.getName()), genJLabel(mod.getAuthor()),
+            components = new JComponent[]{genJLabel("<html>" + mod.getName()), genJLabel("<html>" + mod.getAuthor()),
                     genJLabel("<html>" + translate(type) + "<br>" + translate(ins_type)),
                     genJLabel("<html>" + (mode.equals("patch")?"":mod.getFileVersion().isEmpty()?"N/A":mod.getFileVersion()) + "<br>" + mod.getVersion()),
                     buttonsPane, genJLabel("<html>" + (notInstalled?requireMods.replace("style=\"color: red\"", ""):requireMods))};
