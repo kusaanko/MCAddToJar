@@ -24,8 +24,8 @@ public class RailCraft125 extends Mod125 {
     }
 
     @Override
-    public String[] getUnzipFiles() {
-        return new String[]{"mods/LogisticsPipes-BC3-0.2.5B.zip"};
+    public String getUnzipFile() {
+        return "mods/LogisticsPipes-BC3-0.2.5B.zip";
     }
 
     @Override
