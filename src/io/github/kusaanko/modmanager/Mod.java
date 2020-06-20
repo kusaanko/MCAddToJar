@@ -81,9 +81,7 @@ public abstract class Mod implements Cloneable {
         return false;
     }
 
-    public String getDownloadFolder() {
-        return "mods/1.2.5/";
-    }
+    public abstract String getDownloadFolder();
 
     public void setFileName(String fileName) {
         this.fileName = fileName.replace("<", "");
