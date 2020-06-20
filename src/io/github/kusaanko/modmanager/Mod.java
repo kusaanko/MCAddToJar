@@ -40,6 +40,10 @@ public abstract class Mod implements Cloneable {
         return INSTALLATION_TYPE.MODS_FOLDER;
     }
 
+    public String getInstallationFolder() {
+        return "mods";
+    }
+
     //direct link
     public abstract String getDownloadURL();
 
