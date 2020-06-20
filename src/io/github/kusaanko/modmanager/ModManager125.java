@@ -41,6 +41,7 @@ public class ModManager125 extends JDialog {
                             if (ver != null) {
                                 Mod m = mod.clone();
                                 m.setFileName(fileName);
+                                m.setFilePath(file.getAbsolutePath());
                                 m.setFileVersion(ver);
                                 mods.add(m);
                                 added = true;
