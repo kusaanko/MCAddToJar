@@ -11,6 +11,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
+import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 public class Util {
@@ -148,6 +149,43 @@ public class Util {
             }
             else copyFolder(file, out);
         }
+    }
+
+    public static void zipCopy(File inZip, File outZip) throws IOException {
+        File outTemp = new File(outZip.getParentFile(), "temp" + System.currentTimeMillis() + ".tmp");
+        ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(inZip));
+        ZipInputStream zipInputStreamOut = new ZipInputStream(new FileInputStream(outZip));
+        ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(outTemp));
+
+        System.out.println(outZip.getName());
+        byte[] buff = new byte[8192];
+        int len;
+        ZipEntry entry;
+        while((entry = zipInputStream.getNextEntry()) != null) {
+            System.out.println(entry.getName());
+            zipOutputStream.putNextEntry(new ZipEntry(entry.getName()));
+
+            while((len = zipInputStream.read(buff)) != -1) {
+                zipOutputStream.write(buff, 0, len);
+            }
+        }
+        while ((entry = zipInputStreamOut.getNextEntry()) != null) {
+            System.out.println(entry.getName());
+            try {
+                zipOutputStream.putNextEntry(new ZipEntry(entry.getName()));
+
+                while ((len = zipInputStreamOut.read(buff)) != -1) {
+                    zipOutputStream.write(buff, 0, len);
+                }
+            }catch (ZipException ignore) {}
+        }
+
+        zipInputStreamOut.close();
+        zipInputStream.close();
+        zipOutputStream.close();
+
+        outZip.delete();
+        outTemp.renameTo(outZip);
     }
 
     public static void compress(File input, File output) throws IOException {
