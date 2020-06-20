@@ -78,6 +78,7 @@ serious=Serious
 needupdating=Need updating
 installed=Installed
 notinstalled=Not intalled
+patch=Patch
 solveaproblem=Solve a problem
 redownload=Re-download
 download=Download
@@ -89,6 +90,8 @@ anerrorhasoccurred=An error has occurred.\n%s
 waitfordownload=Wait for download.
 draganddropthedownloadedfile=Drag and drop the downloaded file here.
 opendownloadlink=Open download link
+applythispatch=Apply this patch
+thepatchmayhavealready=The patch may have already been applied. It is possible to hit multiple times. Also, patches cannot be deleted. If you want to remove the patch, please re-download the MOD.
 
 crashloganalyzer=Crash log analyzer
 pastecrashlog=Paste crash log

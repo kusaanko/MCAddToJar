@@ -78,6 +78,7 @@ serious=重大
 needupdating=要更新
 installed=インストール済み
 notinstalled=未インストール
+patch=パッチ
 solveaproblem=問題を解決する
 redownload=再ダウンロード
 download=ダウンロード
@@ -86,6 +87,11 @@ downloading=%sをダウンロード中...%s
 waitingforsiteresponse=サイトの応答を待機しています...
 anerrorhasoccurredhttp=エラーが発生しました。\nHTTPステータスコード:%s
 anerrorhasoccurred=エラーが発生しました。\n%s
+waitfordownload=ダウンロードの待機
+draganddropthedownloadedfile=ダウンロードしたファイルをここにドラッグ・アンド・ドロップ
+opendownloadlink=ダウンロードリンクを開く
+applythispatch=パッチを適用する
+thepatchmayhavealready=パッチは既に当てられている可能性があります。複数回当てることも可能です。また、パッチは削除することはできません。パッチを削除する場合はMODを再ダウンロードしてください。
 
 crashloganalyzer=クラッシュログの解析
 pastecrashlog=クラッシュログを貼り付け
@@ -98,9 +104,6 @@ therearenotenoughmods=必要な前提MODが足りていません。
 andidsareduplicated=%sと%sのIDが重複しています。
 errornotregisteredyet=まだ登録されていないエラーです。
 pleaseenterthefullcrashlog=クラッシュログ全文を入力してください。
-waitfordownload=ダウンロードの待機
-draganddropthedownloadedfile=ダウンロードしたファイルをここにドラッグ・アンド・ドロップ
-opendownloadlink=ダウンロードリンクを開く
 
 whathappenedprofile=%sはどうしましたか？
 
