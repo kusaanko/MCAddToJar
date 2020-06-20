@@ -241,7 +241,7 @@ public class ModManagerPanel extends JPanel {
             JButton download = new JButton(translate("download"));
             download.addActionListener(e -> {
                 download.setEnabled(false);
-                Path folder = Util.getPath(gameDir, "mods");
+                Path folder = Util.getPath(gameDir, mod.getInstallationFolder());
                 if(mod.getInstallationType() == Mod.INSTALLATION_TYPE.IN_JAR) {
                     folder = Util.getPath("mods/1.2.5/");
                 }
