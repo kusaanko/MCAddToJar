@@ -10,6 +10,7 @@ public abstract class Mod implements Cloneable {
         MOD,
         ADDON,
         CONFIG,
+        PATCH,
     }
 
     public static enum INSTALLATION_TYPE{
