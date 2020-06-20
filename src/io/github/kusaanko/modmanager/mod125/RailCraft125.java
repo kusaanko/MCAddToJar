@@ -25,7 +25,7 @@ public class RailCraft125 extends Mod125 {
 
     @Override
     public String getUnzipFile() {
-        return "mods/LogisticsPipes-BC3-0.2.5B.zip";
+        return "mods/Railcraft_Client_5.4.7b.zip";
     }
 
     @Override
