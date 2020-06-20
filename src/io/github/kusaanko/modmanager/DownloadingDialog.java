@@ -110,6 +110,7 @@ public class DownloadingDialog extends JDialog {
             }catch (Exception e) {
                 statusLabel.setText(String.format(translate("anerrorhasoccurred"), e.getLocalizedMessage()));
                 e.printStackTrace();
+                this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             }
         }).start();
     }
