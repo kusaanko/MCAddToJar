@@ -21,6 +21,7 @@ public class ModManagerPanel extends JPanel {
     private final JPanel needUpdatingPane;
     private final JPanel installedPane;
     private final JPanel notinstalledPane;
+    private final JPanel patchPane;
 
     private final JTabbedPane tabbedPane;
 
@@ -55,12 +56,16 @@ public class ModManagerPanel extends JPanel {
         this.notinstalledPane = new JPanel(new GridLayout(0, 1));
         JScrollPane scrollPane4 = new JScrollPane(this.notinstalledPane);
 
+        this.patchPane = new JPanel(new GridLayout(0, 1));
+        JScrollPane scrollPane5 = new JScrollPane(this.patchPane);
+
         this.tabbedPane = new JTabbedPane();
         this.add(this.tabbedPane);
         this.tabbedPane.addTab(translate("serious"), scrollPane);
         this.tabbedPane.addTab(translate("needupdating"), scrollPane2);
         this.tabbedPane.addTab(translate("installed"), scrollPane3);
         this.tabbedPane.addTab(translate("notinstalled"), scrollPane4);
+        this.tabbedPane.addTab(translate("patch"), scrollPane5);
 
         scrollPane.getVerticalScrollBar().setUnitIncrement(25);
         scrollPane2.getVerticalScrollBar().setUnitIncrement(25);
@@ -77,6 +82,7 @@ public class ModManagerPanel extends JPanel {
         updatePane("needupdating", needUpdatingPane);
         updatePane("installed", installedPane);
         updatePane("notinstalled", notinstalledPane);
+        updatePane("patch", patchPane);
         this.tabbedPane.repaint();
     }
 
@@ -87,8 +93,20 @@ public class ModManagerPanel extends JPanel {
                 genJLabel("<html>" + translate("nowver") + "<br>" + translate("recommendver")),
                 genJLabel(translate("action")), genJLabel(translate("requiremods"))};
 
+        if(mode.equals("patch")) {
+            this.addLine(panel, genJLabel("<html>" + translate("thepatchmayhavealready").replace("<", "")));
+        }
         this.addLine(panel, components);
         for(Mod mod : mods) {
+            if(mode.equals("patch")) {
+                if(mod.getType() != Mod.TYPE.PATCH) {
+                    continue;
+                }
+            }else {
+                if(mod.getType() == Mod.TYPE.PATCH) {
+                    continue;
+                }
+            }
             boolean serious = false;
             String requireMods = "";
             ArrayList<Class<? extends Mod>> needMods = new ArrayList<>();
@@ -127,6 +145,18 @@ public class ModManagerPanel extends JPanel {
             if (!requireMods.isEmpty()) {
                 requireMods = requireMods.substring(0, requireMods.length() - 1);
             }
+            String ins_type = "";
+            switch (mod.getInstallationType()) {
+                case IN_JAR:
+                    ins_type = "injar";
+                    break;
+                case MODS_FOLDER:
+                    ins_type = "modsfolder";
+                    break;
+                case OTHER_FOLDER:
+                    ins_type = "otherfolder";
+                    break;
+            }
             String type = "";
             switch (mod.getType()) {
                 case MOD:
@@ -140,18 +170,10 @@ public class ModManagerPanel extends JPanel {
                     break;
                 case CONFIG:
                     type = "config";
-            }
-            String ins_type = "";
-            switch (mod.getInstallationType()) {
-                case IN_JAR:
-                    ins_type = "injar";
                     break;
-                case MODS_FOLDER:
-                    ins_type = "modsfolder";
-                    break;
-                case OTHER_FOLDER:
-                    ins_type = "otherfolder";
-                    break;
+                case PATCH:
+                    type = "patch";
+                    ins_type = "";
             }
 
             JPanel buttonsPane = new JPanel(new GridLayout(0, 1));
@@ -159,6 +181,7 @@ public class ModManagerPanel extends JPanel {
             boolean notInstalled = false;
             boolean installed = false;
             boolean needUpdating = false;
+            boolean patch = false;
             if((serious && !mode.equals("serious")) || (mod.getFileVersion().isEmpty() && mode.equals("serious")))
                 serious = false;
             if(!mod.getFileVersion().isEmpty() && mod.compareVersion() && mode.equals("needupdating"))
@@ -167,10 +190,12 @@ public class ModManagerPanel extends JPanel {
                 installed = true;
             if(mod.getFileVersion().isEmpty() && mode.equals("notinstalled"))
                 notInstalled = true;
+            if(mode.equals("patch"))
+                patch = true;
 
             components = new JComponent[]{genJLabel(mod.getName()), genJLabel(mod.getAuthor()),
                     genJLabel("<html>" + translate(type) + "<br>" + translate(ins_type)),
-                    genJLabel("<html>" + (mod.getFileVersion().isEmpty()?"N/A":mod.getFileVersion()) + "<br>" + mod.getVersion()),
+                    genJLabel("<html>" + (mode.equals("patch")?"":mod.getFileVersion().isEmpty()?"N/A":mod.getFileVersion()) + "<br>" + mod.getVersion()),
                     buttonsPane, genJLabel("<html>" + (notInstalled?requireMods.replace("style=\"color: red\"", ""):requireMods))};
 
             JButton delete = new JButton(translate("delete"));
@@ -258,7 +283,11 @@ public class ModManagerPanel extends JPanel {
                 redownload.setText(translate("update"));
                 buttonsPane.add(redownload);
             }
-            if(!notInstalled) buttonsPane.add(delete);
+            if(patch) {
+                download.setText(translate("applythispatch"));
+                buttonsPane.add(download);
+            }
+            if(!notInstalled && !patch) buttonsPane.add(delete);
 
             if(serious) {
                 this.addLine(panel, components);
@@ -267,6 +296,8 @@ public class ModManagerPanel extends JPanel {
             }else if(installed) {
                 this.addLine(panel, components);
             }else if(needUpdating) {
+                this.addLine(panel, components);
+            }else if(patch) {
                 this.addLine(panel, components);
             }
         }
