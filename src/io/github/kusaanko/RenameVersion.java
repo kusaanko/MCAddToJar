@@ -2,23 +2,24 @@ package io.github.kusaanko;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static io.github.kusaanko.Language.*;
 
 public class RenameVersion extends JDialog {
 
-    public RenameVersion(JFrame parent, File profileFile) {
+    public RenameVersion(JFrame parent, Path profileFile) {
         super(parent);
         this.setModal(true);
         this.setSize(380,150);
         this.setTitle(translate("renameversionname"));
         JPanel panel = new JPanel(new GridLayout(3, 1));
         JLabel label = new JLabel(translate("enteranewversionname"));
-        JTextField field = new JTextField(profileFile.getName());
+        JTextField field = new JTextField(profileFile.getFileName().toString());
         JButton button = new JButton("OK");
         button.addActionListener(e -> {
-            if(!new File(profileFile.getParentFile(), field.getText()).exists()) {
+            if(!Files.exists(Util.getPath(profileFile.getParent(), field.getText()))) {
                 ok(field.getText().replace("\"", ""));
             }else {
                 JOptionPane.showMessageDialog(this, translate("theversionalreadyexists"));

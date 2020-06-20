@@ -11,18 +11,21 @@ import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static io.github.kusaanko.Language.*;
 
 public class MCAddToJar extends JFrame {
-    public static File mcDir;
+    public static Path mcDir;
     public static final String version = "1.1.20";
     public static final String repo = "https://github.com/kusaanko/MCAddToJar/releases";
     public static MCAddToJar frame;
@@ -37,8 +40,8 @@ public class MCAddToJar extends JFrame {
             e.printStackTrace();
         }
         if(args.length>0) {
-            mcDir = new File(args[0]);
-            if(!mcDir.exists()) {
+            mcDir = Util.getPath(args[0]);
+            if(!Files.exists(mcDir)) {
                 mcDir = null;
                 JOptionPane.showMessageDialog(null, args[0]+translate("isnotexist"));
                 JOptionPane.showMessageDialog(null, translate("plssetdotmc"));
@@ -49,8 +52,8 @@ public class MCAddToJar extends JFrame {
         }else {
             String dir = Config.get("minecraftDir", "");
             if(!dir.isEmpty()) {
-                mcDir = new File(dir);
-                if(!mcDir.exists()) {
+                mcDir = Util.getPath(dir);
+                if(!Files.exists(mcDir)) {
                     mcDir = null;
                     JOptionPane.showMessageDialog(null, dir + translate("isnotexist"));
                 }
@@ -58,13 +61,13 @@ public class MCAddToJar extends JFrame {
         }
         if(mcDir==null) {
             mcDir = Util.getWorkingDirectory("minecraft");
-            if (!mcDir.exists()) {
+            if (!Files.exists(mcDir)) {
                 JOptionPane.showMessageDialog(null, translate("dotmcdoesnotexist") + ": " + mcDir);
                 String data;
                 if((data = JOptionPane.showInputDialog(null, translate("enterdirectorypath")+"("+translate("relativepathallowed")+")"))!=null) {
                     Config.put("minecraftDir", data);
-                    mcDir = new File(data);
-                    if (!mcDir.exists()) {
+                    mcDir = Util.getPath(data);
+                    if (!Files.exists(mcDir)) {
                         JOptionPane.showMessageDialog(null, translate("dotmcdoesnotexist") + ": " + mcDir);
                         return;
                     }
@@ -184,13 +187,17 @@ public class MCAddToJar extends JFrame {
                 e.printStackTrace();
             }
         }).start();
-        if(!new File(mcDir, "versions/").exists()) {
-            if(!new File(mcDir, "bin/minecraft.jar").exists()) {
+        if(!Files.exists(Util.getPath(mcDir, "versions/"))) {
+            if(!Files.exists(Util.getPath(mcDir, "bin/minecraft.jar"))) {
                 JOptionPane.showMessageDialog(null, translate("couldnotfindminecraftjarfile"));
                 return;
             }else {
-                File profileFile = new File("profiles","minecraft.profile");
-                profileFile.getParentFile().mkdirs();
+                Path profileFile = Util.getPath("profiles","minecraft.profile");
+                try {
+                    Files.createDirectories(profileFile.getParent());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 profile = Profile.load(profileFile);
                 if(profile==null) {
                     WhatVersion whatVersion = new WhatVersion(MCAddToJar.this, profileFile) {
@@ -199,7 +206,7 @@ public class MCAddToJar extends JFrame {
                             profile = new Profile(new HashMap<>(), new ArrayList<>(), profileFile, version);
                             MCAddToJar.this.dispose();
                             this.dispose();
-                            new AddToJar(new File(mcDir, "bin/"), "minecraft", profile, false);
+                            new AddToJar(Util.getPath(mcDir, "bin/"), "minecraft", profile, false);
                         }
                     };
                     whatVersion.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -212,7 +219,7 @@ public class MCAddToJar extends JFrame {
                     whatVersion.setVisible(true);
                 }else {
                     MCAddToJar.this.dispose();
-                    new AddToJar(new File(mcDir, "bin/"), "minecraft", profile, false);
+                    new AddToJar(Util.getPath(mcDir, "bin/"), "minecraft", profile, false);
                 }
                 return;
             }
@@ -238,8 +245,8 @@ public class MCAddToJar extends JFrame {
             try {
                 String fileSum;
                 boolean isUpdate = false;
-                if(new File("OldMCPatcher.zip").exists()) {
-                    fileSum = Util.sha256sum(new File("OldMCPatcher.zip").toPath());
+                if(Files.exists(Util.getPath("OldMCPatcher.zip"))) {
+                    fileSum = Util.sha256sum(Util.getPath("OldMCPatcher.zip"));
                     isUpdate = true;
                 }else {
                     fileSum = "";
@@ -252,9 +259,12 @@ public class MCAddToJar extends JFrame {
                 }
                 if(!fileSum.equals(newSum)) {
                     Util.downloadFile("https://github.com/kusaanko/OldMCPatcher/releases/download/"+newVer+"/OldMCPatcher-"+newVer+".zip", "OldMCPatcher.zip");
-                    File profileFolder = new File("profiles/");
-                    if(!profileFolder.exists()) {
-                        if(!profileFolder.mkdirs()) {
+                    Path profileFolder = Util.getPath("profiles/");
+                    if(!Files.exists(profileFolder)) {
+                        try {
+                            Files.createDirectories(profileFolder);
+                        }catch (Exception e) {
+                            e.printStackTrace();
                             throw new IOException("Couldn't make the profile directory!");
                         }
                     }
@@ -285,19 +295,19 @@ public class MCAddToJar extends JFrame {
         JButton rename = new JButton(translate("rename"));
         copy.addActionListener(e -> {
             if(list.getSelectedIndex()==-1) return;
-            File profileFile = new File(mcDir,"versions/"+list.getSelectedValue());
+            Path profileFile = Util.getPath(mcDir,"versions/"+list.getSelectedValue());
             new CopyVersion(this, profileFile) {
                 @Override
                 public void ok(String name) {
                     this.dispose();
                     try {
-                        File newFile = new File(mcDir, "versions/"+name);
-                        newFile.mkdirs();
-                        Util.copy(new File(profileFile,profileFile.getName()+".jar"), new File(newFile, name+".jar"));
-                        Util.copy(new File(profileFile,profileFile.getName()+".json"), new File(newFile, name+".json"));
-                        if(new File(profileFile,profileFile.getName()+"-original.jar").exists()) Util.copy(new File(profileFile,profileFile.getName()+"-original.jar"), new File(newFile, name+"-original.jar"));
-                        if(new File("profiles/"+profileFile.getName()+".profile").exists()) Util.copy(new File("profiles/"+profileFile.getName()+".profile"), new File("profiles/"+name+".profile"));
-                        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(newFile, name+".json")),"UTF-8"));
+                        Path newFile = Util.getPath(mcDir, "versions/"+name);
+                        Files.createDirectories(newFile);
+                        Util.copy(Util.getPath(profileFile, profileFile.getFileName().toString()+".jar"), Util.getPath(newFile, name+".jar"));
+                        Util.copy(Util.getPath(profileFile, profileFile.getFileName().toString()+".json"), Util.getPath(newFile, name+".json"));
+                        if(Files.exists(Util.getPath(profileFile,profileFile.getFileName().toString()+"-original.jar"))) Util.copy(Util.getPath(profileFile,profileFile.getFileName().toString()+"-original.jar"), Util.getPath(newFile, name+"-original.jar"));
+                        if(Files.exists(Util.getPath("profiles/"+profileFile.getFileName().toString()+".profile"))) Util.copy(Util.getPath("profiles/"+profileFile.getFileName().toString()+".profile"), Util.getPath("profiles/"+name+".profile"));
+                        BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(Util.getPath(newFile, name+".json")), StandardCharsets.UTF_8));
 
                         String line;
                         String text = "";
@@ -306,11 +316,11 @@ public class MCAddToJar extends JFrame {
                         }
                         text = text.substring(0, text.length()-1);
 
-                        text = text.replace("\"id\": \""+profileFile.getName()+"\"","\"id\": \""+name+"\"");
+                        text = text.replace("\"id\": \""+profileFile.getFileName().toString()+"\"","\"id\": \""+name+"\"");
 
                         br.close();
 
-                        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(newFile, name+".json")),"UTF-8"));
+                        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(Util.getPath(newFile, name+".json")),"UTF-8"));
                         bw.write(text);
                         bw.close();
 
@@ -323,19 +333,19 @@ public class MCAddToJar extends JFrame {
         });
         rename.addActionListener(e -> {
             if(list.getSelectedIndex()==-1) return;
-            File profileFile = new File(mcDir,"versions/"+list.getSelectedValue());
+            Path profileFile = Util.getPath(mcDir,"versions/"+list.getSelectedValue());
             new RenameVersion(this, profileFile) {
                 @Override
                 public void ok(String name) {
                     this.dispose();
                     try {
-                        File newFile = new File(mcDir, "versions/"+name);
-                        profileFile.renameTo(newFile);
-                        new File("profiles/"+profileFile.getName()+".profile").renameTo(new File("profiles/"+name+".profile"));
-                        new File(newFile,profileFile.getName()+".jar").renameTo(new File(newFile, name+".jar"));
-                        if(profile.profile_version==0) new File(newFile,profileFile.getName()+"-original.jar").renameTo(new File(newFile, name+"-original.jar"));
-                        new File(newFile,profileFile.getName()+".json").renameTo(new File(newFile, name+".json"));
-                        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(newFile, name+".json")),"UTF-8"));
+                        Path newFile = Util.getPath(mcDir, "versions/"+name);
+                        Files.move(profileFile, newFile);
+                        Files.move(Util.getPath("profiles/"+profileFile.getFileName().toString()+".profile"), Util.getPath("profiles/"+name+".profile"));
+                        Files.move(Util.getPath(newFile,profileFile.getFileName().toString()+".jar"), Util.getPath(newFile, name+".jar"));
+                        if(profile.profile_version==0) Files.move(Util.getPath(newFile,profileFile.getFileName().toString()+"-original.jar"), Util.getPath(newFile, name+"-original.jar"));
+                        Files.move(Util.getPath(newFile,profileFile.getFileName().toString()+".json"), Util.getPath(newFile, name+".json"));
+                        BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(Util.getPath(newFile, name+".json")), StandardCharsets.UTF_8));
 
                         String line;
                         String text = "";
@@ -344,11 +354,11 @@ public class MCAddToJar extends JFrame {
                         }
                         text = text.substring(0, text.length()-1);
 
-                        text = text.replace("\"id\": \""+profileFile.getName()+"\"","\"id\": \""+name+"\"");
+                        text = text.replace("\"id\": \""+profileFile.getFileName().toString()+"\"","\"id\": \""+name+"\"");
 
                         br.close();
 
-                        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(newFile, name+".json")),"UTF-8"));
+                        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(Util.getPath(newFile, name+".json")),"UTF-8"));
                         bw.write(text);
                         bw.close();
 
@@ -363,8 +373,12 @@ public class MCAddToJar extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(e.getClickCount()==2) {
-                    File profileFile = new File("profiles",list.getSelectedValue()+".profile");
-                    profileFile.getParentFile().mkdirs();
+                    Path profileFile = Util.getPath("profiles",list.getSelectedValue()+".profile");
+                    try {
+                        Files.createDirectories(profileFile.getParent());
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                     profile = Profile.load(profileFile);
                     if(profile==null) {
                         new WhatVersion(MCAddToJar.this, profileFile) {
@@ -373,12 +387,12 @@ public class MCAddToJar extends JFrame {
                                 profile = new Profile(new HashMap<>(), new ArrayList<>(), profileFile, version);
                                 MCAddToJar.this.dispose();
                                 this.dispose();
-                                addToJar = new AddToJar(new File(mcDir, "versions/"+list.getSelectedValue()), list.getSelectedValue(), profile, true);
+                                addToJar = new AddToJar(Util.getPath(mcDir, "versions/"+list.getSelectedValue()), list.getSelectedValue(), profile, true);
                             }
                         }.setVisible(true);
                     }else {
                         MCAddToJar.this.dispose();
-                        addToJar = new AddToJar(new File(mcDir, "versions/"+list.getSelectedValue()), list.getSelectedValue(), profile, true);
+                        addToJar = new AddToJar(Util.getPath(mcDir, "versions/"+list.getSelectedValue()), list.getSelectedValue(), profile, true);
                     }
                 }
             }
@@ -395,8 +409,17 @@ public class MCAddToJar extends JFrame {
 
     private void update() {
         model.removeAllElements();
-        new File("profiles").mkdirs();
-        ArrayList<File> profiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(new File("profiles").listFiles())));
+        try {
+            Files.createDirectories(Util.getPath("profiles"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        java.util.List<Path> profiles = null;
+        try {
+            profiles = Files.list(Util.getPath("profiles")).collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         String[] versions = new String[]{
                 "1.0",
                 "1.1",
@@ -405,48 +428,57 @@ public class MCAddToJar extends JFrame {
                 "1.4.2","1.4.4","1.4.5","1.4.6","1.4.7",
                 "1.5.1","1.5.2"};
         Pattern pattern = Pattern.compile("([0-9]*\\.?)*");
-        for(File f : Objects.requireNonNull(new File(mcDir, "versions").listFiles())) {
-            if(f.isDirectory()) {
-                String mcVersion = "";
-                Matcher matcher = pattern.matcher(f.getName());
-                while(matcher.find()) {
-                    for (String version : versions) {
-                        if (matcher.group(0).equals(version)) {
-                            mcVersion = version;
+        try {
+            for(Path f : Files.list(Util.getPath(mcDir, "versions")).collect(Collectors.toList())) {
+                if(Files.isDirectory(f)) {
+                    String mcVersion = "";
+                    Matcher matcher = pattern.matcher(f.getFileName().toString());
+                    while(matcher.find()) {
+                        for (String version : versions) {
+                            if (matcher.group(0).equals(version)) {
+                                mcVersion = version;
+                            }
                         }
                     }
-                }
-                if(new File("profiles",f.getName()+".profile").exists()) {
-                    profiles.remove(new File("profiles",f.getName()+".profile"));
-                    try {
-                        mcVersion = Objects.requireNonNull(Profile.load(new File("profiles", f.getName() + ".profile"))).version;
-                    }catch (NullPointerException ignore) {}
-                }
-                if(     mcVersion.isEmpty() && !Boolean.parseBoolean(Config.get("showothers", "true")) ||
-                        mcVersion.startsWith("1.0") && !Boolean.parseBoolean(Config.get("show1.0", "true")) ||
-                        mcVersion.startsWith("1.1") && !Boolean.parseBoolean(Config.get("show1.1", "true")) ||
-                        mcVersion.startsWith("1.2") && !Boolean.parseBoolean(Config.get("show1.2.x", "true")) ||
-                        mcVersion.startsWith("1.3") && !Boolean.parseBoolean(Config.get("show1.3.x", "true")) ||
-                        mcVersion.startsWith("1.4") && !Boolean.parseBoolean(Config.get("show1.4.x", "true")) ||
-                        mcVersion.startsWith("1.5") && !Boolean.parseBoolean(Config.get("show1.5.x", "true"))) {
-                    continue;
-                }
-                if(new File("profiles",f.getName()+".profile").exists()) {
-                    model.add(0, f.getName()+"(Modded)");
-                }else {
-                    model.addElement(f.getName());
+                    if(Files.exists(Util.getPath("profiles",f.getFileName().toString()+".profile"))) {
+                        profiles.remove(Util.getPath("profiles",f.getFileName().toString()+".profile"));
+                        try {
+                            mcVersion = Objects.requireNonNull(Profile.load(Util.getPath("profiles", f.getFileName().toString() + ".profile"))).version;
+                        }catch (NullPointerException ignore) {}
+                    }
+                    if(     mcVersion.isEmpty() && !Boolean.parseBoolean(Config.get("showothers", "true")) ||
+                            mcVersion.startsWith("1.0") && !Boolean.parseBoolean(Config.get("show1.0", "true")) ||
+                            mcVersion.startsWith("1.1") && !Boolean.parseBoolean(Config.get("show1.1", "true")) ||
+                            mcVersion.startsWith("1.2") && !Boolean.parseBoolean(Config.get("show1.2.x", "true")) ||
+                            mcVersion.startsWith("1.3") && !Boolean.parseBoolean(Config.get("show1.3.x", "true")) ||
+                            mcVersion.startsWith("1.4") && !Boolean.parseBoolean(Config.get("show1.4.x", "true")) ||
+                            mcVersion.startsWith("1.5") && !Boolean.parseBoolean(Config.get("show1.5.x", "true"))) {
+                        continue;
+                    }
+                    if(Files.exists(Util.getPath("profiles",f.getFileName().toString()+".profile"))) {
+                        model.add(0, f.getFileName().toString()+"(Modded)");
+                    }else {
+                        model.addElement(f.getFileName().toString());
+                    }
                 }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        java.util.List<Path> finalProfiles = profiles;
         new Thread() {
             @Override
             public void run() {
                 super.run();
-                for(File f : profiles) {
+                for(Path f : finalProfiles) {
                     new CheckProfile(MCAddToJar.this, f) {
                         @Override
                         public void delete() {
-                            f.delete();
+                            try {
+                                Files.delete(f);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             this.dispose();
                             resuume();
                         }
@@ -456,7 +488,11 @@ public class MCAddToJar extends JFrame {
                             new RenameProfile(MCAddToJar.this) {
                                 @Override
                                 public void ok(String name) {
-                                    f.renameTo(new File("profiles/",name+".profile"));
+                                    try {
+                                        Files.move(f, Util.getPath("profiles/",name+".profile"));
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                     MCAddToJar.this.update();
                                     this.dispose();
                                     resuume();

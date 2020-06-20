@@ -5,13 +5,10 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DownloadOriginal extends JDialog {
 
@@ -57,12 +54,12 @@ public class DownloadOriginal extends JDialog {
             loading.setText(Language.translate("downloadingvanilla"));
             String url = "https://launcher.mojang.com/mc/game/"+version+"/client/"+hash.get(version)+"/client.jar";
             try {
-                File originalFile = new File("originals/"+version+".jar");
-                originalFile.getParentFile().mkdirs();
+                Path originalFile = Util.getPath("originals/"+version+".jar");
+                Files.createDirectories(originalFile.getParent());
                 URL var1 = new URL(url);
                 byte[] var5 = new byte[8192];
                 DataInputStream inputStream = new DataInputStream(var1.openStream());
-                DataOutputStream outputStream = new DataOutputStream(new FileOutputStream(originalFile));
+                DataOutputStream outputStream = new DataOutputStream(Files.newOutputStream(originalFile));
 
                 int len;
                 long downloaded = 0;

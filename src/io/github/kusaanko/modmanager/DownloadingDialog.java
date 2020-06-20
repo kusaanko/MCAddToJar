@@ -1,26 +1,24 @@
 package io.github.kusaanko.modmanager;
 
-import io.github.kusaanko.MCAddToJar;
 import io.github.kusaanko.Profile;
 import io.github.kusaanko.Util;
 import io.github.kusaanko.modmanager.mod125.Mod125;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.swing.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
-import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.function.Consumer;
 
 import static io.github.kusaanko.Language.translate;
 
 public class DownloadingDialog extends JDialog {
 
-    private Consumer<File> event;
+    private Consumer<Path> event;
     private JLabel statusLabel;
 
     public DownloadingDialog(JDialog parentDialog) {
@@ -37,16 +35,16 @@ public class DownloadingDialog extends JDialog {
         this.setVisible(true);
     }
 
-    public void run(String link, File placeFolder, Profile profile, Mod mod) {
+    public void run(String link, Path placeFolder, Profile profile, Mod mod) {
         new Thread(() -> {
-            File outputFile;
+            Path outputFile;
             try{
                 String fileName = mod.getDownloadFileName();
 
-                File temporary = new File(mod.getDownloadFolder(), fileName);
-                outputFile = new File(placeFolder, fileName);
+                Path temporary = Util.getPath(mod.getDownloadFolder(), fileName);
+                outputFile = Util.getPath(placeFolder, fileName);
 
-                if(!temporary.exists()) {
+                if(!Files.exists(temporary)) {
                     if(mod.needUserDownload()) {
                         this.dispose();
                         WaitingDownloadDialog dialog = new WaitingDownloadDialog(this, mod.getName(), mod.getVersion(), mod.getDownloadPageURL());
@@ -54,8 +52,8 @@ public class DownloadingDialog extends JDialog {
                             Thread.sleep(100);
                         }
                         dialog.dispose();
-                        if(dialog.getDownloadedFile() != null && dialog.getDownloadedFile().exists()) {
-                            dialog.getDownloadedFile().renameTo(temporary);
+                        if(dialog.getDownloadedFile() != null && Files.exists(dialog.getDownloadedFile())) {
+                            Files.move(dialog.getDownloadedFile(), temporary);
                         }
                     }else {
                         String downloadURL = link;
@@ -83,9 +81,9 @@ public class DownloadingDialog extends JDialog {
                         if (((HttpURLConnection) connection).getResponseCode() == 200) {
                             statusLabel.setText(String.format(translate("downloading"), fileName, ""));
 
-                            temporary.getParentFile().mkdirs();
+                            Files.createDirectories(temporary.getParent());
                             InputStream inputStream = url.openStream();
-                            OutputStream outputStream = new FileOutputStream(temporary);
+                            OutputStream outputStream = Files.newOutputStream(temporary);
 
                             byte[] buff = new byte[4096];
                             int len;
@@ -107,9 +105,9 @@ public class DownloadingDialog extends JDialog {
                 } else {
                     if(mod.getType() == Mod.TYPE.PATCH) {
                         Mod targetMod = Mod125.mods125.get(mod.getPatchMod());
-                        File outZip;
+                        Path outZip;
                         if(targetMod.getInstallationType() == Mod.INSTALLATION_TYPE.MODS_FOLDER) {
-                            outZip = new File(placeFolder, targetMod.getDownloadFileName());
+                            outZip = Util.getPath(placeFolder, targetMod.getDownloadFileName());
                         }else {
                             throw new IllegalArgumentException("This is not supported type!!(" + targetMod.getInstallationType() + ")");
                         }
@@ -126,7 +124,7 @@ public class DownloadingDialog extends JDialog {
         }).start();
     }
 
-    public void registerEvent(Consumer<File> event) {
+    public void registerEvent(Consumer<Path> event) {
         this.event = event;
     }
 }

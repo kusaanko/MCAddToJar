@@ -2,11 +2,14 @@ package io.github.kusaanko.modmanager;
 
 import io.github.kusaanko.MCAddToJar;
 import io.github.kusaanko.Profile;
+import io.github.kusaanko.Util;
 import io.github.kusaanko.modmanager.mod125.Mod125;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -26,12 +29,12 @@ public class ModManagerPanel extends JPanel {
     private final ArrayList<Mod> mods;
 
     private final JDialog parentDialog;
-    private final File gameDir;
+    private final Path gameDir;
     private final Profile profile;
 
     private boolean processing;
 
-    public ModManagerPanel(JDialog parentDialog, File gameDir, Profile profile) {
+    public ModManagerPanel(JDialog parentDialog, Path gameDir, Profile profile) {
         super(new BorderLayout());
 
         this.classToButton = new HashMap<>();
@@ -176,7 +179,11 @@ public class ModManagerPanel extends JPanel {
                     delete.setEnabled(false);
                     DeletingDialog dialog = new DeletingDialog(parentDialog);
                     if(mod.getInstallationType() != Mod.INSTALLATION_TYPE.IN_JAR) {
-                        new File(mod.getFilePath()).delete();
+                        try {
+                            Files.delete(Util.getPath(mod.getFilePath()));
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
                     }else {
                         profile.remove(mod.getFilePath());
                         MCAddToJar.addToJar.update();
@@ -209,21 +216,21 @@ public class ModManagerPanel extends JPanel {
             JButton download = new JButton(translate("download"));
             download.addActionListener(e -> {
                 download.setEnabled(false);
-                File folder = new File(gameDir, "mods");
+                Path folder = Util.getPath(gameDir, "mods");
                 if(mod.getInstallationType() == Mod.INSTALLATION_TYPE.IN_JAR) {
-                    folder = new File("mods/1.2.5/");
+                    folder = Util.getPath("mods/1.2.5/");
                 }
                 DownloadingDialog dialog = new DownloadingDialog(parentDialog);
                 dialog.registerEvent(outputFile -> {
-                    if(outputFile.exists()) {
+                    if(Files.exists(outputFile)) {
                         if (mod.getInstallationType() == Mod.INSTALLATION_TYPE.IN_JAR) {
-                            profile.add(outputFile.getAbsolutePath());
+                            profile.add(outputFile.toAbsolutePath().toString());
                             MCAddToJar.addToJar.update();
                         }
                         mods.remove(mod);
-                        Mod m = Mod125.is125(outputFile.getName().substring(0, outputFile.getName().lastIndexOf(".")));
+                        Mod m = Mod125.is125(outputFile.getFileName().toString().substring(0, outputFile.getFileName().toString().lastIndexOf(".")));
                         if (m != null) {
-                            m.setFilePath(outputFile.getAbsolutePath());
+                            m.setFilePath(outputFile.toAbsolutePath().toString());
                             mods.add(m);
                         }
                         dialog.dispose();
@@ -237,7 +244,11 @@ public class ModManagerPanel extends JPanel {
             classToButton.put(mod.getClass(), download);
             JButton redownload = new JButton(translate("redownload"));
             redownload.addActionListener(e -> {
-                new File(mod.getFilePath()).delete();
+                try {
+                    Files.delete(Util.getPath(mod.getFilePath()));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
                 classToButton.get(mod.getClass()).doClick();
             });
             if(notInstalled) buttonsPane.add(download);

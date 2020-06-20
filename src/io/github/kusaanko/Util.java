@@ -6,9 +6,12 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipInputStream;
@@ -33,26 +36,34 @@ public class Util {
         }
     }
 
-    public static File getWorkingDirectory(String folname) {
-        String var1 = System.getProperty("user.home", ".");
-        File var2;
+    public static Path getWorkingDirectory(String folname) {
+        String homeDir = System.getProperty("user.home", ".");
+        Path path;
         switch(getPlatform()) {
             case LINUX:
             case SOLARIS:
-                var2 = new File(var1, '.' + folname + '/');
+                path = Util.getPath(homeDir, '.' + folname + '/');
                 break;
             case WINDOWS:
                 String var3 = System.getenv("APPDATA");
-                String var4 = var3 != null ? var3 : var1;
-                var2 = new File(var4, '.' + folname + '/');
+                String var4 = var3 != null ? var3 : homeDir;
+                path = Util.getPath(var4, '.' + folname + '/');
                 break;
             case MACOS:
-                var2 = new File(var1, "Library/Application Support/" + folname);
+                path = Util.getPath(homeDir, "Library/Application Support/" + folname);
                 break;
             default:
-                var2 = new File(var1, folname + '/');
+                path = Util.getPath(homeDir, folname + '/');
         }
-        return var2;
+        return path;
+    }
+
+    public static Path getPath(String base, String... others) {
+        return Paths.get(base, others);
+    }
+
+    public static Path getPath(Path base, String... others) {
+        return getPath(base.toString(), others);
     }
 
     public static String executeGet(String url) {
@@ -94,11 +105,11 @@ public class Util {
 
     public static void downloadFile(String URL, String output) {
         try {
-            if(new File(output).getParentFile()!=null) new File(output).getParentFile().mkdirs();
+            if(Util.getPath(output).getParent()!=null) Files.createDirectories(Util.getPath(output).getParent());
             URL var1 = new URL(URL);
             byte[] var5 = new byte[4096];
             DataInputStream inputStream = new DataInputStream(var1.openStream());
-            DataOutputStream outputStream = new DataOutputStream(new FileOutputStream(new File(output)));
+            DataOutputStream outputStream = new DataOutputStream(Files.newOutputStream(Util.getPath(output)));
 
             int len;
             while((len = inputStream.read(var5, 0, var5.length)) > 0) {
@@ -112,21 +123,21 @@ public class Util {
         }
     }
 
-    public static boolean deleteFolder(File file) {
-        for(File f : file.listFiles()) {
-            if(f.isDirectory()) {
+    public static void deleteFolder(Path file) throws IOException {
+        for(Path f : Files.list(file).collect(Collectors.toList())) {
+            if(Files.isDirectory(f)) {
                 deleteFolder(f);
             }else {
-                f.delete();
+                Files.delete(f);
             }
         }
-        return file.delete();
+        Files.delete(file);
     }
 
-    public static void copy(File input, File output) throws IOException{
-        output.getParentFile().mkdirs();
-        FileInputStream fileIn = new FileInputStream(input);
-        FileOutputStream fileOut = new FileOutputStream(output);
+    public static void copy(Path input, Path output) throws IOException{
+        Files.createDirectories(output.getParent());
+        InputStream fileIn = Files.newInputStream(input);
+        OutputStream fileOut = Files.newOutputStream(output);
 
         byte[] buf = new byte[8192];
         int len;
@@ -141,23 +152,27 @@ public class Util {
         fileIn.close();
     }
 
-    public static void copyFolder(File input, File output) throws IOException{
-        for(File file : input.listFiles()) {
-            File out = new File(output, file.getAbsolutePath().replace(input.getAbsolutePath(), ""));
-            if(file.isFile()) {
-                copy(file, out);
+    public static void copy(File input, File output) throws IOException{
+        copy(input.toPath(), output.toPath());
+    }
+
+    public static void copyFolder(Path input, Path output) throws IOException{
+        List<Path> pathList = Files.list(input).collect(Collectors.toList());
+        for(Path path : pathList) {
+            Path out = Util.getPath(output, path.toAbsolutePath().toString().replace(input.toAbsolutePath().toString(), ""));
+            if(Files.isRegularFile(path)) {
+                copy(path, out);
             }
-            else copyFolder(file, out);
+            else copyFolder(path, out);
         }
     }
 
-    public static void zipCopy(File inZip, File outZip) throws IOException {
-        File outTemp = new File(outZip.getParentFile(), "temp" + System.currentTimeMillis() + ".tmp");
-        ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(inZip));
-        ZipInputStream zipInputStreamOut = new ZipInputStream(new FileInputStream(outZip));
-        ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(outTemp));
+    public static void zipCopy(Path inZip, Path outZip) throws IOException {
+        Path outTemp = Util.getPath(outZip.getParent(), "temp" + System.currentTimeMillis() + ".tmp");
+        ZipInputStream zipInputStream = new ZipInputStream(Files.newInputStream(inZip));
+        ZipInputStream zipInputStreamOut = new ZipInputStream(Files.newInputStream(outZip));
+        ZipOutputStream zipOutputStream = new ZipOutputStream(Files.newOutputStream(outTemp));
 
-        System.out.println(outZip.getName());
         byte[] buff = new byte[8192];
         int len;
         ZipEntry entry;
@@ -182,15 +197,15 @@ public class Util {
         zipInputStream.close();
         zipOutputStream.close();
 
-        outZip.delete();
-        outTemp.renameTo(outZip);
+        Files.delete(outZip);
+        Files.move(outTemp, outZip);
     }
 
-    public static void compress(File input, File output) throws IOException {
-        ZipOutputStream append = new ZipOutputStream(new FileOutputStream(output));
+    public static void compress(Path input, Path output) throws IOException {
+        ZipOutputStream append = new ZipOutputStream(Files.newOutputStream(output));
         try {
-            append.putNextEntry(new ZipEntry(input.getName()));
-            InputStream stream = new FileInputStream(input);
+            append.putNextEntry(new ZipEntry(input.getFileName().toString()));
+            InputStream stream = Files.newInputStream(input);
             byte[] bytes = new byte[8192];
             int len;
             while ((len = stream.read(bytes, 0, bytes.length)) > 0) {

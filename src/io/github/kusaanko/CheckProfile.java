@@ -2,20 +2,18 @@ package io.github.kusaanko;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.nio.file.Path;
 
 public class CheckProfile extends JDialog {
 
-    public CheckProfile(JFrame parent, File profileFile) {
+    public CheckProfile(JFrame parent, Path profileFile) {
         super(parent);
         this.setModal(true);
         this.setSize(380,150);
         this.setTitle("MCAddToJar");
         JPanel panel = new JPanel(new GridLayout(0, 1));
         JPanel panel1 = new JPanel(new GridLayout(1, 0));
-        JLabel label = new JLabel(String.format(Language.translate("whathappenedprofile"), profileFile.getName().substring(0, profileFile.getName().lastIndexOf("."))));
+        JLabel label = new JLabel(String.format(Language.translate("whathappenedprofile"), profileFile.getFileName().toString().substring(0, profileFile.getFileName().toString().lastIndexOf("."))));
         JButton delete = new JButton(Language.translate("deleted"));
         JButton rename = new JButton(Language.translate("renamed"));
         delete.addActionListener(e -> {

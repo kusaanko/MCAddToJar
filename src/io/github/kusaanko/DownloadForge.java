@@ -4,8 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,20 +51,24 @@ public class DownloadForge extends JDialog {
                     panel.add(loading, BorderLayout.CENTER);
                     validate();
                     repaint();
-                    new File("forge").mkdirs();
+                    try {
+                        Files.createDirectories(Util.getPath("forge"));
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                     String kind = "universal";
                     if(version.startsWith("1.1")||version.startsWith("1.2")) {
                         kind = "client";
                     }
                     String url = "http://files.minecraftforge.net/maven/net/minecraftforge/forge/"+version+"-"+list.getSelectedValue()+"/forge-"+version+"-"+list.getSelectedValue()+"-"+kind+".zip";
-                    File output = new File("forge/forge-"+version+"-"+list.getSelectedValue()+"-"+kind+".zip");
-                    if(!output.exists()) {
+                    Path output = Util.getPath("forge/forge-"+version+"-"+list.getSelectedValue()+"-"+kind+".zip");
+                    if(!Files.exists(output)) {
                         try {
-                            output.getParentFile().mkdirs();
+                            Files.createDirectories(output.getParent());
                             URL var1 = new URL(url);
                             byte[] var5 = new byte[8192];
                             DataInputStream inputStream = new DataInputStream(var1.openStream());
-                            DataOutputStream outputStream = new DataOutputStream(new FileOutputStream(output));
+                            DataOutputStream outputStream = new DataOutputStream(Files.newOutputStream(output));
 
                             int len;
                             long downloaded = 0;
@@ -94,5 +99,5 @@ public class DownloadForge extends JDialog {
         this.setVisible(true);
     }
 
-    public void end(File path) {}
+    public void end(Path path) {}
 }

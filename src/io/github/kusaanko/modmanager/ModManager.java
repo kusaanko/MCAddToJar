@@ -3,6 +3,7 @@ package io.github.kusaanko.modmanager;
 import com.google.gson.Gson;
 import io.github.kusaanko.MCAddToJar;
 import io.github.kusaanko.Profile;
+import io.github.kusaanko.Util;
 
 import javax.swing.*;
 
@@ -11,6 +12,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,10 +43,10 @@ public class ModManager extends JDialog {
             panel.add(scaning);
             parentPane.add(panel);
             new Thread(() -> {
-                File profileJson = new File(MCAddToJar.mcDir, "launcher_profiles.json");
-                if(profileJson.exists()) {
+                Path profileJson = Util.getPath(MCAddToJar.mcDir, "launcher_profiles.json");
+                if(Files.exists(profileJson)) {
                     try {
-                        FileInputStream stream = new FileInputStream(profileJson);
+                        InputStream stream = Files.newInputStream(profileJson);
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         byte[] buff = new byte[512];
                         int len;
@@ -71,7 +74,7 @@ public class ModManager extends JDialog {
                             JScrollPane scrollPane = new JScrollPane(profileList);
                             Runnable open = () -> {
                                 ModManager.this.dispose();
-                                File gameDir = new File(this.profileDirMap.get(profileList.getSelectedValue()));
+                                Path gameDir = Util.getPath(this.profileDirMap.get(profileList.getSelectedValue()));
                                 if(profile.version.equals("1.2.5"))
                                     new ModManager125(parent, profile, gameDir);
                             };
