@@ -74,6 +74,8 @@ public abstract class Mod125 extends Mod {
         mods125.put(RedPowerControl125.class, new RedPowerControl125());
 
         //Others
+        //Addon
+        mods125.put(LogisticsPipes125.class, new LogisticsPipes125());
         mods125.put(AdditionalPipes125.class, new AdditionalPipes125());
         mods125.put(AdditionalPipesFix125.class, new AdditionalPipesFix125());
         mods125.put(SneakyPipes125.class, new SneakyPipes125());
@@ -81,9 +83,13 @@ public abstract class Mod125 extends Mod {
         mods125.put(kuukaiCrossConverter125.class, new kuukaiCrossConverter125());
         mods125.put(IC2125.class, new IC2125());
         mods125.put(CompactSolars125.class, new CompactSolars125());
+        //Other
         mods125.put(EE2125.class, new EE2125());
         mods125.put(IronChests125.class, new IronChests125());
         mods125.put(MultiPageChest125.class, new MultiPageChest125());
+        mods125.put(RailCraft125.class, new RailCraft125());
+        mods125.put(ReverseCraft125.class, new ReverseCraft125());
+        mods125.put(TrainMod125.class, new TrainMod125());
         mods125.put(SinglePlayerCommands125.class, new SinglePlayerCommands125());
         mods125.put(TooManyItems125.class, new TooManyItems125());
     }
