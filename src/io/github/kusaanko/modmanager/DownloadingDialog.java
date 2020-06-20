@@ -3,7 +3,6 @@ package io.github.kusaanko.modmanager;
 import io.github.kusaanko.MCAddToJar;
 import io.github.kusaanko.Profile;
 import io.github.kusaanko.Util;
-import io.github.kusaanko.modmanager.mod125.Mod125;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.swing.*;
@@ -102,25 +101,14 @@ public class DownloadingDialog extends JDialog {
                         }
                     }
                 }
-                if (mod.getInstallationType() != Mod.INSTALLATION_TYPE.IN_JAR && mod.getType() != Mod.TYPE.PATCH) {
+                if (mod.getInstallationType() != Mod.INSTALLATION_TYPE.IN_JAR) {
                     Util.copy(temporary, outputFile);
                 } else {
-                    if(mod.getType() == Mod.TYPE.PATCH) {
-                        Mod targetMod = Mod125.mods125.get(mod.getPatchMod());
-                        File outZip;
-                        if(targetMod.getInstallationType() == Mod.INSTALLATION_TYPE.MODS_FOLDER) {
-                            outZip = new File(placeFolder, targetMod.getDownloadFileName());
-                        }else {
-                            throw new IllegalArgumentException("This is not supported type!!(" + targetMod.getInstallationType() + ")");
-                        }
-                        Util.zipCopy(temporary, outZip);
-                    }
                     outputFile = temporary;
                 }
                 event.accept(outputFile);
             }catch (Exception e) {
                 statusLabel.setText(String.format(translate("anerrorhasoccurred"), e.getLocalizedMessage()));
-                this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 e.printStackTrace();
             }
         }).start();
