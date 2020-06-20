@@ -13,6 +13,8 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.function.Consumer;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import static io.github.kusaanko.Language.translate;
 
@@ -101,7 +103,27 @@ public class DownloadingDialog extends JDialog {
                     }
                 }
                 if (mod.getInstallationType() != Mod.INSTALLATION_TYPE.IN_JAR && mod.getType() != Mod.TYPE.PATCH) {
-                    Util.copy(temporary, outputFile);
+                    if(mod.getProcessType() == Mod.PROCESS_TYPE.PLAIN) {
+                        Util.copy(temporary, outputFile);
+                    }else {
+                        ZipInputStream inputStream = new ZipInputStream(Files.newInputStream(temporary));
+                        OutputStream outputStream = Files.newOutputStream(outputFile);
+
+                        byte[] buff = new byte[8192];
+                        int len;
+                        ZipEntry entry;
+                        while((entry = inputStream.getNextEntry()) != null) {
+                            if(entry.getName().equals(mod.getUnzipFile())) {
+                                while((len = inputStream.read(buff)) != -1) {
+                                    outputStream.write(buff, 0, len);
+                                }
+                                break;
+                            }
+                        }
+
+                        inputStream.close();
+                        outputStream.close();
+                    }
                 } else {
                     if(mod.getType() == Mod.TYPE.PATCH) {
                         Mod targetMod = Mod125.mods125.get(mod.getPatchMod());
