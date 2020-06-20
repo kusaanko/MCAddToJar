@@ -13,6 +13,10 @@ public abstract class Mod implements Cloneable {
         PATCH,
     }
 
+    public static enum PATCH_TYPE{
+        OVERWRITE_ZIP,
+    }
+
     public static enum INSTALLATION_TYPE{
         MODS_FOLDER,
         IN_JAR,
@@ -38,6 +42,14 @@ public abstract class Mod implements Cloneable {
 
     public INSTALLATION_TYPE getInstallationType() {
         return INSTALLATION_TYPE.MODS_FOLDER;
+    }
+
+    public PATCH_TYPE getPatchType() {
+        return PATCH_TYPE.OVERWRITE_ZIP;
+    }
+
+    public Class<? extends Mod> getPatchMod() {
+        return null;
     }
 
     public String getInstallationFolder() {
