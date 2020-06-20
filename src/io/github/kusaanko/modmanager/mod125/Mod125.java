@@ -82,7 +82,7 @@ public abstract class Mod125 extends Mod {
         mods125.put(IC2125.class, new IC2125());
         mods125.put(CompactSolars125.class, new CompactSolars125());
         mods125.put(EE2125.class, new EE2125());
-        mods125.put(IronChest125.class, new IronChest125());
+        mods125.put(IronChests125.class, new IronChests125());
         mods125.put(MultiPageChest125.class, new MultiPageChest125());
         mods125.put(SinglePlayerCommands125.class, new SinglePlayerCommands125());
         mods125.put(TooManyItems125.class, new TooManyItems125());

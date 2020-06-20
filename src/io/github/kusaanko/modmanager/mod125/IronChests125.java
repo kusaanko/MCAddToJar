@@ -2,7 +2,7 @@ package io.github.kusaanko.modmanager.mod125;
 
 import io.github.kusaanko.modmanager.Mod;
 
-public class IronChest125 extends Mod125 {
+public class IronChests125 extends Mod125 {
     @Override
     public String is(String fileName) {
         return startsWith(fileName, "mod_ironchests-client-");
@@ -25,12 +25,12 @@ public class IronChest125 extends Mod125 {
 
     @Override
     public String getName() {
-        return "Iron Chest";
+        return "Iron Chests";
     }
 
     @Override
     public String getShortName() {
-        return "Iron Chest";
+        return "Iron Chests";
     }
 
     @Override
