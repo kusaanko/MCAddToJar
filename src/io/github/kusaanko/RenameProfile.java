@@ -2,8 +2,10 @@ package io.github.kusaanko;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.util.Objects;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Collectors;
 
 public class RenameProfile extends JDialog {
 
@@ -16,10 +18,14 @@ public class RenameProfile extends JDialog {
         JLabel label = new JLabel(Language.translate("pleaseselectaname"));
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         JComboBox<String> box = new JComboBox<>(model);
-        for(File f : Objects.requireNonNull(new File(MCAddToJar.mcDir, "versions").listFiles())) {
-            if(f.isDirectory()) {
-                model.addElement(f.getName());
+        try {
+            for(Path f : Files.list(Util.getPath(MCAddToJar.mcDir, "versions")).collect(Collectors.toList())) {
+                if(Files.isDirectory(f)) {
+                    model.addElement(f.getFileName().toString());
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         JButton button = new JButton("OK");
         button.addActionListener(e -> {

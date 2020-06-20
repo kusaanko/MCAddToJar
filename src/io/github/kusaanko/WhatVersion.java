@@ -3,6 +3,7 @@ package io.github.kusaanko;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,7 +20,7 @@ public class WhatVersion extends JDialog {
             "1.4.2","1.4.4","1.4.5","1.4.6","1.4.7",
             "1.5.1","1.5.2"};
 
-    public WhatVersion(JFrame parent, File profileFile) {
+    public WhatVersion(JFrame parent, Path profileFile) {
         super(parent);
         this.setModal(true);
         this.setSize(380,150);
@@ -30,7 +31,7 @@ public class WhatVersion extends JDialog {
         JComboBox<String> box = new JComboBox<>(model);
         Pattern pattern = Pattern.compile("([0-9]*\\.?)*");
         {
-            Matcher matcher = pattern.matcher(profileFile.getName().substring(0, profileFile.getName().lastIndexOf(".")));
+            Matcher matcher = pattern.matcher(profileFile.getFileName().toString().substring(0, profileFile.getFileName().toString().lastIndexOf(".")));
             while(matcher.find()) {
                 for (String version : versions) {
                     if (matcher.group(0).equals(version)) {

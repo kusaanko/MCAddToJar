@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import java.util.*;
 import java.util.zip.ZipFile;
 
@@ -15,8 +14,8 @@ public class AddToJarTurn extends JDialog {
 
     public AddToJarTurn(JFrame parent, String fileName, ArrayList<String> remove) {
         super(parent);
-        root = new DefaultMutableTreeNode(new File(fileName).getName());
-        this.setTitle(new File(fileName).getName());
+        root = new DefaultMutableTreeNode(Util.getPath(fileName).getFileName().toString());
+        this.setTitle(Util.getPath(fileName).getFileName().toString());
         this.setModal(true);
         HashMap<String, DefaultMutableTreeNode> folders = new HashMap<>();
         ArrayList<String> files = new ArrayList<>();
@@ -145,7 +144,7 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor {
             Object userObject = ((DefaultMutableTreeNode) value).getUserObject();
             if (userObject instanceof CheckBoxNode) {
                 CheckBoxNode node = (CheckBoxNode) userObject;
-                checkBox.setSelected(((CheckBoxNode) node).selected);
+                checkBox.setSelected(node.selected);
                 checkBox.setText(node.text.substring(0, node.text.lastIndexOf("?")));
                 folder = node.text.substring(node.text.lastIndexOf("?"));
             } else {

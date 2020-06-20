@@ -2,19 +2,28 @@ package io.github.kusaanko;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.InstanceCreator;
+import com.google.gson.annotations.Expose;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class Profile {
-    public File profileFile;
+    public Path profileFile;
+    @Expose
     public HashMap<String, ArrayList<String>> mcAddToJar;
+    @Expose
     public ArrayList<String> mcAddToJarTurn;
+    @Expose
     public String version;
+    @Expose
     public int profile_version;
 
-    public Profile(HashMap<String, ArrayList<String>> addToJar, ArrayList<String> turn, File profileFile, String version) {
+    public Profile(HashMap<String, ArrayList<String>> addToJar, ArrayList<String> turn, Path profileFile, String version) {
         this.mcAddToJar = addToJar;
         this.mcAddToJarTurn = turn;
         this.profileFile = profileFile;
@@ -25,8 +34,11 @@ public class Profile {
     public void save() {
         try{
             profile_version = 2;
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(profileFile), StandardCharsets.UTF_8));
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(profileFile), StandardCharsets.UTF_8));
+            Gson gson = new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .setPrettyPrinting()
+                    .create();
             bw.write(gson.toJson(this));
             bw.close();
         }catch (IOException e) {
@@ -45,15 +57,17 @@ public class Profile {
     }
 
     public String getVersionName() {
-        return this.profileFile.getName().substring(0, this.profileFile.getName().lastIndexOf("."));
+        return this.profileFile.getFileName().toString().substring(0, this.profileFile.getFileName().toString().lastIndexOf("."));
     }
 
     private static String ver;
-    public static Profile load(File profileFile) {
-        if(profileFile.exists()) {
+    public static Profile load(Path profileFile) {
+        if(Files.exists(profileFile)) {
             try {
-                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(profileFile), StandardCharsets.UTF_8));
-                Gson gson = new Gson();
+                BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(profileFile), StandardCharsets.UTF_8));
+                Gson gson = new GsonBuilder()
+                        .registerTypeAdapter(Path.class, new PathInstanceCreator())
+                        .create();
                 Profile profile = gson.fromJson(br, Profile.class);
                 profile.profileFile = profileFile;
                 br.close();

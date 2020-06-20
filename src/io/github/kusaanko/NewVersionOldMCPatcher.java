@@ -4,15 +4,18 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static io.github.kusaanko.Language.translate;
 
 public class NewVersionOldMCPatcher extends JDialog {
 
-    public NewVersionOldMCPatcher(JFrame parent, String prever, String newver, File profileFolder) {
+    public NewVersionOldMCPatcher(JFrame parent, String prever, String newver, Path profileFolder) {
         super(parent);
         this.setModal(true);
         this.setTitle(translate("newversion"));
@@ -39,32 +42,36 @@ public class NewVersionOldMCPatcher extends JDialog {
         JButton button = new JButton("<html><font style=\"font-size: 14px;\">OK");
         button.addActionListener(e -> {
             this.dispose();
-            if(profileFolder.listFiles().length>0&&JOptionPane.showConfirmDialog(MCAddToJar.frame, translate("reoutputallprofiles"), translate("confirm"), JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
-                for(File f : profileFolder.listFiles()) {
-                    if(f.getName().endsWith(".profile")) {
-                        Profile profile = Profile.load(f);
-                        final boolean[] ended = {false};
-                        String profileName = f.getName().substring(0, f.getName().lastIndexOf("."));
-                        if(new File(MCAddToJar.mcDir, "versions/"+profileName).exists()) {
-                            AddToJar addToJar = new AddToJar(new File(MCAddToJar.mcDir, "versions/" + profileName),
-                                    profileName, profile, true) {
-                                @Override
-                                public void outputEnd() {
-                                    ended[0] = true;
-                                    this.dispose();
-                                }
-                            };
-                            addToJar.output();
-                            while (!ended[0]) {
-                                try {
-                                    Thread.sleep(100);
-                                } catch (InterruptedException e1) {
-                                    e1.printStackTrace();
+            try {
+                if(Files.list(profileFolder).count() > 0 && JOptionPane.showConfirmDialog(MCAddToJar.frame, translate("reoutputallprofiles"), translate("confirm"), JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
+                    for(Path f : Files.list(profileFolder).collect(Collectors.toList())) {
+                        if(f.getFileName().toString().endsWith(".profile")) {
+                            Profile profile = Profile.load(f);
+                            final boolean[] ended = {false};
+                            String profileName = f.getFileName().toString().substring(0, f.getFileName().toString().lastIndexOf("."));
+                            if(Files.exists(Util.getPath(MCAddToJar.mcDir, "versions/"+profileName))) {
+                                AddToJar addToJar = new AddToJar(Util.getPath(MCAddToJar.mcDir, "versions/" + profileName),
+                                        profileName, profile, true) {
+                                    @Override
+                                    public void outputEnd() {
+                                        ended[0] = true;
+                                        this.dispose();
+                                    }
+                                };
+                                addToJar.output();
+                                while (!ended[0]) {
+                                    try {
+                                        Thread.sleep(100);
+                                    } catch (InterruptedException e1) {
+                                        e1.printStackTrace();
+                                    }
                                 }
                             }
                         }
                     }
                 }
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
         });
         main.add(panel, BorderLayout.CENTER);

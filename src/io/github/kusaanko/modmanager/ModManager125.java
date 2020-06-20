@@ -1,21 +1,23 @@
 package io.github.kusaanko.modmanager;
 
 import io.github.kusaanko.Profile;
+import io.github.kusaanko.Util;
 import io.github.kusaanko.modmanager.mod125.Mod125;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static io.github.kusaanko.Language.translate;
 
 public class ModManager125 extends JDialog {
     private ArrayList<Mod> mods = new ArrayList<>();
 
-    public ModManager125(JFrame parent, Profile profile, File profileDir) {
+    public ModManager125(JFrame parent, Profile profile, Path profileDir) {
         super(parent);
         JPanel parentPane = new JPanel(new BorderLayout());
         {
@@ -26,22 +28,30 @@ public class ModManager125 extends JDialog {
             panel.add(scaning);
             parentPane.add(panel);
             new Thread(() -> {
-                new File(profileDir, "mods").mkdirs();
-                ArrayList<File> files = new ArrayList<>(Arrays.asList(Objects.requireNonNull(new File(profileDir, "mods").listFiles())));
+                try {
+                    Files.createDirectories(Util.getPath(profileDir, "mods"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                java.util.List<Path> files = null;
+                try {
+                    files = Files.list(Util.getPath(profileDir, "mods")).collect(Collectors.toList());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 for(String filePath : profile.mcAddToJarTurn) {
-                    File file = new File(filePath);
-                    files.add(file);
+                    files.add(Util.getPath(filePath));
                 }
                 for (Mod mod : Mod125.mods125.values()) {
                     boolean added = false;
-                    for(File file : files) {
-                        if (file.isFile() && (file.getName().endsWith(".zip") || file.getName().endsWith(".jar"))) {
-                            String fileName = file.getName().substring(0, file.getName().lastIndexOf("."));
+                    for(Path file : files) {
+                        if (Files.isRegularFile(file) && (file.getFileName().toString().endsWith(".zip") || file.getFileName().toString().endsWith(".jar"))) {
+                            String fileName = file.getFileName().toString().substring(0, file.getFileName().toString().lastIndexOf("."));
                             String ver = mod.is(fileName);
                             if (ver != null) {
                                 Mod m = mod.clone();
                                 m.setFileName(fileName);
-                                m.setFilePath(file.getAbsolutePath());
+                                m.setFilePath(file.toAbsolutePath().toString());
                                 m.setFileVersion(ver);
                                 mods.add(m);
                                 added = true;

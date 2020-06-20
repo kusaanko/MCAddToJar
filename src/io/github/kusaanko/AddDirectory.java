@@ -2,11 +2,12 @@ package io.github.kusaanko;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class AddDirectory extends JDialog {
 
-    public AddDirectory(JFrame parent, File profileFile) {
+    public AddDirectory(JFrame parent, Path profileFile) {
         super(parent);
         this.setModal(true);
         this.setSize(380,150);
@@ -18,7 +19,7 @@ public class AddDirectory extends JDialog {
         JButton refe = new JButton("...");
         JButton button = new JButton("OK");
         button.addActionListener(e -> {
-            if(!new File(profileFile.getParentFile(), field.getText()).exists()) {
+            if(!Files.exists(Util.getPath(profileFile.getParent(), field.getText()))) {
                 ok(field.getText());
             }else {
                 JOptionPane.showMessageDialog(this, Language.translate("theversionalreadyexists"));

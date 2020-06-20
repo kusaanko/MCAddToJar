@@ -12,13 +12,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 import static io.github.kusaanko.Language.translate;
 
 public class WaitingDownloadDialog extends JDialog {
     private boolean isDownloaded;
-    private File downloadedFile;
+    private Path downloadedFile;
 
     public WaitingDownloadDialog(JDialog parent, String modName, String version, String downloadLink) {
         super(parent);
@@ -63,11 +64,11 @@ public class WaitingDownloadDialog extends JDialog {
         return isDownloaded;
     }
 
-    public File getDownloadedFile() {
+    public Path getDownloadedFile() {
         return downloadedFile;
     }
 
-    void setDownloadedFile(File file) {
+    void setDownloadedFile(Path file) {
         this.downloadedFile = file;
     }
 
@@ -92,7 +93,7 @@ public class WaitingDownloadDialog extends JDialog {
             Transferable t = support.getTransferable();
             try {
                 java.util.List<File> files = (java.util.List<File>) t.getTransferData(DataFlavor.javaFileListFlavor);
-                dialog.setDownloadedFile(files.get(0));
+                dialog.setDownloadedFile(files.get(0).toPath());
                 dialog.setDownloaded(true);
             } catch (UnsupportedFlavorException | IOException e) {
                 e.printStackTrace();

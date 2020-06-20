@@ -30,7 +30,7 @@ public class AddToJar extends JFrame {
     private DefaultListModel<String> model;
     private Profile profile;
     private JButton output;
-    AddToJar(File versionDir, String versionName, Profile profile, boolean json) {
+    AddToJar(Path versionDir, String versionName, Profile profile, boolean json) {
         this.profile = profile;
         JPanel panel = new JPanel(new BorderLayout());
         output = new JButton(translate("output"));
@@ -43,12 +43,12 @@ public class AddToJar extends JFrame {
 
                     output:try{
                         if(json) {
-                            File jsonFile = new File(versionDir, versionName + ".json");
-                            if(!Files.isWritable(jsonFile.toPath())) {
-                                JOptionPane.showMessageDialog(AddToJar.this, String.format(translate("couldnotoutput"), jsonFile.getName()));
+                            Path jsonFile = Util.getPath(versionDir, versionName + ".json");
+                            if(!Files.isWritable(jsonFile)) {
+                                JOptionPane.showMessageDialog(AddToJar.this, String.format(translate("couldnotoutput"), jsonFile.getFileName().toString()));
                                 return;
                             }
-                            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8));
+                            BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(jsonFile), StandardCharsets.UTF_8));
 
                             String line;
                             String text = "";
@@ -119,26 +119,26 @@ public class AddToJar extends JFrame {
 
                             br.close();
 
-                            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(versionDir, versionName + ".json")), "UTF-8"));
+                            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(Util.getPath(versionDir, versionName + ".json")), StandardCharsets.UTF_8));
                             bw.write(text);
                             bw.close();
                         }
                         if (profile.mcAddToJar.size() == 0) break output;
-                        File mc = new File(versionDir, versionName+".jar");
-                        if(!Files.isWritable(mc.toPath())) {
-                            JOptionPane.showMessageDialog(AddToJar.this, String.format(translate("couldnotoutput"), mc.getName()));
+                        Path mc = Util.getPath(versionDir, versionName+".jar");
+                        if(!Files.isWritable(mc)) {
+                            JOptionPane.showMessageDialog(AddToJar.this, String.format(translate("couldnotoutput"), mc.getFileName().toString()));
                             return;
                         }
-                        File mc_original = new File("originals", profile.version+".jar");
-                        if (!mc_original.exists()) {
+                        Path mc_original = Util.getPath("originals", profile.version+".jar");
+                        if (!Files.exists(mc_original)) {
                             JOptionPane.showMessageDialog(AddToJar.this, translate("mcvanillawasnotfound"));
                             break output;
                         }
-                        ZipOutputStream append = new ZipOutputStream(new FileOutputStream(mc));
+                        ZipOutputStream append = new ZipOutputStream(Files.newOutputStream(mc));
                         ArrayList<String> copy = (ArrayList<String>) profile.mcAddToJarTurn.clone();
                         Collections.reverse(copy);
                         for (String fileName : copy) {
-                            if(!new File(fileName).exists()) {
+                            if(!Files.exists(Util.getPath(fileName))) {
                                 JOptionPane.showMessageDialog(AddToJar.this, fileName+translate("isnotexist"));
                             }
                             ZipFile mod = new ZipFile(fileName);
@@ -164,7 +164,7 @@ public class AddToJar extends JFrame {
                             mod.close();
                         }
                         {
-                            ZipFile mod = new ZipFile(mc_original);
+                            ZipFile mod = new ZipFile(mc_original.toFile());
                             Enumeration<? extends ZipEntry> entries = mod.entries();
                             while (entries.hasMoreElements()) {
                                 ZipEntry entry = entries.nextElement();
@@ -186,9 +186,9 @@ public class AddToJar extends JFrame {
                         append.close();
                         Map<String, String> env = new HashMap<>();
                         env.put("create", "false");
-                        URI uri = URI.create("jar:file:/"+URLEncoder.encode(mc.getAbsolutePath().replace("\\","/"),"UTF-8").replace("+","%20")); // Zip file path
+                        URI uri = URI.create("jar:file:/"+URLEncoder.encode(mc.toAbsolutePath().toString().replace("\\","/"),"UTF-8").replace("+","%20")); // Zip file path
                         try(FileSystem zipfs = FileSystems.newFileSystem(uri, env)) {
-                            ZipFile mod = new ZipFile(mc);
+                            ZipFile mod = new ZipFile(mc.toFile());
                             Enumeration<? extends ZipEntry> entries = mod.entries();
                             while (entries.hasMoreElements()) {
                                 ZipEntry entry = entries.nextElement();
@@ -288,10 +288,10 @@ public class AddToJar extends JFrame {
         forge.addActionListener(e -> {
             new DownloadForge(this, profile.version) {
                 @Override
-                public void end(File output) {
-                    profile.mcAddToJar.put(output.getAbsolutePath(), new ArrayList<>());
-                    profile.mcAddToJarTurn.remove(output.getAbsolutePath());
-                    profile.mcAddToJarTurn.add(output.getAbsolutePath());
+                public void end(Path output) {
+                    profile.mcAddToJar.put(output.toAbsolutePath().toString(), new ArrayList<>());
+                    profile.mcAddToJarTurn.remove(output.toAbsolutePath().toString());
+                    profile.mcAddToJarTurn.add(output.toAbsolutePath().toString());
                     this.dispose();
                     if(profile.version.startsWith("1.5")) {
                         new FMLWarning(AddToJar.this);
@@ -302,8 +302,8 @@ public class AddToJar extends JFrame {
             };
         });
         oldmc.addActionListener(e -> {
-            String path = new File("OldMCPatcher.zip").getAbsolutePath();
-            if(new File("OldMCPatcher.zip").exists()) {
+            String path = Util.getPath("OldMCPatcher.zip").toAbsolutePath().toString();
+            if(Files.exists(Util.getPath("OldMCPatcher.zip"))) {
                 profile.mcAddToJar.put(path, new ArrayList<>());
                 profile.mcAddToJarTurn.remove(path);
                 profile.mcAddToJarTurn.add(path);
@@ -318,7 +318,7 @@ public class AddToJar extends JFrame {
                 backupjar.setText(translate("backingupjar"));
                 Calendar calendar = Calendar.getInstance();
                 try {
-                    Util.compress(new File(versionDir,versionName+".jar"),new File(versionDir,versionName+"-"+calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH)+"-"+calendar.get(Calendar.HOUR_OF_DAY)+"-"+calendar.get(Calendar.MINUTE)+"-"+calendar.get(Calendar.SECOND)+".jar.zip"));
+                    Util.compress(Util.getPath(versionDir,versionName+".jar"), Util.getPath(versionDir, versionName+"-"+calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH)+"-"+calendar.get(Calendar.HOUR_OF_DAY)+"-"+calendar.get(Calendar.MINUTE)+"-"+calendar.get(Calendar.SECOND)+".jar.zip"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -332,7 +332,7 @@ public class AddToJar extends JFrame {
                 backupjson.setText(translate("backingupjson"));
                 Calendar calendar = Calendar.getInstance();
                 try {
-                    Util.compress(new File(versionDir,versionName+".json"),new File(versionDir,versionName+"-"+calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH)+"-"+calendar.get(Calendar.HOUR_OF_DAY)+"-"+calendar.get(Calendar.MINUTE)+"-"+calendar.get(Calendar.SECOND)+".json.zip"));
+                    Util.compress(Util.getPath(versionDir,versionName+".json"), Util.getPath(versionDir,versionName+"-"+calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH)+"-"+calendar.get(Calendar.HOUR_OF_DAY)+"-"+calendar.get(Calendar.MINUTE)+"-"+calendar.get(Calendar.SECOND)+".json.zip"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -352,8 +352,8 @@ public class AddToJar extends JFrame {
         list.setCellRenderer(new DefaultListCellRenderer(){
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                File file = new File(value.toString());
-                this.setText(file.getName());
+                Path file = Util.getPath(value.toString());
+                this.setText(file.getFileName().toString());
                 if(isSelected) {
                     this.setBackground(new Color(0, 100, 255));
                 }else {
@@ -392,10 +392,10 @@ public class AddToJar extends JFrame {
             }
         });
         new Thread(() -> {
-            if(profile.profile_version==0&&new File(versionDir, versionName+"-original.jar").exists()) {
+            if(profile.profile_version==0 && Files.exists(Util.getPath(versionDir, versionName+"-original.jar"))) {
                 if(JOptionPane.showConfirmDialog(AddToJar.this, String.format(translate("deleteoriginal"), versionName+"-original.jar"), "Confirm", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
                     try {
-                        Files.delete(Paths.get(versionDir.getAbsolutePath(), versionName + "-original.jar"));
+                        Files.delete(Util.getPath(versionDir.toAbsolutePath(), versionName + "-original.jar"));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

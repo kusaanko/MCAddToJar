@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.io.File;
+import java.nio.file.Files;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,7 +42,7 @@ public class NewVersionAvailable extends JDialog {
         });
         JButton update = new JButton("<html><font style=\"font-size: 14px;\">"+translate("updatenow"));
         update.addActionListener(e -> {
-            if(!new File("MCAddToJar.jar").exists()) {
+            if(!Files.exists(Util.getPath("MCAddToJar.jar"))) {
                 JOptionPane.showMessageDialog(this, translate("executablefilename"));
             }
             parent.dispose();
