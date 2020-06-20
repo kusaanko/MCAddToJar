@@ -89,4 +89,9 @@ public abstract class Mod125 extends Mod {
     public Class<? extends Mod>[] getRequireModsInJar() {
         return genRequireMods(Forge125.class);
     }
+
+    @Override
+    public String getDownloadFolder()  {
+        return "mods/1.2.5/";
+    }
 }
