@@ -64,12 +64,27 @@ public abstract class Mod125 extends Mod {
         mods125.put(MergeEnchantment125.class, new MergeEnchantment125());
         mods125.put(MultiToolHolders125.class, new MultiToolHolders125());
 
+        //RedPower
+        mods125.put(RedPowerCore125.class, new RedPowerCore125());
+        mods125.put(RedPowerLogic125.class, new RedPowerLogic125());
+        mods125.put(RedPowerWiring125.class, new RedPowerWiring125());
+        mods125.put(RedPowerLighting125.class, new RedPowerLighting125());
+        mods125.put(RedPowerWorld125.class, new RedPowerWorld125());
+        mods125.put(RedPowerMachine125.class, new RedPowerMachine125());
+        mods125.put(RedPowerControl125.class, new RedPowerControl125());
+
         //Others
         mods125.put(AdditionalPipes125.class, new AdditionalPipes125());
         mods125.put(AdditionalPipesFix125.class, new AdditionalPipesFix125());
+        mods125.put(SneakyPipes125.class, new SneakyPipes125());
+        mods125.put(BCICCrossover125.class, new BCICCrossover125());
+        mods125.put(kuukaiCrossConverter125.class, new kuukaiCrossConverter125());
         mods125.put(IC2125.class, new IC2125());
         mods125.put(CompactSolars125.class, new CompactSolars125());
         mods125.put(EE2125.class, new EE2125());
+        mods125.put(IronChest125.class, new IronChest125());
+        mods125.put(MultiPageChest125.class, new MultiPageChest125());
+        mods125.put(SinglePlayerCommands125.class, new SinglePlayerCommands125());
         mods125.put(TooManyItems125.class, new TooManyItems125());
     }
 
