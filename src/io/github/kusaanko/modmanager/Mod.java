@@ -15,6 +15,7 @@ public abstract class Mod implements Cloneable {
 
     public static enum PATCH_TYPE{
         OVERWRITE_ZIP,
+        DELETE_FILES,
     }
 
     public static enum INSTALLATION_TYPE{
@@ -50,6 +51,12 @@ public abstract class Mod implements Cloneable {
 
     public Class<? extends Mod> getPatchMod() {
         return null;
+    }
+
+    //Folder a/b/
+    //File a/b/c
+    public String[] getPatchDeleteFiles() {
+        return new String[]{};
     }
 
     public String getInstallationFolder() {
