@@ -264,7 +264,25 @@ public class ModManagerPanel extends JPanel {
                     solve.doClick();
                     processing = false;
                 });
-                dialog.run(mod.getDownloadURL(), folder, profile, mod);
+                boolean conflict = false;
+                Mod conflictMod = null;
+                if(mod.getConflictMods() != null) for(Class<? extends Mod> mc : mod.getConflictMods()) {
+                    for (Mod m : mods) {
+                        if (m.getClass() == mc && !m.getFileVersion().isEmpty()) {
+                            conflict = true;
+                            conflictMod = m;
+                            break;
+                        }
+                    }
+                }
+                if(conflict) {
+                    dialog.dispose();
+                    JOptionPane.showMessageDialog(this, String.format(translate("cannotbeinstalledbecauseitconflicts"), conflictMod.getName()));
+                    updatePanes();
+                    processing = false;
+                }else {
+                    dialog.run(mod.getDownloadURL(), folder, profile, mod);
+                }
             });
             classToButton.put(mod.getClass(), download);
             JButton redownload = new JButton(translate("redownload"));
