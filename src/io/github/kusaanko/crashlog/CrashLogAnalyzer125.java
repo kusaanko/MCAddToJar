@@ -15,6 +15,7 @@ public class CrashLogAnalyzer125 extends JDialog {
         String excepMessage = "N/A";
         String occurrencePoints = "";
         String possibleCause = "errornotregisteredyet";
+        String[] causeFormats = {""};
 
         if(crashLog.contains("\tat")) {
             try {
@@ -35,6 +36,7 @@ public class CrashLogAnalyzer125 extends JDialog {
                         possibleCause = "competingwithothermods";
                     } else if (excep.equals("aiz") && excepMessage.contains("EEAA")) {
                         possibleCause = "srequired";
+                        causeFormats = new String[]{"EEAA"};
                     } else if ((occurrencePoints.contains("cpw.mods.fml.common.Loader.modInit") && excep.contains("NullPointerException")) || excep.contains("NoClassDefFoundError")) {
                         possibleCause = "therearenotenoughmods";
                     }
@@ -64,7 +66,7 @@ public class CrashLogAnalyzer125 extends JDialog {
         occurrencePointsPane.add(exceptionMessagePane, BorderLayout.NORTH);
         analyzePane.add(occurrencePointsPane, BorderLayout.NORTH);
 
-        JLabel possibleCauseLabel = new JLabel(translate("possiblecause") + ":" + translate(possibleCause));
+        JLabel possibleCauseLabel = new JLabel(translate("possiblecause") + ":" + String.format(translate(possibleCause), causeFormats));
         possibleCauseLabel.setFont(font);
         analyzePane.add(possibleCauseLabel, BorderLayout.SOUTH);
 
