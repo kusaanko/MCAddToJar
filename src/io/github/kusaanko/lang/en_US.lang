@@ -103,6 +103,7 @@ possiblecause=Possible causes
 therearenotenoughmods=There are not enough mods.
 andidsareduplicated=%s and %s IDs are duplicated.
 eeaarequired=EEAA required.
+competingwithothermods=Competing with other mods.
 errornotregisteredyet=Error not registered yet.
 pleaseenterthefullcrashlog=Please enter the full crash log.
 
