@@ -24,6 +24,11 @@ public class ForestryTMI125 extends Mod125 {
     }
 
     @Override
+    public Class<? extends Mod>[] getRequireMods() {
+        return genRequireMods(ForestryForMinecraft125.class);
+    }
+
+    @Override
     public String getName() {
         return "ForestryTMI";
     }
