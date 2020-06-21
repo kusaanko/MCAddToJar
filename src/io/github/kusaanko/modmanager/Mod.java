@@ -106,7 +106,7 @@ public abstract class Mod implements Cloneable {
         return null;
     }
 
-    public Class<?extends Mod>[] getCompetingMods() {
+    public Class<?extends Mod>[] getConflictMods() {
         return null;
     }
 

@@ -19,7 +19,7 @@ public class ChainDestruction125 extends Mod125 {
     }
 
     @Override
-    public Class<? extends Mod>[] getCompetingMods() {
+    public Class<? extends Mod>[] getConflictMods() {
         return genRequireMods(TrainMod125.class);
     }
 
