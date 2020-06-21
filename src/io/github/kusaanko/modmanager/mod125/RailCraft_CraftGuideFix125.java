@@ -34,6 +34,11 @@ public class RailCraft_CraftGuideFix125 extends Mod125 {
     }
 
     @Override
+    public String[] getPatchDeleteFiles() {
+        return new String[]{"CraftGuide"};
+    }
+
+    @Override
     public String getName() {
         return "RailCraft CraftGuide Fix";
     }
