@@ -73,6 +73,39 @@ public abstract class Mod125 extends Mod {
         mods125.put(RedPowerMachine125.class, new RedPowerMachine125());
         mods125.put(RedPowerControl125.class, new RedPowerControl125());
 
+        //masa
+        mods125.put(MineAll125.class, new MineAll125());
+        mods125.put(CutAll125.class, new CutAll125());
+        mods125.put(DigAll125.class, new DigAll125());
+        mods125.put(PickupWidely125.class, new PickupWidely125());
+        mods125.put(FlyingPlayer125.class, new FlyingPlayer125());
+
+        //WirelessRedstone
+        mods125.put(WirelessRedstone125.class, new WirelessRedstone125());
+        mods125.put(PowerConfigulator125.class, new PowerConfigulator125());
+        mods125.put(WirelessSniffer125.class, new WirelessSniffer125());
+        mods125.put(WirelessRemote125.class, new WirelessRemote125());
+        mods125.put(WirelessClocker125.class, new WirelessClocker125());
+
+        //MMM
+        mods125.put(IKATORITame125.class, new IKATORITame125());
+        mods125.put(mobEgg125.class, new mobEgg125());
+        mods125.put(BlockLogDirectional125.class, new BlockLogDirectional125());
+        mods125.put(Zabuton125.class, new Zabuton125());
+        mods125.put(fragileArmor125.class, new fragileArmor125());
+        mods125.put(Figure125.class, new Figure125());
+        mods125.put(FrenchBread125.class, new FrenchBread125());
+        mods125.put(Tachikoma125.class, new Tachikoma125());
+        mods125.put(PlayerFormSkinLoad2125.class, new PlayerFormSkinLoad2125());
+        mods125.put(WirelessClocker125.class, new WirelessClocker125());
+        mods125.put(WirelessClocker125.class, new WirelessClocker125());
+        mods125.put(WirelessClocker125.class, new WirelessClocker125());
+        mods125.put(WirelessClocker125.class, new WirelessClocker125());
+        mods125.put(WirelessClocker125.class, new WirelessClocker125());
+        mods125.put(WirelessClocker125.class, new WirelessClocker125());
+        mods125.put(WirelessClocker125.class, new WirelessClocker125());
+        mods125.put(WirelessClocker125.class, new WirelessClocker125());
+
         //Others
         //Addon
         mods125.put(LogisticsPipes125.class, new LogisticsPipes125());
@@ -88,12 +121,10 @@ public abstract class Mod125 extends Mod {
         mods125.put(TurboModelThingy125.class, new TurboModelThingy125());
         mods125.put(SPCForPlayerAPI125.class, new SPCForPlayerAPI125());
 
-        mods125.put(WirelessRedstone125.class, new WirelessRedstone125());
-        mods125.put(PowerConfigulator125.class, new PowerConfigulator125());
-        mods125.put(WirelessSniffer125.class, new WirelessSniffer125());
-        mods125.put(WirelessRemote125.class, new WirelessRemote125());
-        mods125.put(WirelessClocker125.class, new WirelessClocker125());
-
+        mods125.put(SpawnChecker125.class, new SpawnChecker125());
+        mods125.put(Bamboo125.class, new Bamboo125());
+        mods125.put(Zeppelin125.class, new Zeppelin125());
+        mods125.put(UgoCraft125.class, new UgoCraft125());
         mods125.put(Portalgun125.class, new Portalgun125());
         mods125.put(ComputerCraft125.class, new ComputerCraft125());
         mods125.put(EE2125.class, new EE2125());
