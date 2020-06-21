@@ -34,6 +34,9 @@ public class CrashLogAnalyzer125 extends JDialog {
                     occurrencePoints = crashLog.substring(crashLog.indexOf("\n") + 1);
                     if (excep.equals("java.lang.NullPointerException") && occurrencePoints.contains("TrainMod.RollingStock.BuilderOreHandler.registerOre")) {
                         possibleCause = "competingwithothermods";
+                    } else if (excep.equals("aiz") && excepMessage.contains("Version of IC2Fix")) {
+                        possibleCause = "srequired";
+                        causeFormats = new String[]{"IC2Fix"};
                     } else if (excep.equals("aiz") && excepMessage.contains("EEAA")) {
                         possibleCause = "srequired";
                         causeFormats = new String[]{"EEAA"};
