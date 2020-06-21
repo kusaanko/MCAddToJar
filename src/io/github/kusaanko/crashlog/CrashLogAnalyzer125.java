@@ -16,8 +16,6 @@ public class CrashLogAnalyzer125 extends JDialog {
         String occurrencePoints = "";
         String possibleCause = "errornotregisteredyet";
 
-        //crashLog = crashLog.replace("\r", "");
-
         if(crashLog.contains("\tat")) {
             try {
                 Matcher matcher = Pattern.compile("[^\n]*\n\tat").matcher(crashLog);
