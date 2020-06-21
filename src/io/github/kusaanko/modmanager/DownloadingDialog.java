@@ -110,9 +110,10 @@ public class DownloadingDialog extends JDialog {
                         ZipInputStream inputStream = new ZipInputStream(Files.newInputStream(temporary), Charset.forName(mod.getUnzipCharset()));
                         System.out.println(temporary.toString());
 
+                        statusLabel.setText("Unzipping...");
                         byte[] buff = new byte[8192];
                         int len;
-                        int read = 0;
+                        int read;
                         ZipEntry entry;
                         while((entry = inputStream.getNextEntry()) != null) {
                             for(String extract : mod.getUnzipFiles()) {
