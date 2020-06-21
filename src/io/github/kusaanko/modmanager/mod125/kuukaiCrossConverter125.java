@@ -20,7 +20,7 @@ public class kuukaiCrossConverter125 extends Mod125 {
 
     @Override
     public Class<? extends Mod>[] getRequireMods() {
-        return genRequireMods(BCx125.class);
+        return genRequireMods(BCx125.class, IC2125.class);
     }
 
     @Override
