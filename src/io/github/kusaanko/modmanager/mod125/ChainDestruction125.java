@@ -19,6 +19,11 @@ public class ChainDestruction125 extends Mod125 {
     }
 
     @Override
+    public Class<? extends Mod>[] getCompetingMods() {
+        return genRequireMods(TrainMod125.class);
+    }
+
+    @Override
     public Class<? extends Mod>[] getRequireModsInJar() {
         return genRequireMods(Forge125.class, MCAPI125.class);
     }
