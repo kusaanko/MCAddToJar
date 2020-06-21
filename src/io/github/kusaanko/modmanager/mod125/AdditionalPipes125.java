@@ -40,7 +40,7 @@ public class AdditionalPipes125 extends Mod125 {
 
     @Override
     public String getAuthor() {
-        return "Zombie Killer";
+        return "DaStormbringer";
     }
 
     @Override
