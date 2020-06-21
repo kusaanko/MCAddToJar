@@ -3,7 +3,7 @@ package io.github.kusaanko.modmanager.mod125;
 public class HalogenLight125 extends Mod125 {
     @Override
     public String is(String fileName) {
-        return startsWith(fileName, "[125]-mod_HalogenLight_v");
+        return startsWith(fileName, "mod_HalogenLight_v");
     }
 
     @Override
@@ -19,6 +19,16 @@ public class HalogenLight125 extends Mod125 {
     @Override
     public String getReferer() {
         return "https://blog.wolfs.jp/down/minecraft/oldversion/";
+    }
+
+    @Override
+    public PROCESS_TYPE getProcessType() {
+        return PROCESS_TYPE.UNZIP;
+    }
+
+    @Override
+    public String[] getUnzipFiles() {
+        return new String[]{"mod_HalogenLight_v103_forge.zip"};
     }
 
     @Override
@@ -38,11 +48,11 @@ public class HalogenLight125 extends Mod125 {
 
     @Override
     public String getVersion() {
-        return "103";
+        return "103_forge";
     }
 
     @Override
     public String getDownloadFileName() {
-        return "[125]-mod_HalogenLight_v103.zip";
+        return "mod_HalogenLight_v103_forge.zip";
     }
 }
