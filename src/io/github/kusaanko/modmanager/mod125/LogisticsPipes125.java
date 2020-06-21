@@ -29,8 +29,8 @@ public class LogisticsPipes125 extends Mod125 {
     }
 
     @Override
-    public String getUnzipFile() {
-        return "mods/LogisticsPipes-BC3-0.2.5B.zip";
+    public String[] getUnzipFiles() {
+        return new String[]{"mods/LogisticsPipes-BC3-0.2.5B.zip"};
     }
 
     @Override
