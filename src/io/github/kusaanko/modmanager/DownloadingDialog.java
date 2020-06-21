@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import static io.github.kusaanko.Language.translate;
 
@@ -144,14 +145,41 @@ public class DownloadingDialog extends JDialog {
                     }
                 } else {
                     if(mod.getType() == Mod.TYPE.PATCH) {
+                        statusLabel.setText("Patching... ");
                         Mod targetMod = Mod125.mods125.get(mod.getPatchMod());
                         Path outZip;
-                        if(targetMod.getInstallationType() == Mod.INSTALLATION_TYPE.MODS_FOLDER) {
+                        if (targetMod.getInstallationType() == Mod.INSTALLATION_TYPE.MODS_FOLDER) {
                             outZip = Util.getPath(placeFolder, targetMod.getDownloadFileName());
-                        }else {
+                        } else {
                             throw new IllegalArgumentException("This is not supported type!!(" + targetMod.getInstallationType() + ")");
                         }
-                        Util.zipCopy(temporary, outZip);
+                        if(mod.getPatchType() == Mod.PATCH_TYPE.OVERWRITE_ZIP) {
+                            Util.zipCopy(temporary, outZip);
+                        }else {
+                            Path tmpZip = Util.getPath(outZip.getParent(), "tmp" + System.currentTimeMillis() + ".tmp");
+                            ZipInputStream inputStream = new ZipInputStream(Files.newInputStream(outZip), Charset.forName(mod.getUnzipCharset()));
+                            ZipOutputStream outputStream = new ZipOutputStream(Files.newOutputStream(tmpZip), Charset.forName(mod.getUnzipCharset()));
+
+                            byte[] buff = new byte[8192];
+                            int len;
+                            ZipEntry entry;
+                            while((entry = inputStream.getNextEntry()) != null) {
+                                for(String delete : mod.getPatchDeleteFiles()) {
+                                    if (!entry.getName().startsWith(delete)) {
+                                        outputStream.putNextEntry(new ZipEntry(entry.getName()));
+                                        while ((len = inputStream.read(buff)) != -1) {
+                                            outputStream.write(buff, 0, len);
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+
+                            inputStream.close();
+                            outputStream.close();
+                            Files.delete(outZip);
+                            Files.move(tmpZip, outZip);
+                        }
                     }
                     outputFile = temporary;
                 }
