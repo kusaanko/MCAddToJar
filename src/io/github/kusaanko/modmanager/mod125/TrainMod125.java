@@ -1,5 +1,7 @@
 package io.github.kusaanko.modmanager.mod125;
 
+import io.github.kusaanko.modmanager.Mod;
+
 public class TrainMod125 extends Mod125 {
     @Override
     public String is(String fileName) {
@@ -14,6 +16,11 @@ public class TrainMod125 extends Mod125 {
     @Override
     public String getDownloadPageURL() {
         return "http://traincraft-mod.com/wordpress/downloads/";
+    }
+
+    @Override
+    public Class<? extends Mod>[] getCompetingMods() {
+        return genRequireMods(ChainDestruction125.class);
     }
 
     @Override
