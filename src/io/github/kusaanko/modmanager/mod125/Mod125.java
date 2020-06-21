@@ -57,6 +57,15 @@ public abstract class Mod125 extends Mod {
         mods125.put(ThinArm125.class, new ThinArm125());
         mods125.put(VillagersSpawnBan125.class, new VillagersSpawnBan125());
 
+        //ps125
+        mods125.put(psSystem125.class, new psSystem125());
+        mods125.put(psBuild125.class, new psBuild125());
+        mods125.put(psEnchant125.class, new psEnchant125());
+        mods125.put(psRedStone125.class, new psRedStone125());
+        mods125.put(psFirework125.class, new psFirework125());
+        mods125.put(psEnderChest125.class, new psEnderChest125());
+        mods125.put(psBonusChest125.class, new psBonusChest125());
+
         //A.K.
         mods125.put(ChainDestruction125.class, new ChainDestruction125());
         mods125.put(EEAA125.class, new EEAA125());
@@ -121,12 +130,15 @@ public abstract class Mod125 extends Mod {
         mods125.put(BCICCrossover125.class, new BCICCrossover125());
         mods125.put(IC2125.class, new IC2125());
         mods125.put(CompactSolars125.class, new CompactSolars125());
+        mods125.put(AdditionalBuildcraftObjects125.class, new AdditionalBuildcraftObjects125());
+        mods125.put(BucketFilter125.class, new BucketFilter125());
         //Other
         mods125.put(ModLoaderMP125.class, new ModLoaderMP125());
         mods125.put(PlayerAPI125.class, new PlayerAPI125());
         mods125.put(TurboModelThingy125.class, new TurboModelThingy125());
         mods125.put(SPCForPlayerAPI125.class, new SPCForPlayerAPI125());
 
+        mods125.put(ReiMinimap125.class, new ReiMinimap125());
         mods125.put(ForestryForMinecraft125.class, new ForestryForMinecraft125());
         mods125.put(SpawnChecker125.class, new SpawnChecker125());
         mods125.put(Bamboo125.class, new Bamboo125());
