@@ -101,6 +101,17 @@ public abstract class Mod125 extends Mod {
         //Kusaanko
         mods125.put(RailCraft_CraftGuideFix125.class, new RailCraft_CraftGuideFix125());
 
+        //REIMA
+        mods125.put(CamouflageBlocks125.class, new CamouflageBlocks125());
+        mods125.put(CamouflageMaterials125.class, new CamouflageMaterials125());
+        mods125.put(Column125.class, new Column125());
+        mods125.put(FullcolorBlocks125.class, new FullcolorBlocks125());
+        mods125.put(GlowstonePlus125.class, new GlowstonePlus125());
+        mods125.put(HalogenLight125.class, new HalogenLight125());
+        mods125.put(Multislab125.class, new Multislab125());
+        mods125.put(Paintings125.class, new Paintings125());
+        mods125.put(SelectablePaintings125.class, new SelectablePaintings125());
+
         //Others
         //Addon
         mods125.put(LogisticsPipes125.class, new LogisticsPipes125());
