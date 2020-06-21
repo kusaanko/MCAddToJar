@@ -127,6 +127,7 @@ public abstract class Mod125 extends Mod {
         mods125.put(TurboModelThingy125.class, new TurboModelThingy125());
         mods125.put(SPCForPlayerAPI125.class, new SPCForPlayerAPI125());
 
+        mods125.put(ForestryForMinecraft125.class, new ForestryForMinecraft125());
         mods125.put(SpawnChecker125.class, new SpawnChecker125());
         mods125.put(Bamboo125.class, new Bamboo125());
         mods125.put(Zeppelin125.class, new Zeppelin125());
