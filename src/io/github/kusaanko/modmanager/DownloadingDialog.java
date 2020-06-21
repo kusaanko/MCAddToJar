@@ -10,8 +10,12 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -106,23 +110,36 @@ public class DownloadingDialog extends JDialog {
                     if(mod.getProcessType() == Mod.PROCESS_TYPE.PLAIN) {
                         Util.copy(temporary, outputFile);
                     }else {
-                        ZipInputStream inputStream = new ZipInputStream(Files.newInputStream(temporary));
-                        OutputStream outputStream = Files.newOutputStream(outputFile);
+                        ZipInputStream inputStream = new ZipInputStream(Files.newInputStream(temporary), Charset.forName(mod.getUnzipCharset()));
+                        System.out.println(temporary.toString());
 
                         byte[] buff = new byte[8192];
                         int len;
+                        int read = 0;
                         ZipEntry entry;
                         while((entry = inputStream.getNextEntry()) != null) {
-                            if(entry.getName().equals(mod.getUnzipFile())) {
-                                while((len = inputStream.read(buff)) != -1) {
-                                    outputStream.write(buff, 0, len);
+                            for(String extract : mod.getUnzipFiles()) {
+                                if (entry.getName().startsWith(extract)) {
+                                    statusLabel.setText("Unzipping... " + entry.getName());
+                                    Path out = Util.getPath(placeFolder, entry.getName());
+                                    if (entry.isDirectory()) {
+                                        Files.createDirectories(out);
+                                    } else {
+                                        read = 0;
+                                        OutputStream outputStream = Files.newOutputStream(out);
+                                        while ((len = inputStream.read(buff)) != -1) {
+                                            outputStream.write(buff, 0, len);
+                                            read += len;
+                                            statusLabel.setText("Unzipping... " + entry.getName() + " " + (read / 1024) + "KiB");
+                                        }
+                                        outputStream.close();
+                                    }
+                                    break;
                                 }
-                                break;
                             }
                         }
 
                         inputStream.close();
-                        outputStream.close();
                     }
                 } else {
                     if(mod.getType() == Mod.TYPE.PATCH) {

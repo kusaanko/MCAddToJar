@@ -56,8 +56,12 @@ public abstract class Mod implements Cloneable {
 
     //Folder a/b/
     //File a/b/c
-    public String getUnzipFile() {
+    public String[] getUnzipFiles() {
         return null;
+    }
+
+    public String getUnzipCharset() {
+        return "UTF-8";
     }
 
     public Class<? extends Mod> getPatchMod() {
