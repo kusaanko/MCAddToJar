@@ -106,6 +106,10 @@ public abstract class Mod implements Cloneable {
         return null;
     }
 
+    public Class<?extends Mod>[] getCompetingMods() {
+        return null;
+    }
+
     @SafeVarargs
     public final Class<?extends Mod>[] genRequireMods(Class<? extends Mod>... classes) {
         return classes;
