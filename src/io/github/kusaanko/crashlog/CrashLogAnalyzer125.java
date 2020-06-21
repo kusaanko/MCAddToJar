@@ -34,7 +34,7 @@ public class CrashLogAnalyzer125 extends JDialog {
                     if (excep.equals("java.lang.NullPointerException") && occurrencePoints.contains("TrainMod.RollingStock.BuilderOreHandler.registerOre")) {
                         possibleCause = "competingwithothermods";
                     } else if (excep.equals("aiz") && excepMessage.contains("EEAA")) {
-                        possibleCause = "eeaarequired";
+                        possibleCause = "srequired";
                     } else if ((occurrencePoints.contains("cpw.mods.fml.common.Loader.modInit") && excep.contains("NullPointerException")) || excep.contains("NoClassDefFoundError")) {
                         possibleCause = "therearenotenoughmods";
                     }
