@@ -97,14 +97,9 @@ public abstract class Mod125 extends Mod {
         mods125.put(FrenchBread125.class, new FrenchBread125());
         mods125.put(Tachikoma125.class, new Tachikoma125());
         mods125.put(PlayerFormSkinLoad2125.class, new PlayerFormSkinLoad2125());
-        mods125.put(WirelessClocker125.class, new WirelessClocker125());
-        mods125.put(WirelessClocker125.class, new WirelessClocker125());
-        mods125.put(WirelessClocker125.class, new WirelessClocker125());
-        mods125.put(WirelessClocker125.class, new WirelessClocker125());
-        mods125.put(WirelessClocker125.class, new WirelessClocker125());
-        mods125.put(WirelessClocker125.class, new WirelessClocker125());
-        mods125.put(WirelessClocker125.class, new WirelessClocker125());
-        mods125.put(WirelessClocker125.class, new WirelessClocker125());
+
+        //Kusaanko
+        mods125.put(RailCraft_CraftGuideFix125.class, new RailCraft_CraftGuideFix125());
 
         //Others
         //Addon
