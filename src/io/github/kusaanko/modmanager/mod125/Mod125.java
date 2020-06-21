@@ -85,6 +85,8 @@ public abstract class Mod125 extends Mod {
         //Other
         mods125.put(ModLoaderMP125.class, new ModLoaderMP125());
         mods125.put(PlayerAPI125.class, new PlayerAPI125());
+        mods125.put(TurboModelThingy125.class, new TurboModelThingy125());
+        mods125.put(SPCForPlayerAPI125.class, new SPCForPlayerAPI125());
 
         mods125.put(EE2125.class, new EE2125());
         mods125.put(IronChests125.class, new IronChests125());
