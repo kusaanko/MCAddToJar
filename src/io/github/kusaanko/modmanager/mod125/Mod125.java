@@ -94,6 +94,8 @@ public abstract class Mod125 extends Mod {
         mods125.put(WirelessRemote125.class, new WirelessRemote125());
         mods125.put(WirelessClocker125.class, new WirelessClocker125());
 
+        mods125.put(Portalgun125.class, new Portalgun125());
+        mods125.put(ComputerCraft125.class, new ComputerCraft125());
         mods125.put(EE2125.class, new EE2125());
         mods125.put(IronChests125.class, new IronChests125());
         mods125.put(MultiPageChest125.class, new MultiPageChest125());

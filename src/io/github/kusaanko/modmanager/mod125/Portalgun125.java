@@ -1,21 +1,19 @@
 package io.github.kusaanko.modmanager.mod125;
 
-import io.github.kusaanko.modmanager.Mod;
-
-public class RailCraft125 extends Mod125 {
+public class Portalgun125 extends Mod125 {
     @Override
     public String is(String fileName) {
-        return startsWith(fileName, "Railcraft_Client_");
+        return startsWith(fileName, "portalgun1.2.5v");
     }
 
     @Override
     public String getDownloadURL() {
-        return "https://github.com/TechnicPack/Technic/raw/master/mods/rc/rc-v5.4.7b.zip";
+        return "https://drive.google.com/uc?id=0BzZbvRtrx7SsWVc1VVdaQm5Ga3c";
     }
 
     @Override
     public String getDownloadPageURL() {
-        return "https://web.archive.org/web/20130126213115/http://railcraft.wikispaces.com/Version+5.4.7";
+        return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SscjF4b3pYamlkY1k";
     }
 
     @Override
@@ -25,31 +23,36 @@ public class RailCraft125 extends Mod125 {
 
     @Override
     public String[] getUnzipFiles() {
-        return new String[]{"mods/Railcraft_Client_5.4.7b.zip"};
+        return new String[]{"portalgun", "portalgun1.2.5v3.zip"};
+    }
+
+    @Override
+    public String getUnzipCharset() {
+        return "Shift-JIS";
     }
 
     @Override
     public String getName() {
-        return "RailCraft";
+        return "Portalgun";
     }
 
     @Override
     public String getShortName() {
-        return "RailCraft";
+        return "Portalgun";
     }
 
     @Override
     public String getAuthor() {
-        return "CovertJaguar";
+        return "さよ";
     }
 
     @Override
     public String getVersion() {
-        return "5.4.7b";
+        return "3";
     }
 
     @Override
     public String getDownloadFileName() {
-        return "Railcraft_Client_5.4.7b.zip";
+        return "portalgun1.2.5v3.zip";
     }
 }
