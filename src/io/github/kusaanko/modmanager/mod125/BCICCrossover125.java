@@ -5,7 +5,7 @@ import io.github.kusaanko.modmanager.Mod;
 public class BCICCrossover125 extends Mod125 {
     @Override
     public String is(String fileName) {
-        return startsWith(fileName, "BCIC2crossover.IB.v");
+        return startsWith(fileName, "C_BCIC2crossover.IB.v");
     }
 
     @Override
@@ -43,8 +43,9 @@ public class BCICCrossover125 extends Mod125 {
         return "0.08";
     }
 
+    //C_ to avoid conflict with BCx
     @Override
     public String getDownloadFileName() {
-        return "BCIC2crossover.IB.v0.08.zip";
+        return "C_BCIC2crossover.IB.v0.08.zip";
     }
 }
