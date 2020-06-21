@@ -88,6 +88,12 @@ public abstract class Mod125 extends Mod {
         mods125.put(TurboModelThingy125.class, new TurboModelThingy125());
         mods125.put(SPCForPlayerAPI125.class, new SPCForPlayerAPI125());
 
+        mods125.put(WirelessRedstone125.class, new WirelessRedstone125());
+        mods125.put(PowerConfigulator125.class, new PowerConfigulator125());
+        mods125.put(WirelessSniffer125.class, new WirelessSniffer125());
+        mods125.put(WirelessRemote125.class, new WirelessRemote125());
+        mods125.put(WirelessClocker125.class, new WirelessClocker125());
+
         mods125.put(EE2125.class, new EE2125());
         mods125.put(IronChests125.class, new IronChests125());
         mods125.put(MultiPageChest125.class, new MultiPageChest125());
