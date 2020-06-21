@@ -80,7 +80,6 @@ public abstract class Mod125 extends Mod {
         mods125.put(AdditionalPipesFix125.class, new AdditionalPipesFix125());
         mods125.put(SneakyPipes125.class, new SneakyPipes125());
         mods125.put(BCICCrossover125.class, new BCICCrossover125());
-        mods125.put(kuukaiCrossConverter125.class, new kuukaiCrossConverter125());
         mods125.put(IC2125.class, new IC2125());
         mods125.put(CompactSolars125.class, new CompactSolars125());
         //Other
