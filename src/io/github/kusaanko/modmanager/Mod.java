@@ -87,6 +87,10 @@ public abstract class Mod implements Cloneable {
 
     public abstract String getDownloadPageURL();
 
+    public String getReferer() {
+        return "";
+    }
+
     //true is need to update
     public boolean compareVersion() {
         return !this.getFileVersion().equals(this.getVersion());
