@@ -85,27 +85,22 @@ public class DownloadingDialog extends JDialog {
                                 connection.setRequestProperty("Cookie", cookies);
                             }
                         }
+                        statusLabel.setText(String.format(translate("downloading"), fileName, ""));
 
-                        if (((HttpURLConnection) connection).getResponseCode() == 200) {
-                            statusLabel.setText(String.format(translate("downloading"), fileName, ""));
+                        Files.createDirectories(temporary.getParent());
+                        InputStream inputStream = connection.getInputStream();
+                        OutputStream outputStream = Files.newOutputStream(temporary);
 
-                            Files.createDirectories(temporary.getParent());
-                            InputStream inputStream = url.openStream();
-                            OutputStream outputStream = Files.newOutputStream(temporary);
-
-                            byte[] buff = new byte[4096];
-                            int len;
-                            int downloaded = 0;
-                            while ((len = inputStream.read(buff, 0, buff.length)) != -1) {
-                                outputStream.write(buff, 0, len);
-                                downloaded += len;
-                                statusLabel.setText(String.format(translate("downloading"), fileName, downloaded / 1024 + "KiB / " + connection.getContentLength() / 1024 + "KiB"));
-                            }
-                            inputStream.close();
-                            outputStream.close();
-                        } else {
-                            statusLabel.setText(String.format(translate("anerrorhasoccurredhttp"), ((HttpURLConnection) connection).getResponseCode()));
+                        byte[] buff = new byte[4096];
+                        int len;
+                        int downloaded = 0;
+                        while ((len = inputStream.read(buff, 0, buff.length)) != -1) {
+                            outputStream.write(buff, 0, len);
+                            downloaded += len;
+                            statusLabel.setText(String.format(translate("downloading"), fileName, downloaded / 1024 + "KiB / " + connection.getContentLength() / 1024 + "KiB"));
                         }
+                        inputStream.close();
+                        outputStream.close();
                     }
                 }
                 if (mod.getInstallationType() != Mod.INSTALLATION_TYPE.IN_JAR && mod.getType() != Mod.TYPE.PATCH) {
