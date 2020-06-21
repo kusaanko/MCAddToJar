@@ -2,6 +2,8 @@ package io.github.kusaanko.crashlog;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static io.github.kusaanko.Language.translate;
 
@@ -14,25 +16,28 @@ public class CrashLogAnalyzer125 extends JDialog {
         String occurrencePoints = "";
         String possibleCause = "errornotregisteredyet";
 
-        crashLog = crashLog.replace("\r", "");
+        //crashLog = crashLog.replace("\r", "");
 
-        if(crashLog.contains("BEGIN ERROR REPORT")) {
+        if(crashLog.contains("\tat")) {
             try {
-                crashLog = crashLog.substring(crashLog.indexOf("BEGIN ERROR REPORT"));
-                crashLog = crashLog.substring(crashLog.indexOf("LWJGL"));
-                crashLog = crashLog.substring(0, crashLog.indexOf("--- END ERROR REPORT"));
-                crashLog = crashLog.substring(crashLog.indexOf("\n\n") + 2);
-                crashLog = crashLog.replace("\t", "");
-                excep = crashLog.split("\n")[0];
-                if(excep.contains(":")) {
-                    excepMessage = excep.substring(excep.indexOf(":" + 2));
-                    excep = excep.substring(0, excep.indexOf(":"));
-                }
-                occurrencePoints = crashLog.substring(crashLog.indexOf("\n") + 1);
-                if(excep.equals("aiz") && excepMessage.contains("EEAA")) {
-                    possibleCause = "eeaarequired";
-                }else if((occurrencePoints.contains("cpw.mods.fml.common.Loader.modInit") && excep.contains("NullPointerException")) || excep.contains("NoClassDefFoundError")) {
-                    possibleCause = "therearenotenoughmods";
+                Matcher matcher = Pattern.compile("[^\n]*\n\tat").matcher(crashLog);
+                if(matcher.find()) {
+                    crashLog = crashLog.substring(matcher.start());
+                    if(crashLog.contains("\n--- END ERROR REPORT")) {
+                        crashLog = crashLog.substring(0, crashLog.indexOf("\n--- END ERROR REPORT"));
+                    }
+                    crashLog = crashLog.replace("\t", "");
+                    excep = crashLog.split("\n")[0];
+                    if (excep.contains(":")) {
+                        excepMessage = excep.substring(excep.indexOf(":") + 2);
+                        excep = excep.substring(0, excep.indexOf(":"));
+                    }
+                    occurrencePoints = crashLog.substring(crashLog.indexOf("\n") + 1);
+                    if (excep.equals("aiz") && excepMessage.contains("EEAA")) {
+                        possibleCause = "eeaarequired";
+                    } else if ((occurrencePoints.contains("cpw.mods.fml.common.Loader.modInit") && excep.contains("NullPointerException")) || excep.contains("NoClassDefFoundError")) {
+                        possibleCause = "therearenotenoughmods";
+                    }
                 }
             }catch (Exception ignore) {}
         }
