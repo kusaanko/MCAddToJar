@@ -19,6 +19,11 @@ public class TooManyItems125 extends Mod125 {
     }
 
     @Override
+    public INSTALLATION_TYPE getInstallationType() {
+        return INSTALLATION_TYPE.IN_JAR;
+    }
+
+    @Override
     public boolean needUserDownload() {
         return true;
     }
