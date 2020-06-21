@@ -19,6 +19,11 @@ public class RailCraft_CraftGuideFix125 extends Mod125 {
     }
 
     @Override
+    public Class<? extends Mod>[] getRequireMods() {
+        return genRequireMods(RailCraft125.class);
+    }
+
+    @Override
     public TYPE getType() {
         return TYPE.PATCH;
     }
