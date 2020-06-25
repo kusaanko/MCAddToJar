@@ -94,6 +94,13 @@ applythispatch=パッチを適用する
 thepatchmayhavealready=パッチは既に当てられている可能性があります。複数回当てることも可能です。また、パッチは削除することはできません。パッチを削除する場合はMODを再ダウンロードしてください。
 conflictmods=競合MOD
 cannotbeinstalledbecauseitconflicts=%sと競合するため導入できません。
+opendownloadpage=ダウンロードページを開く
+opendirectdownloadpage=直接ダウンロードページを開く
+copydownloadpageurl=ダウンロードページURLをコピー
+copydirectdownloadpageurl=直接ダウンロードページURLをコピー
+copymodname=MOD名をコピー
+copyauthor=制作者名をコピー
+copyversion=バージョンをコピー
 
 crashloganalyzer=クラッシュログの解析
 pastecrashlog=クラッシュログを貼り付け
