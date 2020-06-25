@@ -53,6 +53,7 @@ public abstract class Mod125 extends Mod {
         mods125.put(FururinMod125.class, new FururinMod125());
         mods125.put(OptiFineHDRendererFix125.class, new OptiFineHDRendererFix125());
         mods125.put(OptiFineLocalizeFix125.class, new OptiFineLocalizeFix125());
+        mods125.put(Portalgun125.class, new Portalgun125());
         mods125.put(DiamondHell125.class, new DiamondHell125());
         mods125.put(ThinArm125.class, new ThinArm125());
         mods125.put(VillagersSpawnBan125.class, new VillagersSpawnBan125());
@@ -174,23 +175,22 @@ public abstract class Mod125 extends Mod {
         mods125.put(TurboModelThingy125.class, new TurboModelThingy125());
         mods125.put(SPCForPlayerAPI125.class, new SPCForPlayerAPI125());
 
-        mods125.put(ReiMinimap125.class, new ReiMinimap125());
-        mods125.put(ForestryForMinecraft125.class, new ForestryForMinecraft125());
-        mods125.put(SpawnChecker125.class, new SpawnChecker125());
         mods125.put(Bamboo125.class, new Bamboo125());
-        mods125.put(Zeppelin125.class, new Zeppelin125());
-        mods125.put(UgoCraft125.class, new UgoCraft125());
-        mods125.put(Portalgun125.class, new Portalgun125());
         mods125.put(ComputerCraft125.class, new ComputerCraft125());
         mods125.put(EE2125.class, new EE2125());
+        mods125.put(ForestryForMinecraft125.class, new ForestryForMinecraft125());
         mods125.put(IronChests125.class, new IronChests125());
         mods125.put(MultiPageChest125.class, new MultiPageChest125());
         mods125.put(RailCraft125.class, new RailCraft125());
+        mods125.put(ReiMinimap125.class, new ReiMinimap125());
         mods125.put(ReverseCraft125.class, new ReverseCraft125());
-        mods125.put(TrainMod125.class, new TrainMod125());
-        mods125.put(WorkBenchEX125.class, new WorkBenchEX125());
         mods125.put(SinglePlayerCommands125.class, new SinglePlayerCommands125());
+        mods125.put(SpawnChecker125.class, new SpawnChecker125());
         mods125.put(TooManyItems125.class, new TooManyItems125());
+        mods125.put(TrainMod125.class, new TrainMod125());
+        mods125.put(UgoCraft125.class, new UgoCraft125());
+        mods125.put(WorkBenchEX125.class, new WorkBenchEX125());
+        mods125.put(Zeppelin125.class, new Zeppelin125());
     }
 
     public static Mod is125(String fileName) {
