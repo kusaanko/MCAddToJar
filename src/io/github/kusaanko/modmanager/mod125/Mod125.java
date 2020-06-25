@@ -139,6 +139,24 @@ public abstract class Mod125 extends Mod {
         //mods125.put(NEI_RailCraftPlugin125.class, new NEI_RailCraftPlugin125());
         //mods125.put(NEI_RedPowerPlugin125.class, new NEI_RedPowerPlugin125());
 
+        //Deer05
+        mods125.put(BuildingBlocks125.class, new BuildingBlocks125());
+        mods125.put(EnderBag125.class, new EnderBag125());
+        mods125.put(extraIC125.class, new extraIC125());
+        mods125.put(KarakuriBlock125.class, new KarakuriBlock125());
+        mods125.put(WirelessPower125.class, new WirelessPower125());
+        //Doesn't work
+        //mods125.put(DesignationSkin125.class, new DesignationSkin125());
+        mods125.put(modLister125.class, new modLister125());
+        mods125.put(GetData125.class, new GetData125());
+        mods125.put(GetID125.class, new GetID125());
+        mods125.put(matterZip125.class, new matterZip125());
+        mods125.put(DistanceCounter125.class, new DistanceCounter125());
+        mods125.put(GroupGuiLib125.class, new GroupGuiLib125());
+        mods125.put(StagingLight125.class, new StagingLight125());
+        mods125.put(tesrFix125.class, new tesrFix125());
+        mods125.put(SimpleGameInfo125.class, new SimpleGameInfo125());
+
         //Others
         //Addon
         mods125.put(LogisticsPipes125.class, new LogisticsPipes125());
@@ -170,6 +188,7 @@ public abstract class Mod125 extends Mod {
         mods125.put(RailCraft125.class, new RailCraft125());
         mods125.put(ReverseCraft125.class, new ReverseCraft125());
         mods125.put(TrainMod125.class, new TrainMod125());
+        mods125.put(WorkBenchEX125.class, new WorkBenchEX125());
         mods125.put(SinglePlayerCommands125.class, new SinglePlayerCommands125());
         mods125.put(TooManyItems125.class, new TooManyItems125());
     }
