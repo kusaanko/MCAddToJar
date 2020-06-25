@@ -28,7 +28,7 @@ public class DigBedrock125 extends Mod125 {
 
     @Override
     public String getAuthor() {
-        return "さよ";
+        return "takanasayo";
     }
 
     @Override

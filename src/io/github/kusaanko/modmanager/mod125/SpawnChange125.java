@@ -1,7 +1,5 @@
 package io.github.kusaanko.modmanager.mod125;
 
-import io.github.kusaanko.modmanager.Mod;
-
 public class SpawnChange125 extends Mod125 {
     @Override
     public String is(String fileName) {
@@ -30,7 +28,7 @@ public class SpawnChange125 extends Mod125 {
 
     @Override
     public String getAuthor() {
-        return "さよ";
+        return "takanasayo";
     }
 
     @Override
