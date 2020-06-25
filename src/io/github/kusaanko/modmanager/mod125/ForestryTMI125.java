@@ -20,7 +20,7 @@ public class ForestryTMI125 extends Mod125 {
 
     @Override
     public Class<? extends Mod>[] getRequireModsInJar() {
-        return genRequireMods(Forge125.class, MCAPI125.class);
+        return genRequireMods(Forge125.class, MCAPI125.class, TooManyItems125.class);
     }
 
     @Override
