@@ -48,7 +48,7 @@ public class IC2Fix125 extends Mod125 {
 
     @Override
     public String getAuthor() {
-        return "さよ";
+        return "takanasayo";
     }
 
     @Override
