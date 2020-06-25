@@ -24,6 +24,11 @@ public class OptiFineLocalizeFix125 extends Mod125 {
     }
 
     @Override
+    public TYPE getType() {
+        return TYPE.ADDON;
+    }
+
+    @Override
     public Class<? extends Mod>[] getRequireModsInJar() {
         return genRequireMods(OptiFine125.class);
     }

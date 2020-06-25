@@ -24,6 +24,11 @@ public class ModLoaderMP125 extends Mod125 {
     }
 
     @Override
+    public TYPE getType() {
+        return TYPE.REQUIREMENTS;
+    }
+
+    @Override
     public Class<? extends Mod>[] getRequireModsInJar() {
         return null;
     }

@@ -29,6 +29,11 @@ public class ForestryTMI125 extends Mod125 {
     }
 
     @Override
+    public TYPE getType() {
+        return TYPE.ADDON;
+    }
+
+    @Override
     public String getName() {
         return "ForestryTMI";
     }

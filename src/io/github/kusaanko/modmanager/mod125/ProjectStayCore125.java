@@ -17,6 +17,11 @@ public class ProjectStayCore125 extends Mod125 {
     }
 
     @Override
+    public TYPE getType() {
+        return TYPE.REQUIREMENTS;
+    }
+
+    @Override
     public String getName() {
         return "Project Stay 1.2.5 Core";
     }
