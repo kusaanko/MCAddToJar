@@ -6,8 +6,14 @@ import io.github.kusaanko.Util;
 import io.github.kusaanko.modmanager.mod125.Mod125;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -177,6 +183,7 @@ public class ModManagerPanel extends JPanel {
             }
 
             JPanel buttonsPane = new JPanel(new GridLayout(0, 1));
+            buttonsPane.setBorder(new EmptyBorder(2, 2, 2, 2));
 
             boolean notInstalled = false;
             boolean installed = false;
@@ -310,6 +317,71 @@ public class ModManagerPanel extends JPanel {
                 buttonsPane.add(download);
             }
             if(!notInstalled && !patch) buttonsPane.add(delete);
+            JPopupMenu popupMenu = new JPopupMenu();
+            JMenuItem modName = new JMenuItem(mod.getName());
+            modName.setEnabled(false);
+            popupMenu.add(modName);
+            JMenuItem opendownload = new JMenuItem(translate("opendownloadpage"));
+            popupMenu.add(opendownload);
+            opendownload.addActionListener(e -> {
+                try {
+                    Desktop.getDesktop().browse(new URL(mod.getDownloadPageURL()).toURI());
+                } catch (IOException | URISyntaxException ioException) {
+                    ioException.printStackTrace();
+                }
+            });
+            JMenuItem opendirectdownload = new JMenuItem(translate("opendirectdownloadpage"));
+            popupMenu.add(opendirectdownload);
+            opendirectdownload.addActionListener(e -> {
+                try {
+                    Desktop.getDesktop().browse(new URL(mod.getDownloadURL()).toURI());
+                } catch (IOException | URISyntaxException ioException) {
+                    ioException.printStackTrace();
+                }
+            });
+            JMenuItem copydownload = new JMenuItem(translate("copydownloadpageurl"));
+            popupMenu.add(copydownload);
+            copydownload.addActionListener(e -> {
+                StringSelection selection = new StringSelection(mod.getDownloadPageURL());
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
+            });
+            JMenuItem copydirectdownload = new JMenuItem(translate("copydirectdownloadpageurl"));
+            popupMenu.add(copydirectdownload);
+            copydirectdownload.addActionListener(e -> {
+                StringSelection selection = new StringSelection(mod.getDownloadURL());
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
+            });
+            JMenuItem copymodname = new JMenuItem(translate("copymodname"));
+            popupMenu.add(copymodname);
+            copymodname.addActionListener(e -> {
+                StringSelection selection = new StringSelection(mod.getName());
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
+            });
+            JMenuItem copyauthor = new JMenuItem(translate("copyauthor"));
+            popupMenu.add(copyauthor);
+            copyauthor.addActionListener(e -> {
+                StringSelection selection = new StringSelection(mod.getAuthor());
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
+            });
+            JMenuItem copyversion = new JMenuItem(translate("copyversion"));
+            popupMenu.add(copyversion);
+            copyversion.addActionListener(e -> {
+                StringSelection selection = new StringSelection(mod.getVersion());
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
+            });
+
+            for(JComponent component : components) {
+                if(component instanceof JLabel) {
+                    component.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if(SwingUtilities.isRightMouseButton(e)) {
+                                popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                            }
+                        }
+                    });
+                }
+            }
 
             if(serious) {
                 this.addLine(panel, components);
