@@ -65,6 +65,8 @@ public abstract class Mod125 extends Mod {
         mods125.put(psFirework125.class, new psFirework125());
         mods125.put(psEnderChest125.class, new psEnderChest125());
         mods125.put(psBonusChest125.class, new psBonusChest125());
+        mods125.put(ProjectStayCore125.class, new ProjectStayCore125());
+        mods125.put(ProjectStayEditableBook125.class, new ProjectStayEditableBook125());
 
         //A.K.
         mods125.put(ChainDestruction125.class, new ChainDestruction125());
@@ -108,6 +110,7 @@ public abstract class Mod125 extends Mod {
         mods125.put(PlayerFormSkinLoad2125.class, new PlayerFormSkinLoad2125());
 
         //Kusaanko
+        mods125.put(CreativeGui125.class, new CreativeGui125());
         mods125.put(RailCraft_CraftGuideFix125.class, new RailCraft_CraftGuideFix125());
 
         //REIMA
@@ -120,6 +123,9 @@ public abstract class Mod125 extends Mod {
         mods125.put(Multislab125.class, new Multislab125());
         mods125.put(Paintings125.class, new Paintings125());
         mods125.put(SelectablePaintings125.class, new SelectablePaintings125());
+
+        //Ferne
+        mods125.put(MineFactoryReloaded125.class, new MineFactoryReloaded125());
 
         //Others
         //Addon
