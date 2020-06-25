@@ -22,6 +22,11 @@ public class SPCForPlayerAPI125 extends Mod125 {
     }
 
     @Override
+    public TYPE getType() {
+        return TYPE.ADDON;
+    }
+
+    @Override
     public String getName() {
         return "SPC for Player API";
     }

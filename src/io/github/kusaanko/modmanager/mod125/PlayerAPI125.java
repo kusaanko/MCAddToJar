@@ -24,6 +24,11 @@ public class PlayerAPI125 extends Mod125 {
     }
 
     @Override
+    public TYPE getType() {
+        return TYPE.REQUIREMENTS;
+    }
+
+    @Override
     public String getName() {
         return "Player API";
     }
