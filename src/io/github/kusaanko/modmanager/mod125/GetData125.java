@@ -3,7 +3,7 @@ package io.github.kusaanko.modmanager.mod125;
 public class GetData125 extends Mod125 {
     @Override
     public String is(String fileName) {
-        return startsWith(fileName, "mod_ModLister125-");
+        return startsWith(fileName, "mod_GetData125-");
     }
 
     @Override
