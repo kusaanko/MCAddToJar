@@ -29,6 +29,11 @@ public class RailCraft125 extends Mod125 {
     }
 
     @Override
+    public Class<? extends Mod>[] getConflictMods() {
+        return genRequireMods(psFirework125.class);
+    }
+
+    @Override
     public String getName() {
         return "RailCraft";
     }
