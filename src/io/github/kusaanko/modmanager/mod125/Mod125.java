@@ -127,6 +127,18 @@ public abstract class Mod125 extends Mod {
         //Ferne
         mods125.put(MineFactoryReloaded125.class, new MineFactoryReloaded125());
 
+        //ChickenBones
+        mods125.put(CodeChickenCore125.class, new CodeChickenCore125());
+        //Does not work with BCx
+        //mods125.put(CC_BucketFiller125.class, new CC_BucketFiller125());
+        mods125.put(ChickenChunks125.class, new ChickenChunks125());
+        mods125.put(EnderStorage125.class, new EnderStorage125());
+        //Unstable drawing
+        //mods125.put(NotEnoughItems125.class, new NotEnoughItems125());
+        //Does not work with RailCraft 5.4.7b
+        //mods125.put(NEI_RailCraftPlugin125.class, new NEI_RailCraftPlugin125());
+        //mods125.put(NEI_RedPowerPlugin125.class, new NEI_RedPowerPlugin125());
+
         //Others
         //Addon
         mods125.put(LogisticsPipes125.class, new LogisticsPipes125());
