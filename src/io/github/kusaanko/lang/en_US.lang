@@ -94,6 +94,13 @@ applythispatch=Apply this patch
 thepatchmayhavealready=The patch may have already been applied. It is possible to hit multiple times. Also, patches cannot be deleted. If you want to remove the patch, please re-download the MOD.
 conflictmods=Conflict mods
 cannotbeinstalledbecauseitconflicts=Cannot be installed because it conflicts with %s.
+opendownloadpage=Open download page
+opendirectdownloadpage=Open direct download page
+copydownloadpageurl=Copy download page url
+copydirectdownloadpageurl=Copy direct download page url
+copymodname=Copy mod name
+copyauthor=Copy author's name
+copyversion=Copy version
 
 crashloganalyzer=Crash log analyzer
 pastecrashlog=Paste crash log
