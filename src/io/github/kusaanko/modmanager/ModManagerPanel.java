@@ -40,6 +40,11 @@ public class ModManagerPanel extends JPanel {
     private final Profile profile;
 
     private boolean processing;
+    private final JScrollPane scrollPane;
+    private final JScrollPane scrollPane2;
+    private final JScrollPane scrollPane3;
+    private final JScrollPane scrollPane4;
+    private final JScrollPane scrollPane5;
 
     public ModManagerPanel(JDialog parentDialog, Path gameDir, Profile profile) {
         super(new BorderLayout());
@@ -51,19 +56,19 @@ public class ModManagerPanel extends JPanel {
         this.profile = profile;
 
         this.seriousPane = new JPanel(new GridLayout(0, 1));
-        JScrollPane scrollPane = new JScrollPane(this.seriousPane);
+        scrollPane = new JScrollPane(this.seriousPane);
 
         this.needUpdatingPane = new JPanel(new GridLayout(0, 1));
-        JScrollPane scrollPane2 = new JScrollPane(this.needUpdatingPane);
+        scrollPane2 = new JScrollPane(this.needUpdatingPane);
 
         this.installedPane = new JPanel(new GridLayout(0, 1));
-        JScrollPane scrollPane3 = new JScrollPane(this.installedPane);
+        scrollPane3 = new JScrollPane(this.installedPane);
 
         this.notinstalledPane = new JPanel(new GridLayout(0, 1));
-        JScrollPane scrollPane4 = new JScrollPane(this.notinstalledPane);
+        scrollPane4 = new JScrollPane(this.notinstalledPane);
 
         this.patchPane = new JPanel(new GridLayout(0, 1));
-        JScrollPane scrollPane5 = new JScrollPane(this.patchPane);
+        scrollPane5 = new JScrollPane(this.patchPane);
 
         this.tabbedPane = new JTabbedPane();
         this.add(this.tabbedPane);
@@ -83,13 +88,28 @@ public class ModManagerPanel extends JPanel {
         this.mods.add(mod);
     }
 
-    public void updatePanes() {
+    public synchronized void updatePanes() {
+        int scrollPane1Pos = scrollPane.getVerticalScrollBar().getValue();
+        int scrollPane2Pos = scrollPane2.getVerticalScrollBar().getValue();
+        int scrollPane3Pos = scrollPane3.getVerticalScrollBar().getValue();
+        int scrollPane4Pos = scrollPane4.getVerticalScrollBar().getValue();
+        int scrollPane5Pos = scrollPane5.getVerticalScrollBar().getValue();
         updatePane("serious", seriousPane);
         updatePane("needupdating", needUpdatingPane);
         updatePane("installed", installedPane);
         updatePane("notinstalled", notinstalledPane);
         updatePane("patch", patchPane);
         this.tabbedPane.repaint();
+        scrollPane.validate();
+        scrollPane2.validate();
+        scrollPane3.validate();
+        scrollPane4.validate();
+        scrollPane5.validate();
+        scrollPane.getVerticalScrollBar().setValue(scrollPane1Pos);
+        scrollPane2.getVerticalScrollBar().setValue(scrollPane2Pos);
+        scrollPane3.getVerticalScrollBar().setValue(scrollPane3Pos);
+        scrollPane4.getVerticalScrollBar().setValue(scrollPane4Pos);
+        scrollPane5.getVerticalScrollBar().setValue(scrollPane5Pos);
     }
 
     public void updatePane(String mode, JPanel panel) {
@@ -271,8 +291,8 @@ public class ModManagerPanel extends JPanel {
                     }else {
                         dialog.dispose();
                     }
-                    updatePanes();
                     solve.doClick();
+                    updatePanes();
                     processing = false;
                 });
                 boolean conflict = false;
