@@ -1,5 +1,7 @@
 package io.github.kusaanko;
 
+import com.google.gson.*;
+import com.google.gson.internal.LinkedTreeMap;
 import io.github.kusaanko.crashlog.CrashLogAnalyzer;
 import io.github.kusaanko.modmanager.ModManager;
 
@@ -11,6 +13,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -48,63 +51,54 @@ public class AddToJar extends JFrame {
                                 JOptionPane.showMessageDialog(AddToJar.this, String.format(translate("couldnotoutput"), jsonFile.getFileName().toString()));
                                 return;
                             }
-                            BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(jsonFile), StandardCharsets.UTF_8));
-
-                            String line;
-                            String text = "";
-                            while ((line = br.readLine()) != null) {
-                                text += line + "\n";
-                            }
-                            text = text.substring(0, text.length() - 1);
-
-                            text = text.replaceAll("\"id\"([^\"]*)\"legacy\"([^\"]*)\"sha1\"([^\"]*)\"770572e819335b6c0a053f8378ad88eda189fc14\"([^\"]*)\"size\"([^0-9]*)109634(,[^\"]*)\"totalSize\"([^0-9]*)153475165(,[^\"]*)\"url\"([^\"]*\")https://launchermeta.mojang.com/v1/packages/770572e819335b6c0a053f8378ad88eda189fc14/legacy.json(\"},[^\"]*\"assets\":[^\"]*\")legacy\"",
-                                    "\"id\"$1\"pre-1.6\"$2\"sha1\"$3\"4759bad2824e419da9db32861fcdc3a274336532\"$4\"size\": 73813$6\"totalSize\": 49381897$8\"url\"$9https://launchermeta.mojang.com/v1/packages/4759bad2824e419da9db32861fcdc3a274336532/pre-1.6.json$10pre-1.6\"");
-                            text = text.replaceAll("\"downloads\":[^\"]*\"client\"([^{}]*\\{[^}]*},?)*[^}]*},", "");
-                            text = text.replaceAll("\"downloads\":[^\"]*\"client\"([^{}]*\\{[^}]*},?)*[^}]*},", "");
-                            {
-                                Matcher matcher = Pattern.compile("\"downloads\": [^}]*}[^}]*},[^\"]*\"name\": ?\"([^\"]*)\"").matcher(text);
-                                while (matcher.find()) {
-                                    String name = matcher.group(1);
-                                    String data = matcher.group(0);
-                                    if (name.contains(":lwjgl:") && !name.contains("nightly")) {
-                                        data = data.replace(name, "org.lwjgl.lwjgl:lwjgl:2.9.1");
-                                        data = data.replaceAll("\"url\"[^,}]*", "\"url\": \"https://libraries.minecraft.net/org/lwjgl/lwjgl/lwjgl/2.9.1/lwjgl-2.9.1.jar\"");
-                                        data = data.replaceAll("\"sha1\"[^,}]*", "\"sha1\": \"f58c5aabcef0e41718a564be9f8e412fff8db847\"");
-                                        data = data.replaceAll("\"size\"[^,}]*", "\"size\": 1014790");
-                                        data = data.replaceAll("\"path\"[^,}]*", "\"path\": \"org/lwjgl/lwjgl/lwjgl/2.9.1/lwjgl-2.9.1.jar\"");
-                                        text = text.substring(0, matcher.start()) + data + text.substring(matcher.end(), text.length());
-                                    }
-                                }
-                            }
-                            {
-                                Matcher matcher = Pattern.compile("\"downloads\": ([^}]*}){6},[^\"]*\"name\": ?\"([^\"]*)\"").matcher(text);
-                                while (matcher.find()) {
-                                    String name = matcher.group(2);
-                                    String data = matcher.group(0);
-                                    if (name.contains(":lwjgl-platform:") && !name.contains("nightly")) {
-                                        data = data.replace(name.substring(name.lastIndexOf(":") + 1), "2.9.1");
-                                        Matcher matcher1 = Pattern.compile("\"natives-([^\"]*)\":[^}]*").matcher(data);
-                                        while (matcher1.find()) {
-                                            String os = matcher1.group(1);
-                                            String d = matcher1.group(0);
-                                            if (os.equals("linux")) {
-                                                d = d.replaceAll("\"sha1\"[^,}]*", "\"sha1\": \"aa9aae879af8eb378e22cfc64db56ec2ca9a44d1\"");
-                                                d = d.replaceAll("\"size\"[^,}]*", "\"size\": 571424");
-                                            }
-                                            if (os.equals("osx")) {
-                                                d = d.replaceAll("\"sha1\"[^,}]*", "\"sha1\": \"2d12c83fdfbc04ecabf02c7bc8cc54d034f0daac\"");
-                                                d = d.replaceAll("\"size\"[^,}]*", "\"size\": 611334");
-                                            }
-                                            if (os.equals("windows")) {
-                                                d = d.replaceAll("\"sha1\"[^,}]*", "\"sha1\": \"4c517eca808522457dd95ee8fc1fbcdbb602efbe\"");
-                                                d = d.replaceAll("\"size\"[^,}]*", "\"size\": 527196");
-                                            }
-                                            data = data.substring(0, matcher1.start()) + d + data.substring(matcher1.end(), data.length());
+                            Gson gson = new GsonBuilder().
+                                    registerTypeAdapter(Double.class, (JsonSerializer<Double>) (src, typeOfSrc, context) -> {
+                                        if(src % 1 == 0) {
+                                            return new JsonPrimitive(src.longValue());
                                         }
-                                        text = text.substring(0, matcher.start()) + data + text.substring(matcher.end(), text.length());
-                                    }
+                                        return new JsonPrimitive(src);
+                                    }).create();
+                            LinkedHashMap<Object, Object> jsonMap = gson.fromJson(Files.newBufferedReader(jsonFile), LinkedHashMap.class);
+                            System.out.println(jsonMap);
+                            jsonMap.remove("downloads");
+                            if(jsonMap.containsKey("assetIndex")) {
+                                LinkedTreeMap<String, Object> map = Util.toMap(jsonMap.get("assetIndex"));
+                                map.put("id", "pre-1.6");
+                                map.put("sha1", "4759bad2824e419da9db32861fcdc3a274336532");
+                                map.put("size", 73813);
+                                map.put("totalSize", 49381897);
+                                map.put("url", "https://launchermeta.mojang.com/v1/packages/4759bad2824e419da9db32861fcdc3a274336532/pre-1.6.json");
+                            }
+                            for(LinkedTreeMap<String, Object> map : (List<LinkedTreeMap<String, Object>>) jsonMap.get("libraries")) {
+                                if(map.get("name").toString().startsWith("org.lwjgl.lwjgl:lwjgl:") && !map.get("name").toString().contains("nightly")) {
+                                    map.put("name", "org.lwjgl.lwjgl:lwjgl:2.9.1");
+                                    LinkedTreeMap<String, Object> map2 = Util.toMap(Util.toMap(map.get("downloads")).get("artifact"));
+                                    map2.put("path", "org/lwjgl/lwjgl/lwjgl/2.9.1/lwjgl-2.9.1.jar");
+                                    map2.put("sha1", "f58c5aabcef0e41718a564be9f8e412fff8db847");
+                                    map2.put("size", 1014790);
+                                    map2.put("url", "https://libraries.minecraft.net/org/lwjgl/lwjgl/lwjgl/2.9.1/lwjgl-2.9.1.jar");
+                                }
+                                if(map.get("name").toString().startsWith("org.lwjgl.lwjgl:lwjgl-platform:") && !map.get("name").toString().contains("nightly")) {
+                                    map.put("name", "org.lwjgl.lwjgl:lwjgl-platform:2.9.1");
+                                    LinkedTreeMap<String, Object> map2 = Util.toMap(Util.toMap(map.get("downloads")).get("classifiers"));
+                                    LinkedTreeMap<String, Object> linux = Util.toMap(map2.get("natives-linux"));
+                                    linux.put("path", "org/lwjgl/lwjgl/lwjgl-platform/2.9.1/lwjgl-platform-2.9.1-natives-linux.jar");
+                                    linux.put("sha1", "aa9aae879af8eb378e22cfc64db56ec2ca9a44d1");
+                                    linux.put("size", 571424);
+                                    linux.put("url", "https://libraries.minecraft.net/org/lwjgl/lwjgl/lwjgl-platform/2.9.1/lwjgl-platform-2.9.1-natives-linux.jar");
+                                    LinkedTreeMap<String, Object> mac = Util.toMap(map2.get("natives-osx"));
+                                    mac.put("path", "org/lwjgl/lwjgl/lwjgl-platform/2.9.1/lwjgl-platform-2.9.1-natives-osx.jar");
+                                    mac.put("sha1", "2d12c83fdfbc04ecabf02c7bc8cc54d034f0daac");
+                                    mac.put("size", 611334);
+                                    mac.put("url", "https://libraries.minecraft.net/org/lwjgl/lwjgl/lwjgl-platform/2.9.1/lwjgl-platform-2.9.1-natives-osx.jar");
+                                    LinkedTreeMap<String, Object> windows = Util.toMap(map2.get("natives-windows"));
+                                    windows.put("path", "org/lwjgl/lwjgl/lwjgl-platform/2.9.1/lwjgl-platform-2.9.1-natives-windows.jar");
+                                    windows.put("sha1", "4c517eca808522457dd95ee8fc1fbcdbb602efbe");
+                                    windows.put("size", 527196);
+                                    windows.put("url", "https://libraries.minecraft.net/org/lwjgl/lwjgl/lwjgl-platform/2.9.1/lwjgl-platform-2.9.1-natives-windows.jar");
                                 }
                             }
+
                             boolean containOldMC = false;
                             for (String key : profile.mcAddToJar.keySet()) {
                                 if (key.endsWith("OldMCPatcher.zip")) {
@@ -112,15 +106,13 @@ public class AddToJar extends JFrame {
                                 }
                             }
                             if (containOldMC) {
-                                text = text.replaceAll("\"mainClass\": \"[^\"]*\"", "\"mainClass\": \"net.minecraft.client.OldMCPatcher.Main\"");
+                                jsonMap.put("mainClass", "net.minecraft.client.OldMCPatcher.Main");
                             } else {
-                                text = text.replaceAll("\"mainClass\": \"[^\"]*\"", "\"mainClass\": \"net.minecraft.launchwrapper.Launch\"");
+                                jsonMap.put("mainClass", "net.minecraft.launchwrapper.Launch");
                             }
-
-                            br.close();
-
-                            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(Util.getPath(versionDir, versionName + ".json")), StandardCharsets.UTF_8));
-                            bw.write(text);
+                            System.out.println(gson.toJson(jsonMap));
+                            BufferedWriter bw = Files.newBufferedWriter(jsonFile);
+                            bw.write(gson.toJson(jsonMap));
                             bw.close();
                         }
                         if (profile.mcAddToJar.size() == 0) break output;
