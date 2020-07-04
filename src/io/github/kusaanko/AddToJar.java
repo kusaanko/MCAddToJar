@@ -13,15 +13,9 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
-import java.lang.reflect.Type;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
@@ -137,6 +131,9 @@ public class AddToJar extends JFrame {
                             Enumeration<? extends ZipEntry> entries = mod.entries();
                             while (entries.hasMoreElements()) {
                                 ZipEntry entry = entries.nextElement();
+                                if(entry.getName().startsWith("META-INF")) {
+                                    continue;
+                                }
                                 ArrayList<String> remove = profile.mcAddToJar.get(fileName);
                                 if (remove != null && remove.contains(entry.getName())) continue;
                                 ZipEntry ze = new ZipEntry(entry.getName());
@@ -160,6 +157,9 @@ public class AddToJar extends JFrame {
                             Enumeration<? extends ZipEntry> entries = mod.entries();
                             while (entries.hasMoreElements()) {
                                 ZipEntry entry = entries.nextElement();
+                                if(entry.getName().startsWith("META-INF")) {
+                                    continue;
+                                }
 
                                 ZipEntry ze = new ZipEntry(entry.getName());
                                 try {
@@ -176,21 +176,6 @@ public class AddToJar extends JFrame {
                             }
                         }
                         append.close();
-                        Map<String, String> env = new HashMap<>();
-                        env.put("create", "false");
-                        URI uri = URI.create("jar:file:/"+URLEncoder.encode(mc.toAbsolutePath().toString().replace("\\","/"),"UTF-8").replace("+","%20")); // Zip file path
-                        try(FileSystem zipfs = FileSystems.newFileSystem(uri, env)) {
-                            ZipFile mod = new ZipFile(mc.toFile());
-                            Enumeration<? extends ZipEntry> entries = mod.entries();
-                            while (entries.hasMoreElements()) {
-                                ZipEntry entry = entries.nextElement();
-                                if(entry.getName().startsWith("META-INF")) {
-                                    delete(zipfs.getPath("/"+entry.getName()));
-                                }
-                            }
-                            delete(zipfs.getPath("/META-INF/"));
-                            mod.close();
-                        }
                     }catch(FileNotFoundException e1){
                         JOptionPane.showMessageDialog(this, e1.getLocalizedMessage());
                     }catch(Exception e1) {
