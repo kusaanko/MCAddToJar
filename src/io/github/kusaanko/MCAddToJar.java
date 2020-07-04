@@ -39,6 +39,10 @@ public class MCAddToJar extends JFrame {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        System.setProperty(
+                "com.apple.mrj.application.apple.menu.about.name",
+                "MCAddToJar");
         if(args.length>0) {
             mcDir = Util.getPath(args[0]);
             if(!Files.exists(mcDir)) {
