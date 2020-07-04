@@ -1,5 +1,7 @@
 package io.github.kusaanko;
 
+import com.google.gson.internal.LinkedTreeMap;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -256,5 +258,10 @@ public class Util {
             }
             return hash.toString();
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static LinkedTreeMap<String, Object> toMap(Object src) {
+        return (LinkedTreeMap<String, Object>) src;
     }
 }
