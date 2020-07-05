@@ -19,6 +19,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static io.github.kusaanko.Language.translate;
 
@@ -48,9 +50,12 @@ public class ModManagerPanel extends JPanel {
     private final JScrollPane scrollPane5;
     private final JScrollPane scrollPane6;
 
+    private AtomicBoolean atomicRedownload;
+
     public ModManagerPanel(JDialog parentDialog, Path gameDir, Profile profile) {
         super(new BorderLayout());
 
+        this.atomicRedownload = new AtomicBoolean(false);
         this.classToButton = new HashMap<>();
         this.mods = new ArrayList<>();
         this.parentDialog = parentDialog;
@@ -333,17 +338,19 @@ public class ModManagerPanel extends JPanel {
                     updatePanes();
                     processing = false;
                 }else {
-                    dialog.run(mod.getDownloadURL(), folder, profile, mod);
+                    dialog.run(mod.getDownloadURL(), folder, profile, mod, atomicRedownload.get());
+                    atomicRedownload.set(false);
                 }
             });
             classToButton.put(mod.getClass(), download);
-            JButton redownload = new JButton(translate("redownload"));
-            redownload.addActionListener(e -> {
+            AtomicReference<JButton> redownload = new AtomicReference<>(new JButton(translate("redownload")));
+            redownload.get().addActionListener(e -> {
                 try {
-                    Files.delete(Util.getPath(mod.getFilePath()));
+                    if(Files.exists(Util.getPath(mod.getFilePath()))) Files.delete(Util.getPath(mod.getFilePath()));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
+                atomicRedownload.set(true);
                 classToButton.get(mod.getClass()).doClick();
             });
             JButton installConfig = new JButton(translate("installConfig"));
@@ -358,10 +365,10 @@ public class ModManagerPanel extends JPanel {
             }
             if(notInstalled) buttonsPane.add(download);
             if(serious) buttonsPane.add(solve);
-            if(installed) buttonsPane.add(redownload);
+            if(installed) buttonsPane.add(redownload.get());
             if(needUpdating) {
-                redownload.setText(translate("update"));
-                buttonsPane.add(redownload);
+                redownload.get().setText(translate("update"));
+                buttonsPane.add(redownload.get());
             }
             if(patch) {
                 download.setText(translate("applythispatch"));
