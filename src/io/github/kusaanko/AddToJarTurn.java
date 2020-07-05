@@ -15,7 +15,7 @@ public class AddToJarTurn extends JDialog {
     ArrayList<String> remove;
     DefaultMutableTreeNode root;
 
-    public AddToJarTurn(JFrame parent, String fileName, InputStream inputStream, ArrayList<String> remove) {
+    public AddToJarTurn(Window parent, String fileName, InputStream inputStream, ArrayList<String> remove) {
         super(parent);
         root = new DefaultMutableTreeNode(fileName);
         this.setTitle(fileName);
