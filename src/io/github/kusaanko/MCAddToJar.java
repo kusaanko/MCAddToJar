@@ -30,6 +30,7 @@ public class MCAddToJar extends JFrame {
     public static final String repo = "https://github.com/kusaanko/MCAddToJar/releases";
     public static MCAddToJar frame;
     public static AddToJar addToJar;
+    private static String oldMCPatcherVersion = "Unknown";
 
     public static void main(String[] args) {
         Config.load();
@@ -99,13 +100,22 @@ public class MCAddToJar extends JFrame {
             help.add(menu);
             JMenuItem see = new JMenuItem(translate("seeupdatehistory"));
             see.addActionListener(ev -> {
-                try {
-                    Desktop.getDesktop().browse(new URI("https://github.com/kusaanko/MCAddToJar/releases"));
-                } catch (URISyntaxException | IOException e) {
-                    e.printStackTrace();
+                String link = "https://api.github.com/repos/kusaanko/MCAddToJar/releases";
+                if(language.equals("ja_JP")) {
+                    link = "https://raw.githubusercontent.com/kusaanko/MCAddToJar/master/changelog_jp.json";
                 }
+                new Changelog(this, link);
+            });
+            JMenuItem seeoldmcpatcher = new JMenuItem(translate("seeupdatehistoryofoldmcpatcher"));
+            seeoldmcpatcher.addActionListener(ev -> {
+                String link = "https://api.github.com/repos/OldMCPatcher/MCAddToJar/releases";
+                if(language.equals("ja_JP")) {
+                    link = "https://raw.githubusercontent.com/kusaanko/OldMCPatcher/master/changelog_jp.json";
+                }
+                new Changelog(this, link);
             });
             help.add(see);
+            help.add(seeoldmcpatcher);
             menuBar.add(help);
         }
         {
@@ -261,6 +271,7 @@ public class MCAddToJar extends JFrame {
                         version = key;
                     }
                 }
+                oldMCPatcherVersion = version!=null?version:"Unknown";
                 if(!fileSum.equals(newSum)) {
                     Util.downloadFile("https://github.com/kusaanko/OldMCPatcher/releases/download/"+newVer+"/OldMCPatcher-"+newVer+".zip", "OldMCPatcher.zip");
                     Path profileFolder = Util.getPath("profiles/");
