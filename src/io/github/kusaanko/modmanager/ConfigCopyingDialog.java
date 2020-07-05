@@ -113,6 +113,9 @@ public class ConfigCopyingDialog extends JDialog {
                 }
                 if(!Files.exists(Util.getPath(placeFolder, mod.getDownloadFileName())))
                     Files.createFile(Util.getPath(placeFolder, mod.getDownloadFileName()));
+                mod.setFilePath(Util.getPath(placeFolder, mod.getDownloadFileName()).toAbsolutePath().toString());
+                mod.setFileName(mod.getDownloadFileName());
+                mod.setFileVersion(mod.getVersion());
                 ConfigCopyingDialog.this.dispose();
             }catch (Exception e) {
                 statusLabel.setText(String.format(translate("anerrorhasoccurred"), e.getClass().toString()+": "+e.getLocalizedMessage()));
