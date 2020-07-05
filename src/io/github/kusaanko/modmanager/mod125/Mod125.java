@@ -191,6 +191,9 @@ public abstract class Mod125 extends Mod {
         mods125.put(UgoCraft125.class, new UgoCraft125());
         mods125.put(WorkBenchEX125.class, new WorkBenchEX125());
         mods125.put(Zeppelin125.class, new Zeppelin125());
+
+        //Config
+        mods125.put(ConfigMCAddToJar125.class, new ConfigMCAddToJar125());
     }
 
     public static Mod is125(String fileName) {
