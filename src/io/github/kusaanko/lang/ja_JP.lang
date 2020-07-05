@@ -15,7 +15,9 @@ reoutputallprofiles=全プロファイルを出力し直しますか？
 license=ライセンス
 help=ヘルプ
 apachelicense2.0=このソフトウェアは Apache License, Version 2.0 のライセンスで配布されている成果物を含んでいます。
+checktheversionofOldMCPatcher=OldMCPatcherのバージョンを確認する
 seeupdatehistory=更新履歴を見る
+seeupdatehistoryofoldmcpatcher=OldMCPatcherの更新履歴を見る
 
 lang_name=日本語
 language=言語
@@ -101,6 +103,11 @@ copydirectdownloadpageurl=直接ダウンロードページURLをコピー
 copymodname=MOD名をコピー
 copyauthor=制作者名をコピー
 copyversion=バージョンをコピー
+selecttheinstallationmethod=導入方法を選択
+overwrite=上書き
+onlyfilesthatdonotexist=存在しないファイルのみ
+installConfig=コンフィグをインストール
+selectfiles=ファイルを選択
 
 crashloganalyzer=クラッシュログの解析
 pastecrashlog=クラッシュログを貼り付け

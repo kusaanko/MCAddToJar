@@ -15,7 +15,9 @@ reoutputallprofiles=Do you want to re-output all profiles?
 license=License
 help=Help
 apachelicense2.0=This software includes the artifacts distributed under the Apache License, Version 2.0 license.
+checktheversionofOldMCPatcher=Check the version of OldMCPatcher
 seeupdatehistory=See update history
+seeupdatehistoryofoldmcpatcher=See update history of OldMCPatcher
 
 lang_name=English
 language=Language
@@ -101,6 +103,11 @@ copydirectdownloadpageurl=Copy direct download page url
 copymodname=Copy mod name
 copyauthor=Copy author's name
 copyversion=Copy version
+selecttheinstallationmethod=Select the installation method
+overwrite=Overwrite
+onlyfilesthatdonotexist=Only files that do not exist
+installConfig=Install config
+selectfiles=Select files
 
 crashloganalyzer=Crash log analyzer
 pastecrashlog=Paste crash log
