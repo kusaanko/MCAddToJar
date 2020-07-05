@@ -39,6 +39,11 @@ public class ModManager125 extends JDialog {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                try {
+                    files = Files.list(profileDir).collect(Collectors.toList());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 for(String filePath : profile.mcAddToJarTurn) {
                     files.add(Util.getPath(filePath));
                 }
