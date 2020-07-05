@@ -195,6 +195,7 @@ public class AddToJar extends JFrame {
         JButton backupjson = new JButton(translate("backupjson"));
         JButton modmanager = new JButton(translate("modmanager"));
         JButton crashloganalysis = new JButton(translate("crashloganalysis"));
+        JButton autosort = new JButton(translate("autosort"));
         controls.add(up);
         controls.add(down);
         controls.add(edit);
@@ -206,6 +207,7 @@ public class AddToJar extends JFrame {
         if(profile.version.equals("1.2.5")) {
             controls.add(modmanager);
             controls.add(crashloganalysis);
+            controls.add(autosort);
         }
         if(!json) backupjson.setEnabled(false);
         panel.add(controls, BorderLayout.NORTH);
@@ -325,6 +327,66 @@ public class AddToJar extends JFrame {
         });
         crashloganalysis.addActionListener(e -> {
             new CrashLogAnalyzer(this, profile.version);
+        });
+        autosort.addActionListener(e -> {
+            profile.mcAddToJarTurn.sort((o1, o2) -> {
+                if(o1.contains("OldMCPatcher")) {
+                    return 1;
+                }
+                if(o2.contains("OldMCPatcher")) {
+                    return -1;
+                }
+                if(o1.contains("MinecraftAPI")) {
+                    return 1;
+                }
+                if(o2.contains("MinecraftAPI")) {
+                    return -1;
+                }
+                if(o1.contains("ModLoaderMP")) {
+                    return -1;
+                }
+                if(o2.contains("ModLoaderMP")) {
+                    return 1;
+                }
+                if(o1.contains("forge")) {
+                    return -1;
+                }
+                if(o2.contains("forge")) {
+                    return 1;
+                }
+                if(o1.contains("OptiFine") && !o1.contains("Render") && !o1.contains("Localize")) {
+                    return -1;
+                }
+                if(o2.contains("OptiFine") && !o2.contains("Render") && !o2.contains("Localize")) {
+                    return 1;
+                }
+                if(o1.contains("OptiFine") && o1.contains("Render")) {
+                    return -1;
+                }
+                if(o2.contains("OptiFine") && o2.contains("Render")) {
+                    return 1;
+                }
+                if(o1.contains("OptiFine") && o1.contains("Localize")) {
+                    return -1;
+                }
+                if(o2.contains("OptiFine") && o2.contains("Localize")) {
+                    return 1;
+                }
+                if(o1.contains("TooManyItems")) {
+                    return -1;
+                }
+                if(o2.contains("TooManyItems")) {
+                    return 1;
+                }
+                if(o1.contains("SinglePlayer")) {
+                    return -1;
+                }
+                if(o2.contains("SinglePlayer")) {
+                    return 1;
+                }
+                return o1.compareTo(o2);
+            });
+            update();
         });
         JScrollPane pane = new JScrollPane(list);
         update();
