@@ -98,6 +98,10 @@ public class MCAddToJar extends JFrame {
             JMenuItem menu = new JMenuItem(translate("license"));
             menu.addActionListener(e -> new License(this));
             help.add(menu);
+            JMenuItem checkoldmcpatcherver = new JMenuItem(translate("checktheversionofOldMCPatcher"));
+            checkoldmcpatcherver.addActionListener(ev -> {
+                JOptionPane.showMessageDialog(this, "OldMCPatcher " + oldMCPatcherVersion);
+            });
             JMenuItem see = new JMenuItem(translate("seeupdatehistory"));
             see.addActionListener(ev -> {
                 String link = "https://api.github.com/repos/kusaanko/MCAddToJar/releases";
@@ -114,6 +118,7 @@ public class MCAddToJar extends JFrame {
                 }
                 new Changelog(this, link);
             });
+            help.add(checkoldmcpatcherver);
             help.add(see);
             help.add(seeoldmcpatcher);
             menuBar.add(help);
