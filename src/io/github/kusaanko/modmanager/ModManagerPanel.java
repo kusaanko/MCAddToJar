@@ -374,7 +374,7 @@ public class ModManagerPanel extends JPanel {
             modName.setEnabled(false);
             popupMenu.add(modName);
             JMenuItem opendownload = new JMenuItem(translate("opendownloadpage"));
-            popupMenu.add(opendownload);
+            if(mod.getDownloadPageURL() != null && !mod.getDownloadPageURL().isEmpty()) popupMenu.add(opendownload);
             opendownload.addActionListener(e -> {
                 try {
                     Desktop.getDesktop().browse(new URL(mod.getDownloadPageURL()).toURI());
@@ -383,7 +383,7 @@ public class ModManagerPanel extends JPanel {
                 }
             });
             JMenuItem opendirectdownload = new JMenuItem(translate("opendirectdownloadpage"));
-            popupMenu.add(opendirectdownload);
+            if(mod.getDownloadURL() != null && !mod.getDownloadURL().isEmpty()) popupMenu.add(opendirectdownload);
             opendirectdownload.addActionListener(e -> {
                 try {
                     Desktop.getDesktop().browse(new URL(mod.getDownloadURL()).toURI());
@@ -392,13 +392,13 @@ public class ModManagerPanel extends JPanel {
                 }
             });
             JMenuItem copydownload = new JMenuItem(translate("copydownloadpageurl"));
-            popupMenu.add(copydownload);
+            if(mod.getDownloadPageURL() != null && !mod.getDownloadPageURL().isEmpty())popupMenu.add(copydownload);
             copydownload.addActionListener(e -> {
                 StringSelection selection = new StringSelection(mod.getDownloadPageURL());
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
             });
             JMenuItem copydirectdownload = new JMenuItem(translate("copydirectdownloadpageurl"));
-            popupMenu.add(copydirectdownload);
+            if(mod.getDownloadURL() != null && !mod.getDownloadURL().isEmpty())popupMenu.add(copydirectdownload);
             copydirectdownload.addActionListener(e -> {
                 StringSelection selection = new StringSelection(mod.getDownloadURL());
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
