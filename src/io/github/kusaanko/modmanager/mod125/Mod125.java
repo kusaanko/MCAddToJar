@@ -54,6 +54,7 @@ public abstract class Mod125 extends Mod {
         mods125.put(OptiFineHDRendererFix125.class, new OptiFineHDRendererFix125());
         mods125.put(OptiFineLocalizeFix125.class, new OptiFineLocalizeFix125());
         mods125.put(Portalgun125.class, new Portalgun125());
+        mods125.put(PowerConverters125.class, new PowerConverters125());
         mods125.put(DiamondHell125.class, new DiamondHell125());
         mods125.put(ThinArm125.class, new ThinArm125());
         mods125.put(VillagersSpawnBan125.class, new VillagersSpawnBan125());
