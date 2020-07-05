@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +43,7 @@ public class DownloadingDialog extends JDialog {
         this.setVisible(true);
     }
 
-    public void run(String link, Path placeFolder, Profile profile, Mod mod) {
+    public void run(String link, Path placeFolder, Profile profile, Mod mod, boolean overwrite) {
         new Thread(() -> {
             Path outputFile;
             try{
@@ -51,7 +52,7 @@ public class DownloadingDialog extends JDialog {
                 Path temporary = Util.getPath(mod.getDownloadFolder(), fileName);
                 outputFile = Util.getPath(placeFolder, fileName);
 
-                if(!Files.exists(temporary)) {
+                if(overwrite || !Files.exists(temporary)) {
                     if(mod.needUserDownload()) {
                         this.dispose();
                         WaitingDownloadDialog dialog = new WaitingDownloadDialog(this, mod.getName(), mod.getVersion(), mod.getDownloadPageURL());
@@ -87,20 +88,25 @@ public class DownloadingDialog extends JDialog {
                         }
                         statusLabel.setText(String.format(translate("downloading"), fileName, ""));
 
-                        Files.createDirectories(temporary.getParent());
-                        InputStream inputStream = connection.getInputStream();
-                        OutputStream outputStream = Files.newOutputStream(temporary);
+                        if(((HttpURLConnection)connection).getResponseCode() == 200) {
+                            Files.createDirectories(temporary.getParent());
+                            InputStream inputStream = connection.getInputStream();
+                            OutputStream outputStream = Files.newOutputStream(temporary);
 
-                        byte[] buff = new byte[4096];
-                        int len;
-                        int downloaded = 0;
-                        while ((len = inputStream.read(buff, 0, buff.length)) != -1) {
-                            outputStream.write(buff, 0, len);
-                            downloaded += len;
-                            statusLabel.setText(String.format(translate("downloading"), fileName, downloaded / 1024 + "KiB / " + connection.getContentLength() / 1024 + "KiB"));
+                            byte[] buff = new byte[4096];
+                            int len;
+                            int downloaded = 0;
+                            while ((len = inputStream.read(buff, 0, buff.length)) != -1) {
+                                outputStream.write(buff, 0, len);
+                                downloaded += len;
+                                statusLabel.setText(String.format(translate("downloading"), fileName, downloaded / 1024 + "KiB / " + connection.getContentLength() / 1024 + "KiB"));
+                            }
+                            inputStream.close();
+                            outputStream.close();
                         }
-                        inputStream.close();
-                        outputStream.close();
+                        if(!Files.exists(temporary)) {
+                            throw new NoSuchFileException("Http status code:" + ((HttpURLConnection)connection).getResponseCode());
+                        }
                     }
                 }
                 if (mod.getInstallationType() != Mod.INSTALLATION_TYPE.IN_JAR && mod.getType() != Mod.TYPE.PATCH) {
