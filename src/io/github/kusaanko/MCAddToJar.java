@@ -84,6 +84,7 @@ public class MCAddToJar extends JFrame {
         DownloadOriginal.init();
         Runtime.getRuntime().addShutdownHook(new Thread(Config::save));
         new MCAddToJar();
+        Config.put("lastVersion", version);
     }
 
     private Profile profile;
@@ -122,6 +123,9 @@ public class MCAddToJar extends JFrame {
             help.add(see);
             help.add(seeoldmcpatcher);
             menuBar.add(help);
+            if(Config.get("lastVersion", "").equals("")) {
+                new Thread(see::doClick).start();
+            }
         }
         {
             JMenu settings = new JMenu(translate("settings"));
