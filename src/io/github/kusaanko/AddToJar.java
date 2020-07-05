@@ -53,7 +53,6 @@ public class AddToJar extends JFrame {
                                         return new JsonPrimitive(src);
                                     }).create();
                             LinkedHashMap<Object, Object> jsonMap = gson.fromJson(Files.newBufferedReader(jsonFile), LinkedHashMap.class);
-                            System.out.println(jsonMap);
                             jsonMap.remove("downloads");
                             if(jsonMap.containsKey("assetIndex")) {
                                 LinkedTreeMap<String, Object> map = Util.toMap(jsonMap.get("assetIndex"));
@@ -104,7 +103,6 @@ public class AddToJar extends JFrame {
                             } else {
                                 jsonMap.put("mainClass", "net.minecraft.launchwrapper.Launch");
                             }
-                            System.out.println(gson.toJson(jsonMap));
                             BufferedWriter bw = Files.newBufferedWriter(jsonFile);
                             bw.write(gson.toJson(jsonMap));
                             bw.close();
