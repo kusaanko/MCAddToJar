@@ -29,6 +29,7 @@ public class AddToJarTurn extends JDialog {
             while((entry = mod.getNextEntry()) != null) {
                 entries.add(entry.getName());
             }
+            mod.close();
             entries.sort(String::compareToIgnoreCase);
             for(String name : entries) {
                 String[] a = name.split("/");
