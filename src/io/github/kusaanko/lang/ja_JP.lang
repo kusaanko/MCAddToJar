@@ -108,6 +108,7 @@ overwrite=上書き
 onlyfilesthatdonotexist=存在しないファイルのみ
 installConfig=コンフィグをインストール
 selectfiles=ファイルを選択
+thejarintroductorymodhasbeeninstalled=Jar導入MODがインストールされました。Minecraftを起動する前に、出力してください。
 
 crashloganalyzer=クラッシュログの解析
 pastecrashlog=クラッシュログを貼り付け

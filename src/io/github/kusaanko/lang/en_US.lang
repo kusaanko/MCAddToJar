@@ -108,6 +108,7 @@ overwrite=Overwrite
 onlyfilesthatdonotexist=Only files that do not exist
 installConfig=Install config
 selectfiles=Select files
+thejarintroductorymodhasbeeninstalled=The jar introductory mod has been installed. Please output before starting Minecraft.
 
 crashloganalyzer=Crash log analyzer
 pastecrashlog=Paste crash log
