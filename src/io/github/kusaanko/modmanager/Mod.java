@@ -1,5 +1,7 @@
 package io.github.kusaanko.modmanager;
 
+import java.io.InputStream;
+
 public abstract class Mod implements Cloneable {
     private String filePath;
     private String fileName;
@@ -81,6 +83,8 @@ public abstract class Mod implements Cloneable {
     public String getInstallationFolder() {
         return "mods";
     }
+
+    public InputStream getConfigInputStream() {return null;}
 
     //direct link
     public abstract String getDownloadURL();
