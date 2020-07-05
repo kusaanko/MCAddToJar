@@ -52,6 +52,7 @@ mcvanillawasnotfound=Minecraftのバニラが見つかりませんでした。
 deleteoriginal=%sを削除しますか？
 modmanager=Modマネージャー
 crashloganalysis=クラッシュログの解析
+autosort=自動ソート
 
 selectprofile=プロファイルを選択
 scanningprofile=プロファイルをスキャン中...
