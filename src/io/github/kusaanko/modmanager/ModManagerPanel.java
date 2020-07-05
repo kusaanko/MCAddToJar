@@ -296,6 +296,7 @@ public class ModManagerPanel extends JPanel {
                     if(mod.getType() != Mod.TYPE.PATCH) {
                         if (Files.exists(outputFile)) {
                             if (mod.getInstallationType() == Mod.INSTALLATION_TYPE.IN_JAR) {
+                                profile.remove(outputFile.toAbsolutePath().toString());
                                 profile.add(outputFile.toAbsolutePath().toString());
                                 MCAddToJar.addToJar.update();
                                 JOptionPane.showMessageDialog(this, translate("thejarintroductorymodhasbeeninstalled"));
