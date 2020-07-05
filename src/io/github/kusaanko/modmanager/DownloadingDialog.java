@@ -108,7 +108,6 @@ public class DownloadingDialog extends JDialog {
                         Util.copy(temporary, outputFile);
                     }else {
                         ZipInputStream inputStream = new ZipInputStream(Files.newInputStream(temporary), Charset.forName(mod.getUnzipCharset()));
-                        System.out.println(temporary.toString());
 
                         statusLabel.setText("Unzipping...");
                         byte[] buff = new byte[8192];
@@ -119,7 +118,9 @@ public class DownloadingDialog extends JDialog {
                             for(String extract : mod.getUnzipFiles()) {
                                 if (entry.getName().startsWith(extract)) {
                                     statusLabel.setText("Unzipping... " + entry.getName());
-                                    Path out = Util.getPath(placeFolder, entry.getName());
+                                    String name = entry.getName();
+                                    name = name.substring(name.lastIndexOf("/") + 1);
+                                    Path out = Util.getPath(placeFolder, name);
                                     if (entry.isDirectory()) {
                                         Files.createDirectories(out);
                                     } else {
