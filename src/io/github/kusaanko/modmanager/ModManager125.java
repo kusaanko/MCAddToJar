@@ -40,7 +40,7 @@ public class ModManager125 extends JDialog {
                     e.printStackTrace();
                 }
                 try {
-                    files = Files.list(profileDir).collect(Collectors.toList());
+                    files.addAll(Files.list(profileDir).collect(Collectors.toList()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
