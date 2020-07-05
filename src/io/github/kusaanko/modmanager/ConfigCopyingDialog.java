@@ -27,6 +27,7 @@ public class ConfigCopyingDialog extends JDialog {
     private JLabel statusLabel;
     private boolean overwrite;
     private ArrayList<String> writeList;
+    private Runnable event;
 
     public ConfigCopyingDialog(JDialog parentDialog, Mod mod) {
         super(parentDialog);
@@ -118,6 +119,11 @@ public class ConfigCopyingDialog extends JDialog {
                 e.printStackTrace();
                 this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             }
+            this.event.run();
         }).start();
+    }
+
+    public void registerEvent(Runnable event) {
+        this.event = event;
     }
 }

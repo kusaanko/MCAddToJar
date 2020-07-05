@@ -348,6 +348,7 @@ public class ModManagerPanel extends JPanel {
             installConfig.addActionListener(e -> {
                 ConfigCopyingDialog dialog = new ConfigCopyingDialog(parentDialog, mod);
                 Path folder = Util.getPath(gameDir, mod.getInstallationFolder());
+                dialog.registerEvent(this::updatePanes);
                 dialog.run(folder, mod);
             });
             if(mod.getType() == Mod.TYPE.CONFIG) {
