@@ -5,7 +5,9 @@ import io.github.kusaanko.modmanager.Mod;
 public class OptiFine125 extends Mod125 {
     @Override
     public String is(String fileName) {
-        return startsWith(fileName, "OptiFine_1.2.5_");
+        if(!fileName.contains("Fix"))
+            return startsWith(fileName, "OptiFine_1.2.5_");
+        return null;
     }
 
     @Override
