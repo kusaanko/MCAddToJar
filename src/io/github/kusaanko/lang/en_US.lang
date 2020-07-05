@@ -52,6 +52,7 @@ mcvanillawasnotfound=Minecraft vanilla was not found.
 deleteoriginal=Do you want to delete the %s?
 modmanager=Mod manager
 crashloganalysis=Crash log analysis
+autosort=Auto sort
 
 selectprofile=Select Profile
 scanningprofile=Scanning profile...
