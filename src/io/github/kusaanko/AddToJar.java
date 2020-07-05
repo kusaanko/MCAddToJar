@@ -237,16 +237,21 @@ public class AddToJar extends JFrame {
         edit.addActionListener(e -> {
             int index = list.getSelectedIndex();
             if(index==-1) return;
-            new AddToJarTurn(this, list.getSelectedValue(), profile.mcAddToJar.get(list.getSelectedValue())) {
-                @Override
-                public void end(String fileName, ArrayList<String> remove) {
-                    profile.mcAddToJar.put(fileName, remove);
-                    AddToJar.this.update();
-                    undo();
-                    AddToJar.this.update();
-                    this.dispose();
-                }
-            };
+            Path file = Util.getPath(list.getSelectedValue());
+            try {
+                new AddToJarTurn(this, file.getFileName().toString(), Files.newInputStream(file), profile.mcAddToJar.get(list.getSelectedValue())) {
+                    @Override
+                    public void end(String fileName, ArrayList<String> remove) {
+                        profile.mcAddToJar.put(fileName, remove);
+                        AddToJar.this.update();
+                        undo();
+                        AddToJar.this.update();
+                        this.dispose();
+                    }
+                };
+            }catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
         list.addMouseListener(new MouseAdapter() {
             @Override
