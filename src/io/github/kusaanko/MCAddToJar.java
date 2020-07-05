@@ -123,9 +123,6 @@ public class MCAddToJar extends JFrame {
             help.add(see);
             help.add(seeoldmcpatcher);
             menuBar.add(help);
-            if(Config.get("lastVersion", "").equals("")) {
-                new Thread(see::doClick).start();
-            }
         }
         {
             JMenu settings = new JMenu(translate("settings"));
