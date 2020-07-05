@@ -28,6 +28,7 @@ public class ModManagerPanel extends JPanel {
     private final JPanel installedPane;
     private final JPanel notinstalledPane;
     private final JPanel patchPane;
+    private final JPanel configPane;
 
     private final JTabbedPane tabbedPane;
 
@@ -45,6 +46,7 @@ public class ModManagerPanel extends JPanel {
     private final JScrollPane scrollPane3;
     private final JScrollPane scrollPane4;
     private final JScrollPane scrollPane5;
+    private final JScrollPane scrollPane6;
 
     public ModManagerPanel(JDialog parentDialog, Path gameDir, Profile profile) {
         super(new BorderLayout());
@@ -70,6 +72,9 @@ public class ModManagerPanel extends JPanel {
         this.patchPane = new JPanel(new GridLayout(0, 1));
         scrollPane5 = new JScrollPane(this.patchPane);
 
+        this.configPane = new JPanel(new GridLayout(0, 1));
+        scrollPane6 = new JScrollPane(this.configPane);
+
         this.tabbedPane = new JTabbedPane();
         this.add(this.tabbedPane);
         this.tabbedPane.addTab(translate("serious"), scrollPane);
@@ -77,11 +82,14 @@ public class ModManagerPanel extends JPanel {
         this.tabbedPane.addTab(translate("installed"), scrollPane3);
         this.tabbedPane.addTab(translate("notinstalled"), scrollPane4);
         this.tabbedPane.addTab(translate("patch"), scrollPane5);
+        this.tabbedPane.addTab(translate("config"), scrollPane6);
 
         scrollPane.getVerticalScrollBar().setUnitIncrement(25);
         scrollPane2.getVerticalScrollBar().setUnitIncrement(25);
         scrollPane3.getVerticalScrollBar().setUnitIncrement(25);
         scrollPane4.getVerticalScrollBar().setUnitIncrement(25);
+        scrollPane5.getVerticalScrollBar().setUnitIncrement(25);
+        scrollPane6.getVerticalScrollBar().setUnitIncrement(25);
     }
 
     public void addMod(Mod mod) {
@@ -94,22 +102,26 @@ public class ModManagerPanel extends JPanel {
         int scrollPane3Pos = scrollPane3.getVerticalScrollBar().getValue();
         int scrollPane4Pos = scrollPane4.getVerticalScrollBar().getValue();
         int scrollPane5Pos = scrollPane5.getVerticalScrollBar().getValue();
+        int scrollPane6Pos = scrollPane6.getVerticalScrollBar().getValue();
         updatePane("serious", seriousPane);
         updatePane("needupdating", needUpdatingPane);
         updatePane("installed", installedPane);
         updatePane("notinstalled", notinstalledPane);
         updatePane("patch", patchPane);
+        updatePane("config", configPane);
         this.tabbedPane.repaint();
         scrollPane.validate();
         scrollPane2.validate();
         scrollPane3.validate();
         scrollPane4.validate();
         scrollPane5.validate();
+        scrollPane6.validate();
         scrollPane.getVerticalScrollBar().setValue(scrollPane1Pos);
         scrollPane2.getVerticalScrollBar().setValue(scrollPane2Pos);
         scrollPane3.getVerticalScrollBar().setValue(scrollPane3Pos);
         scrollPane4.getVerticalScrollBar().setValue(scrollPane4Pos);
         scrollPane5.getVerticalScrollBar().setValue(scrollPane5Pos);
+        scrollPane6.getVerticalScrollBar().setValue(scrollPane6Pos);
     }
 
     public void updatePane(String mode, JPanel panel) {
@@ -209,6 +221,7 @@ public class ModManagerPanel extends JPanel {
             boolean installed = false;
             boolean needUpdating = false;
             boolean patch = false;
+            boolean config = false;
             if((serious && !mode.equals("serious")) || (mod.getFileVersion().isEmpty() && mode.equals("serious")))
                 serious = false;
             if(!mod.getFileVersion().isEmpty() && mod.compareVersion() && mode.equals("needupdating"))
@@ -219,6 +232,8 @@ public class ModManagerPanel extends JPanel {
                 notInstalled = true;
             if(mode.equals("patch"))
                 patch = true;
+            if(mode.equals("config") && mod.getType() == Mod.TYPE.CONFIG)
+                config = true;
 
             components = new JComponent[]{genJLabel("<html>" + mod.getName()), genJLabel("<html>" + mod.getAuthor()),
                     genJLabel("<html>" + translate(type) + "<br>" + translate(ins_type)),
@@ -325,6 +340,12 @@ public class ModManagerPanel extends JPanel {
                 }
                 classToButton.get(mod.getClass()).doClick();
             });
+            JButton installConfig = new JButton(translate("installConfig"));
+            installConfig.addActionListener(e -> {
+                ConfigCopyingDialog dialog = new ConfigCopyingDialog(parentDialog, mod);
+                Path folder = Util.getPath(gameDir, mod.getInstallationFolder());
+                dialog.run(folder, mod);
+            });
             if(notInstalled) buttonsPane.add(download);
             if(serious) buttonsPane.add(solve);
             if(installed) buttonsPane.add(redownload);
@@ -336,7 +357,10 @@ public class ModManagerPanel extends JPanel {
                 download.setText(translate("applythispatch"));
                 buttonsPane.add(download);
             }
-            if(!notInstalled && !patch) buttonsPane.add(delete);
+            if(config) {
+                buttonsPane.add(installConfig);
+            }
+            if(!notInstalled && !patch && !config) buttonsPane.add(delete);
             JPopupMenu popupMenu = new JPopupMenu();
             JMenuItem modName = new JMenuItem(mod.getName());
             modName.setEnabled(false);
@@ -412,6 +436,8 @@ public class ModManagerPanel extends JPanel {
             }else if(needUpdating) {
                 this.addLine(panel, components);
             }else if(patch) {
+                this.addLine(panel, components);
+            }else if(config) {
                 this.addLine(panel, components);
             }
         }
