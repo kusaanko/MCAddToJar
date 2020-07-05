@@ -4,25 +4,31 @@ import javax.swing.*;
 import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.InputStream;
 import java.util.*;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 public class AddToJarTurn extends JDialog {
     String fileName;
     ArrayList<String> remove;
     DefaultMutableTreeNode root;
 
-    public AddToJarTurn(JFrame parent, String fileName, ArrayList<String> remove) {
+    public AddToJarTurn(JFrame parent, String fileName, InputStream inputStream, ArrayList<String> remove) {
         super(parent);
-        root = new DefaultMutableTreeNode(Util.getPath(fileName).getFileName().toString());
-        this.setTitle(Util.getPath(fileName).getFileName().toString());
+        root = new DefaultMutableTreeNode(fileName);
+        this.setTitle(fileName);
         this.setModal(true);
         HashMap<String, DefaultMutableTreeNode> folders = new HashMap<>();
         ArrayList<String> files = new ArrayList<>();
         try{
-            ZipFile mod = new ZipFile(fileName);
+            ZipInputStream mod = new ZipInputStream(inputStream);
             ArrayList<String> entries = new ArrayList<>();
-            mod.stream().forEach(o -> entries.add(o.getName()));
+            ZipEntry entry;
+            while((entry = mod.getNextEntry()) != null) {
+                entries.add(entry.getName());
+            }
             entries.sort(String::compareToIgnoreCase);
             for(String name : entries) {
                 String[] a = name.split("/");
