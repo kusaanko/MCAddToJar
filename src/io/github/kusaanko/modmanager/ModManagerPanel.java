@@ -234,6 +234,10 @@ public class ModManagerPanel extends JPanel {
                 patch = true;
             if(mode.equals("config") && mod.getType() == Mod.TYPE.CONFIG)
                 config = true;
+            if(mod.getType() == Mod.TYPE.CONFIG) {
+                installed = false;
+                notInstalled = false;
+            }
 
             components = new JComponent[]{genJLabel("<html>" + mod.getName()), genJLabel("<html>" + mod.getAuthor()),
                     genJLabel("<html>" + translate(type) + "<br>" + translate(ins_type)),
@@ -346,6 +350,9 @@ public class ModManagerPanel extends JPanel {
                 Path folder = Util.getPath(gameDir, mod.getInstallationFolder());
                 dialog.run(folder, mod);
             });
+            if(mod.getType() == Mod.TYPE.CONFIG) {
+                classToButton.put(mod.getClass(), installConfig);
+            }
             if(notInstalled) buttonsPane.add(download);
             if(serious) buttonsPane.add(solve);
             if(installed) buttonsPane.add(redownload);
