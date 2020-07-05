@@ -67,6 +67,6 @@ public class ConfigMCAddToJar125 extends Mod125 {
 
     @Override
     public String getDownloadFileName() {
-        return "config_MCAddToJar_1.zip";
+        return "mods/config_MCAddToJar_1.zip";
     }
 }
