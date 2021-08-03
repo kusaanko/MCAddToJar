@@ -10,12 +10,12 @@ public class CreativeGui125 extends Mod125 {
 
     @Override
     public String getDownloadURL() {
-        return "https://www.dropbox.com/s/ixk2yqwwfn661f8/%5B1.2.5%5DCreativeGui_1.2.1.zip?dl=1";
+        return "https://github.com/kusaanko/Minecraft_CreativeGui/releases/download/v1.2.1/1.2.5.CreativeGui_1.2.1.zip";
     }
 
     @Override
     public String getDownloadPageURL() {
-        return "http://mod.kusaanko.cf/mod.php?mod=1.2.5/CreativeGui";
+        return "https://github.com/kusaanko/Minecraft_CreativeGui";
     }
 
     @Override
