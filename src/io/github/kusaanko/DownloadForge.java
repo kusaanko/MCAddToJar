@@ -24,7 +24,7 @@ public class DownloadForge extends JDialog {
         loading.setHorizontalAlignment(JLabel.CENTER);
         loading.setPreferredSize(new Dimension(500, 300));
         new Thread(() -> {
-            String body = Util.executeGet("https://files.minecraftforge.net/maven/net/minecraftforge/forge/index_"+version+".html");
+            String body = Util.executeGet("https://files.minecraftforge.net/net/minecraftforge/forge/index_"+version+".html");
             if(body!=null) {
                 Matcher matcher = Pattern.compile("([0-9]\\.[0-9]\\.[0-9]\\.[0-9]+)").matcher(body);
                 HashMap<String, String> a = new HashMap<>();
@@ -60,7 +60,8 @@ public class DownloadForge extends JDialog {
                     if(version.startsWith("1.1")||version.startsWith("1.2")) {
                         kind = "client";
                     }
-                    String url = "http://files.minecraftforge.net/maven/net/minecraftforge/forge/"+version+"-"+list.getSelectedValue()+"/forge-"+version+"-"+list.getSelectedValue()+"-"+kind+".zip";
+                    String url = "https://maven.minecraftforge.net/net/minecraftforge/forge/"+version+"-"+list.getSelectedValue()+"/forge-"+version+"-"+list.getSelectedValue()+"-"+kind+".zip";
+                    System.out.println(url);
                     Path output = Util.getPath("forge/forge-"+version+"-"+list.getSelectedValue()+"-"+kind+".zip");
                     if(!Files.exists(output)) {
                         try {
