@@ -61,7 +61,6 @@ public class DownloadForge extends JDialog {
                         kind = "client";
                     }
                     String url = "https://maven.minecraftforge.net/net/minecraftforge/forge/"+version+"-"+list.getSelectedValue()+"/forge-"+version+"-"+list.getSelectedValue()+"-"+kind+".zip";
-                    System.out.println(url);
                     Path output = Util.getPath("forge/forge-"+version+"-"+list.getSelectedValue()+"-"+kind+".zip");
                     if(!Files.exists(output)) {
                         try {
