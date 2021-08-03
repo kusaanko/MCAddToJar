@@ -1,5 +1,9 @@
 [
   {
+    "name": "2.0.2",
+    "body": "* ForgeのURLを修正\n* CreativeGuiのURLを修正"
+  },
+  {
     "name": "2.0.01",
     "body": "* macOS用のlwjglのネイティブライブラリのサイズを修正(@anatawa12さんありがとうございます！)"
   },
