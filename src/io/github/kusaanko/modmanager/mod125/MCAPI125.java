@@ -15,12 +15,14 @@ public class MCAPI125 extends Mod125 {
 
     @Override
     public String getDownloadURL() {
-        return "https://drive.google.com/uc?id=1ICtaX6zPmoixM1lNUDY9jeoeP7yYtrvd";
+        //return "https://drive.google.com/uc?id=1ICtaX6zPmoixM1lNUDY9jeoeP7yYtrvd";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods/raw/main/takanasayo/jar/%40MinecraftAPI-1.24.190503.zip";
     }
 
     @Override
     public String getDownloadPageURL() {
-        return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SsX0lGQlh1UTc2cVE";
+        //return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SsX0lGQlh1UTc2cVE";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods";
     }
 
     @Override

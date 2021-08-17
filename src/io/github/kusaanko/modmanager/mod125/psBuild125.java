@@ -10,12 +10,14 @@ public class psBuild125 extends Mod125 {
 
     @Override
     public String getDownloadURL() {
-        return "https://drive.google.com/uc?id=1q5xJwYsnFJMLKVMbydJSLXfZ00V321j2";
+        //return "https://drive.google.com/uc?id=1q5xJwYsnFJMLKVMbydJSLXfZ00V321j2";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods/raw/main/takanasayo/psBuild2.0.17.190422_sayo.zip";
     }
 
     @Override
     public String getDownloadPageURL() {
-        return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SsYmR1Mk1SbFlmanM";
+        //return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SsYmR1Mk1SbFlmanM";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods";
     }
 
     @Override

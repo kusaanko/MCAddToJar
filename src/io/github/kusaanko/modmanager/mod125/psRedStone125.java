@@ -10,12 +10,14 @@ public class psRedStone125 extends Mod125 {
 
     @Override
     public String getDownloadURL() {
-        return "https://drive.google.com/uc?id=0BzZbvRtrx7SsVkpXY1l0ei0xTk0";
+        //return "https://drive.google.com/uc?id=0BzZbvRtrx7SsVkpXY1l0ei0xTk0";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods/raw/main/takanasayo/psRedStone2.0.11.150626_sayo.zip";
     }
 
     @Override
     public String getDownloadPageURL() {
-        return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SsYmR1Mk1SbFlmanM";
+        //return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SsYmR1Mk1SbFlmanM";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods";
     }
 
     @Override

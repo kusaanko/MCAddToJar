@@ -28,12 +28,14 @@ public class IC2Fix125 extends Mod125 {
 
     @Override
     public String getDownloadURL() {
-        return "https://drive.google.com/uc?id=1MF0BaMdi15n8M1cz8jdlEUrb6ks0y_-3";
+        //return "https://drive.google.com/uc?id=1MF0BaMdi15n8M1cz8jdlEUrb6ks0y_-3";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods/raw/main/takanasayo/ic2_1.95b_Fix-15.180905.zip";
     }
 
     @Override
     public String getDownloadPageURL() {
-        return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SscjF4b3pYamlkY1k";
+        //return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SscjF4b3pYamlkY1k";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods";
     }
 
     @Override

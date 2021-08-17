@@ -13,12 +13,14 @@ public class OptiFineHDRendererFix125 extends Mod125 {
 
     @Override
     public String getDownloadURL() {
-        return "https://drive.google.com/uc?id=0BzZbvRtrx7SsNEhrVjFMem13UkU";
+        //return "https://drive.google.com/uc?id=0BzZbvRtrx7SsNEhrVjFMem13UkU";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods/raw/main/takanasayo/jar/OptiFine_1.2.5_HD_U_C7_HDRendererFix-3(jar).zip";
     }
 
     @Override
     public String getDownloadPageURL() {
-        return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SsX0lGQlh1UTc2cVE";
+        //return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SsX0lGQlh1UTc2cVE";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods";
     }
 
     @Override

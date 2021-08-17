@@ -10,12 +10,14 @@ public class SolomonsRod125 extends Mod125 {
 
     @Override
     public String getDownloadURL() {
-        return "https://drive.google.com/uc?id=0BzZbvRtrx7SsMkltRTJ0U2xGam8";
+        //return "https://drive.google.com/uc?id=0BzZbvRtrx7SsMkltRTJ0U2xGam8";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods/raw/main/takanasayo/sy_SolomonsRod125-7.160424.zip";
     }
 
     @Override
     public String getDownloadPageURL() {
-        return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SscjF4b3pYamlkY1k";
+        //return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SscjF4b3pYamlkY1k";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods";
     }
 
     @Override

@@ -10,12 +10,14 @@ public class OptiFineLocalizeFix125 extends Mod125 {
 
     @Override
     public String getDownloadURL() {
-        return "https://drive.google.com/uc?id=0BzZbvRtrx7SsZ1lWWl9DbFAxZVE";
+        //return "https://drive.google.com/uc?id=0BzZbvRtrx7SsZ1lWWl9DbFAxZVE";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods/raw/main/takanasayo/jar/OptiFine_1.2.5_HD_U_C7_Localize_Fix(jar).zip";
     }
 
     @Override
     public String getDownloadPageURL() {
-        return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SsX0lGQlh1UTc2cVE";
+        //return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SsX0lGQlh1UTc2cVE";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods";
     }
 
     @Override

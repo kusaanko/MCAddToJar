@@ -10,12 +10,14 @@ public class psEnchant125 extends Mod125 {
 
     @Override
     public String getDownloadURL() {
-        return "https://drive.google.com/uc?id=0BzZbvRtrx7SsbkNPU1RQOWVjY2c";
+        //return "https://drive.google.com/uc?id=0BzZbvRtrx7SsbkNPU1RQOWVjY2c";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods/raw/main/takanasayo/psEnchant2.0.16.170520_sayo.zip";
     }
 
     @Override
     public String getDownloadPageURL() {
-        return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SsYmR1Mk1SbFlmanM";
+        //return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SsYmR1Mk1SbFlmanM";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods";
     }
 
     @Override
