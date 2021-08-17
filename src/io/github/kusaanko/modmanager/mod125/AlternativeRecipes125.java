@@ -10,12 +10,14 @@ public class AlternativeRecipes125 extends Mod125 {
 
     @Override
     public String getDownloadURL() {
-        return "https://drive.google.com/uc?id=0BzZbvRtrx7SsNmNOVGpQYWlzM2M";
+        //return "https://drive.google.com/uc?id=0BzZbvRtrx7SsNmNOVGpQYWlzM2M";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods/raw/main/takanasayo/sy_AlternativeRecipes125-6.170330.zip";
     }
 
     @Override
     public String getDownloadPageURL() {
-        return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SscjF4b3pYamlkY1k";
+        //return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SscjF4b3pYamlkY1k";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods";
     }
 
     @Override
