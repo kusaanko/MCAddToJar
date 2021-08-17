@@ -244,7 +244,20 @@ public class ModManagerPanel extends JPanel {
                 notInstalled = false;
             }
 
-            components = new JComponent[]{genJLabel("<html>" + mod.getName()), genJLabel("<html>" + mod.getAuthor()),
+            JLabel modNameLabel = genJLabel("<html><a href=\"" + mod.getDownloadPageURL() + "\">" + mod.getName() + "</a>");
+            modNameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            modNameLabel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    try {
+                        Desktop.getDesktop().browse(new URL(mod.getDownloadPageURL()).toURI());
+                    } catch (IOException | URISyntaxException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+            components = new JComponent[]{modNameLabel,
+                    genJLabel("<html>" + mod.getAuthor()),
                     genJLabel("<html>" + translate(type) + "<br>" + translate(ins_type)),
                     genJLabel("<html>" + (mode.equals("patch")?"":mod.getFileVersion().isEmpty()?"N/A":mod.getFileVersion()) + "<br>" + mod.getVersion()),
                     buttonsPane, genJLabel("<html>" + (notInstalled?requireMods.replace("style=\"color: red\"", ""):requireMods))};
