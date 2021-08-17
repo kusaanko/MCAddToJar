@@ -10,22 +10,17 @@ public class TooManyItems125 extends Mod125 {
 
     @Override
     public String getDownloadURL() {
-        return null;
+        return "https://sites.google.com/site/bimasterscsarchive/downloads/TooManyItems%201.2.5.zip?attredirects=0&d=1";
     }
 
     @Override
     public String getDownloadPageURL() {
-        return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SscjF4b3pYamlkY1k";
+        return "https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1272385-toomanyitems-the-inventory-editor-and-more-1-8";
     }
 
     @Override
     public INSTALLATION_TYPE getInstallationType() {
         return INSTALLATION_TYPE.IN_JAR;
-    }
-
-    @Override
-    public boolean needUserDownload() {
-        return true;
     }
 
     @Override
