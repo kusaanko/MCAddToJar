@@ -38,23 +38,24 @@ public class AddToJar extends JFrame {
                 @Override
                 public void end() {
 
-                    output:try{
-                        if(json) {
+                    output:
+                    try {
+                        if (json) {
                             Path jsonFile = Util.getPath(versionDir, versionName + ".json");
-                            if(!Files.isWritable(jsonFile)) {
+                            if (!Files.isWritable(jsonFile)) {
                                 JOptionPane.showMessageDialog(AddToJar.this, String.format(translate("couldnotoutput"), jsonFile.getFileName().toString()));
                                 return;
                             }
                             Gson gson = new GsonBuilder().
                                     registerTypeAdapter(Double.class, (JsonSerializer<Double>) (src, typeOfSrc, context) -> {
-                                        if(src % 1 == 0) {
+                                        if (src % 1 == 0) {
                                             return new JsonPrimitive(src.longValue());
                                         }
                                         return new JsonPrimitive(src);
                                     }).create();
                             LinkedHashMap<Object, Object> jsonMap = gson.fromJson(Files.newBufferedReader(jsonFile), LinkedHashMap.class);
                             jsonMap.remove("downloads");
-                            if(jsonMap.containsKey("assetIndex")) {
+                            if (jsonMap.containsKey("assetIndex")) {
                                 LinkedTreeMap<String, Object> map = Util.toMap(jsonMap.get("assetIndex"));
                                 map.put("id", "pre-1.6");
                                 map.put("sha1", "4759bad2824e419da9db32861fcdc3a274336532");
@@ -62,8 +63,8 @@ public class AddToJar extends JFrame {
                                 map.put("totalSize", 49381897);
                                 map.put("url", "https://launchermeta.mojang.com/v1/packages/4759bad2824e419da9db32861fcdc3a274336532/pre-1.6.json");
                             }
-                            for(LinkedTreeMap<String, Object> map : (List<LinkedTreeMap<String, Object>>) jsonMap.get("libraries")) {
-                                if(map.get("name").toString().startsWith("org.lwjgl.lwjgl:lwjgl:") && !map.get("name").toString().contains("nightly")) {
+                            for (LinkedTreeMap<String, Object> map : (List<LinkedTreeMap<String, Object>>) jsonMap.get("libraries")) {
+                                if (map.get("name").toString().startsWith("org.lwjgl.lwjgl:lwjgl:") && !map.get("name").toString().contains("nightly")) {
                                     map.put("name", "org.lwjgl.lwjgl:lwjgl:2.9.1");
                                     LinkedTreeMap<String, Object> map2 = Util.toMap(Util.toMap(map.get("downloads")).get("artifact"));
                                     map2.put("path", "org/lwjgl/lwjgl/lwjgl/2.9.1/lwjgl-2.9.1.jar");
@@ -71,7 +72,7 @@ public class AddToJar extends JFrame {
                                     map2.put("size", 1014790);
                                     map2.put("url", "https://libraries.minecraft.net/org/lwjgl/lwjgl/lwjgl/2.9.1/lwjgl-2.9.1.jar");
                                 }
-                                if(map.get("name").toString().startsWith("org.lwjgl.lwjgl:lwjgl-platform:") && !map.get("name").toString().contains("nightly")) {
+                                if (map.get("name").toString().startsWith("org.lwjgl.lwjgl:lwjgl-platform:") && !map.get("name").toString().contains("nightly")) {
                                     map.put("name", "org.lwjgl.lwjgl:lwjgl-platform:2.9.1");
                                     LinkedTreeMap<String, Object> map2 = Util.toMap(Util.toMap(map.get("downloads")).get("classifiers"));
                                     LinkedTreeMap<String, Object> linux = Util.toMap(map2.get("natives-linux"));
@@ -108,12 +109,12 @@ public class AddToJar extends JFrame {
                             bw.close();
                         }
                         if (profile.mcAddToJar.size() == 0) break output;
-                        Path mc = Util.getPath(versionDir, versionName+".jar");
-                        if(!Files.isWritable(mc)) {
+                        Path mc = Util.getPath(versionDir, versionName + ".jar");
+                        if (!Files.isWritable(mc)) {
                             JOptionPane.showMessageDialog(AddToJar.this, String.format(translate("couldnotoutput"), mc.getFileName().toString()));
                             return;
                         }
-                        Path mc_original = Util.getPath("originals", profile.version+".jar");
+                        Path mc_original = Util.getPath("originals", profile.version + ".jar");
                         if (!Files.exists(mc_original)) {
                             JOptionPane.showMessageDialog(AddToJar.this, translate("mcvanillawasnotfound"));
                             break output;
@@ -122,40 +123,45 @@ public class AddToJar extends JFrame {
                         ArrayList<String> copy = (ArrayList<String>) profile.mcAddToJarTurn.clone();
                         Collections.reverse(copy);
                         for (String fileName : copy) {
-                            if(!Files.exists(Util.getPath(fileName))) {
-                                JOptionPane.showMessageDialog(AddToJar.this, fileName+translate("isnotexist"));
+                            if (!Files.exists(Util.getPath(fileName))) {
+                                JOptionPane.showMessageDialog(AddToJar.this, fileName + translate("isnotexist"));
                             }
-                            ZipFile mod = new ZipFile(fileName);
-                            Enumeration<? extends ZipEntry> entries = mod.entries();
-                            while (entries.hasMoreElements()) {
-                                ZipEntry entry = entries.nextElement();
-                                if(entry.getName().startsWith("META-INF")) {
-                                    continue;
-                                }
-                                ArrayList<String> remove = profile.mcAddToJar.get(fileName);
-                                if (remove != null && remove.contains(entry.getName())) continue;
-                                ZipEntry ze = new ZipEntry(entry.getName());
-                                try {
-                                    append.putNextEntry(ze);
-                                    InputStream stream = mod.getInputStream(entry);
-                                    byte[] bytes = new byte[8192];
-                                    int len;
-                                    while ((len = stream.read(bytes, 0, bytes.length)) > 0) {
-                                        append.write(bytes, 0, len);
+                            try {
+                                ZipFile mod = new ZipFile(fileName);
+                                Enumeration<? extends ZipEntry> entries = mod.entries();
+                                while (entries.hasMoreElements()) {
+                                    ZipEntry entry = entries.nextElement();
+                                    if (entry.getName().startsWith("META-INF")) {
+                                        continue;
                                     }
-                                    append.closeEntry();
-                                } catch (ZipException ignore) {
+                                    ArrayList<String> remove = profile.mcAddToJar.get(fileName);
+                                    if (remove != null && remove.contains(entry.getName())) continue;
+                                    ZipEntry ze = new ZipEntry(entry.getName());
+                                    try {
+                                        append.putNextEntry(ze);
+                                        InputStream stream = mod.getInputStream(entry);
+                                        byte[] bytes = new byte[8192];
+                                        int len;
+                                        while ((len = stream.read(bytes, 0, bytes.length)) > 0) {
+                                            append.write(bytes, 0, len);
+                                        }
+                                        append.closeEntry();
+                                    } catch (ZipException ignore) {
+                                    }
                                 }
-                            }
 
-                            mod.close();
+                                mod.close();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                                throw new Exception(fileName + "で問題が発生しました。\n" + ex.getLocalizedMessage());
+                            }
                         }
                         {
                             ZipFile mod = new ZipFile(mc_original.toFile());
                             Enumeration<? extends ZipEntry> entries = mod.entries();
                             while (entries.hasMoreElements()) {
                                 ZipEntry entry = entries.nextElement();
-                                if(entry.getName().startsWith("META-INF")) {
+                                if (entry.getName().startsWith("META-INF")) {
                                     continue;
                                 }
 
@@ -174,10 +180,11 @@ public class AddToJar extends JFrame {
                             }
                         }
                         append.close();
-                    }catch(FileNotFoundException e1){
+                    } catch (FileNotFoundException e1) {
                         JOptionPane.showMessageDialog(this, e1.getLocalizedMessage());
-                    }catch(Exception e1) {
+                    } catch (Exception e1) {
                         e1.printStackTrace();
+                        JOptionPane.showMessageDialog(this, "エラーが発生しました。\n" + e1.getLocalizedMessage(), "", JOptionPane.ERROR_MESSAGE);
                     }
                     output.setEnabled(true);
                     output.setText(translate("output"));
