@@ -62,27 +62,25 @@ public class DownloadForge extends JDialog {
                     }
                     String url = "https://maven.minecraftforge.net/net/minecraftforge/forge/"+version+"-"+list.getSelectedValue()+"/forge-"+version+"-"+list.getSelectedValue()+"-"+kind+".zip";
                     Path output = Util.getPath("forge/forge-"+version+"-"+list.getSelectedValue()+"-"+kind+".zip");
-                    if(!Files.exists(output)) {
-                        try {
-                            Files.createDirectories(output.getParent());
-                            URL var1 = new URL(url);
-                            byte[] var5 = new byte[8192];
-                            DataInputStream inputStream = new DataInputStream(var1.openStream());
-                            DataOutputStream outputStream = new DataOutputStream(Files.newOutputStream(output));
+                    try {
+                        Files.createDirectories(output.getParent());
+                        URL var1 = new URL(url);
+                        byte[] var5 = new byte[8192];
+                        DataInputStream inputStream = new DataInputStream(var1.openStream());
+                        DataOutputStream outputStream = new DataOutputStream(Files.newOutputStream(output));
 
-                            int len;
-                            long downloaded = 0;
-                            while((len = inputStream.read(var5, 0, var5.length)) > 0) {
-                                outputStream.write(var5, 0, len);
-                                downloaded += len;
-                                loading.setText("<html>"+Language.translate("downloadingforge")+"<br>"+downloaded/1024+"KiB");
-                            }
-                            inputStream.close();
-                            outputStream.close();
-
-                        }catch(IOException ex) {
-                            ex.printStackTrace();
+                        int len;
+                        long downloaded = 0;
+                        while((len = inputStream.read(var5, 0, var5.length)) > 0) {
+                            outputStream.write(var5, 0, len);
+                            downloaded += len;
+                            loading.setText("<html>"+Language.translate("downloadingforge")+"<br>"+downloaded/1024+"KiB");
                         }
+                        inputStream.close();
+                        outputStream.close();
+
+                    }catch(IOException ex) {
+                        ex.printStackTrace();
                     }
                     end(output);
                 }).start();
