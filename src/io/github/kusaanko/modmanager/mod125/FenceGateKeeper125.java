@@ -8,12 +8,14 @@ public class FenceGateKeeper125 extends Mod125 {
 
     @Override
     public String getDownloadURL() {
-        return "https://drive.google.com/uc?id=0BzZbvRtrx7Ssc2g3bWF4ZmdnZlk";
+        //return "https://drive.google.com/uc?id=0BzZbvRtrx7Ssc2g3bWF4ZmdnZlk";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods/raw/main/takanasayo/mod_FenceGateKeeper125-1.zip";
     }
 
     @Override
     public String getDownloadPageURL() {
-        return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SscjF4b3pYamlkY1k";
+        //return "https://drive.google.com/drive/u/0/folders/0BzZbvRtrx7SscjF4b3pYamlkY1k";
+        return "https://github.com/kusaanko/minecraft_1.2.5_mods";
     }
 
     @Override
