@@ -163,3 +163,5 @@ selectversion=バージョンを選択
 selectminecraftversion=マインクラフトのバージョンを選択
 
 couldnotoutput=他のプログラムが使用中、もしくは書き込み権限がないため%sに書き込めませんでした。
+
+errorhasoccurredon=%sで問題が発生しました。

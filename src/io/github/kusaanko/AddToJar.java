@@ -153,7 +153,7 @@ public class AddToJar extends JFrame {
                                 mod.close();
                             } catch (Exception ex) {
                                 ex.printStackTrace();
-                                throw new Exception(fileName + "で問題が発生しました。\n" + ex.getLocalizedMessage());
+                                throw new Exception(String.format(translate("errorhasoccurredon"), fileName) + "\n" + ex.getLocalizedMessage());
                             }
                         }
                         {
@@ -184,7 +184,7 @@ public class AddToJar extends JFrame {
                         JOptionPane.showMessageDialog(this, e1.getLocalizedMessage());
                     } catch (Exception e1) {
                         e1.printStackTrace();
-                        JOptionPane.showMessageDialog(this, "エラーが発生しました。\n" + e1.getLocalizedMessage(), "", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, String.format("anerrorhasoccurred", e1.getLocalizedMessage()), "", JOptionPane.ERROR_MESSAGE);
                     }
                     output.setEnabled(true);
                     output.setText(translate("output"));

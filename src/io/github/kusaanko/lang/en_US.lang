@@ -163,3 +163,5 @@ selectversion=Select version
 selectminecraftversion=Select Minecraft Version
 
 couldnotoutput=Could not write to %s because another program is in use or does not have write permission.
+
+errorhasoccurredon=An error has occurred on %s.
