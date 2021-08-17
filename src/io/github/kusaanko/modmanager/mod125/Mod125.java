@@ -181,6 +181,7 @@ public abstract class Mod125 extends Mod {
         mods125.put(EE2125.class, new EE2125());
         mods125.put(ForestryForMinecraft125.class, new ForestryForMinecraft125());
         mods125.put(IronChests125.class, new IronChests125());
+        mods125.put(KonintodokeMod125.class, new KonintodokeMod125());
         mods125.put(MultiPageChest125.class, new MultiPageChest125());
         mods125.put(RailCraft125.class, new RailCraft125());
         mods125.put(ReiMinimap125.class, new ReiMinimap125());
