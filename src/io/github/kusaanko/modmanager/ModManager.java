@@ -44,6 +44,10 @@ public class ModManager extends JDialog {
             parentPane.add(panel);
             new Thread(() -> {
                 Path profileJson = Util.getPath(MCAddToJar.mcDir, "launcher_profiles.json");
+                Path microsoftStoreProfileJson = Util.getPath(MCAddToJar.mcDir, "launcher_profiles_microsoft_store.json");
+                if(Files.exists(microsoftStoreProfileJson)) {
+                    profileJson = microsoftStoreProfileJson;
+                }
                 if(Files.exists(profileJson)) {
                     try {
                         InputStream stream = Files.newInputStream(profileJson);
