@@ -26,7 +26,7 @@ import static io.github.kusaanko.Language.*;
 
 public class MCAddToJar extends JFrame {
     public static Path mcDir;
-    public static final String version = "2.1.0";
+    public static final String version = "2.2.0";
     public static final String repo = "https://github.com/kusaanko/MCAddToJar/releases";
     public static MCAddToJar frame;
     public static AddToJar addToJar;
