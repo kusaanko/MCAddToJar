@@ -88,7 +88,7 @@ public class AddToJar extends JFrame {
                                     LinkedTreeMap<String, Object> windows = Util.toMap(map2.get("natives-windows"));
                                     windows.put("path", "org/lwjgl/lwjgl/lwjgl-platform/2.9.1/lwjgl-platform-2.9.1-natives-windows.jar");
                                     windows.put("sha1", "4c517eca808522457dd95ee8fc1fbcdbb602efbe");
-                                    windows.put("size", 527196);
+                                    windows.put("size", 611334);
                                     windows.put("url", "https://libraries.minecraft.net/org/lwjgl/lwjgl/lwjgl-platform/2.9.1/lwjgl-platform-2.9.1-natives-windows.jar");
                                 }
                             }
