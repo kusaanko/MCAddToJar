@@ -21,6 +21,38 @@ import java.util.zip.ZipOutputStream;
 
 public class Util {
 
+    public static void outputAll(Path profileFolder) {
+        try {
+            for(Path f : Files.list(profileFolder).collect(Collectors.toList())) {
+                if(f.getFileName().toString().endsWith(".profile")) {
+                    Profile profile = Profile.load(f);
+                    final boolean[] ended = {false};
+                    String profileName = f.getFileName().toString().substring(0, f.getFileName().toString().lastIndexOf("."));
+                    if(Files.exists(Util.getPath(MCAddToJar.mcDir, "versions/"+profileName))) {
+                        AddToJar addToJar = new AddToJar(Util.getPath(MCAddToJar.mcDir, "versions/" + profileName),
+                                profileName, profile, true) {
+                            @Override
+                            public void outputEnd() {
+                                ended[0] = true;
+                                this.dispose();
+                            }
+                        };
+                        addToJar.output();
+                        while (!ended[0]) {
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
     public static OS getPlatform() {
         String var0 = System.getProperty("os.name").toLowerCase();
         if (var0.contains("win")) {

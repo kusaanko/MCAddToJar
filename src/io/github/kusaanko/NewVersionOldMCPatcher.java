@@ -57,36 +57,10 @@ public class NewVersionOldMCPatcher extends JDialog {
         button.addActionListener(e -> {
             this.dispose();
             try {
-                if(Files.list(profileFolder).count() > 0 && JOptionPane.showConfirmDialog(MCAddToJar.frame, translate("reoutputallprofiles"), translate("confirm"), JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
-                    for(Path f : Files.list(profileFolder).collect(Collectors.toList())) {
-                        if(f.getFileName().toString().endsWith(".profile")) {
-                            Profile profile = Profile.load(f);
-                            final boolean[] ended = {false};
-                            String profileName = f.getFileName().toString().substring(0, f.getFileName().toString().lastIndexOf("."));
-                            if(Files.exists(Util.getPath(MCAddToJar.mcDir, "versions/"+profileName))) {
-                                AddToJar addToJar = new AddToJar(Util.getPath(MCAddToJar.mcDir, "versions/" + profileName),
-                                        profileName, profile, true) {
-                                    @Override
-                                    public void outputEnd() {
-                                        ended[0] = true;
-                                        this.dispose();
-                                    }
-                                };
-                                addToJar.output();
-                                while (!ended[0]) {
-                                    try {
-                                        Thread.sleep(100);
-                                    } catch (InterruptedException e1) {
-                                        e1.printStackTrace();
-                                    }
-                                }
-                            }
-                        }
-                    }
+                if (Files.list(profileFolder).count() > 0 && JOptionPane.showConfirmDialog(MCAddToJar.frame, translate("reoutputallprofiles"), translate("confirm"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    Util.outputAll(profileFolder);
                 }
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
+            }catch (IOException ignore) {}
         });
         main.add(panel, BorderLayout.CENTER);
         buttonpanel.add(button);
