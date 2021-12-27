@@ -134,7 +134,14 @@ public class MCAddToJar extends JFrame {
                     JOptionPane.showMessageDialog(this, translate("restartnow"));
                 }
             });
+            JMenuItem outputall = new JMenuItem(translate("outputall"));
+            outputall.addActionListener(e -> {
+                if (JOptionPane.showConfirmDialog(MCAddToJar.frame, translate("reoutputallprofiles"), translate("confirm"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    Util.outputAll(Util.getPath("profiles"));
+                }
+            });
             settings.add(menu);
+            settings.add(outputall);
             menuBar.add(settings);
         }
         {

@@ -27,6 +27,7 @@ settings=設定
 setpathdotmc=.minecraftのパスを設定
 plssetdotmc=設定より.minecraftを設定してください。
 dotmcalert=.minecraftのディレクトリを設定しました。\n次回からはMCAddToJar.jarを起動してください。
+outputall=全てのプロファイルを再出力する
 
 versionstoshow=表示するバージョン
 others=その他

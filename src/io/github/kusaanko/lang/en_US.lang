@@ -28,6 +28,7 @@ setpathdotmc=Set path for .minecraft
 plssetdotmc=Please set .minecraft from setting.
 dotmcalert=Set .minecraft directory.\nStart MCAddToJar.jar from next time.
 relativepathallowed=Relative path allowed
+outputall=Reoutput all profiles
 
 versionstoshow=Versions to show
 others=Others
